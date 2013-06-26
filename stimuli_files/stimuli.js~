@@ -1,0 +1,45 @@
+// Creates canvas 320 × 200 at 10, 50
+var paper = Raphael(0, 0, 181, 206);
+var strokeWidth = 2;
+var strokeColor = "#000000";
+
+
+function drawBerries() {
+//BERRIES//
+var berryColor = "#fffc5b";
+var berryRadius = 4.5;
+/*xposition, yposition, direction berries "fall": either out to the left or
+out to the right.*/
+var berryPositions = [ [31,67,"left"], [63,55,"left"], [95,41,"right"],
+                       [98,71,"right"], [131,58,"right"], [162,88,"right"],
+                       [50,106,"left"], [70,124,"right"], [122, 124,"right"],
+                       [34,152,"left"], [152,150,"right"] ];
+
+/* drawBerryClump takes in the position where the stem connects to the
+branch and draws two joined berries there */
+function drawBerryClump(pos) {
+  // drawBerry draws one berry as a circle with center at x,y
+  function drawBerry(p) {
+    var berry = paper.circle(p[0], p[1], berryRadius);
+    berry.attr("fill", berryColor);
+    berry.attr("stroke", strokeColor);
+    berry.attr("stroke-width", strokeWidth);   
+  }
+  xpos = pos[0];
+  ypos = pos[1];
+  direction = pos[2];
+  if (direction == "right") {
+    rightBerryPos = [xpos+13, ypos+14];
+    leftBerryPos = [xpos+1, ypos+19];
+  } else {
+    rightBerryPos = [xpos-13, ypos+14];
+    leftBerryPos = [xpos-1, ypos+19];
+  }
+  drawBerry(rightBerryPos);
+  drawBerry(leftBerryPos);
+}
+
+berryPositions.map(drawBerryClump);
+}
+
+drawBerries();
