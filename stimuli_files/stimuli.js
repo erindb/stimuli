@@ -71,8 +71,67 @@ function Tree() {
     ];
     branchPathStrings.map(myDrawPath);
   }
-
-  function drawBerries() {
+  //------------BERRIES------------//
+  function drawBerries(paper, trunkX, trunkY) {
+    /*xposition and yposition of upper left-hand corner, direction berries "fall":
+    either out to the left or out to the right, and then what branch the berry
+    is on.*/
+    var berryPositions = [ [51, 110, "left", "upper left"],
+                           [83, 97, "left", "upper left"],
+                           [115, 84, "right", "upper left"],
+                           [116, 114, "right", "upper left"],
+                           [157, 101, "right", "upper left"],
+                           [182, 131, "right", "upper right"],
+                           [70, 149, "left", "lower left"],
+                           [90, 167, "right", "lower left"],
+                           [143, 167, "right", "lower right"],
+                           [54, 195, "left", "lower left"],
+                           [172, 193, "right", "lower right"] ];
+    function drawBerries(positions) {
+      //var berryColor = "#fffc5b";
+      //var berryColor = color.get(true, no1beta(0,5), no1beta(0,20));
+      var berryColor = color.get(true, .5, .99);
+      var berryRadius = 4.5;
+      /* drawBerryClump takes in the position where the stem connects to the
+      branch and draws two joined berries there */
+      function drawBerryClump(pos) {
+        // drawBerry draws one berry as a circle with center at x,y
+        function drawBerry(p) {
+          var berry = paper.circle(p[0], p[1], berryRadius);
+          berry.attr("fill", berryColor);
+          berry.attr("stroke", strokeColor);
+          berry.attr("stroke-width", strokeWidth);   
+        }
+        branch = pos[3];
+        index = locs[branch];
+        changeX = trunkX[index] - origTrunkX[index];
+        changeY = trunkY[index] - origTrunkY[index];
+        xpos = pos[0] + changeX;
+        ypos = pos[1] + changeY;
+        direction = pos[2];
+        if (direction == "right") {
+          rightBerryPos = [xpos+13, ypos+14];
+          leftBerryPos = [xpos+1, ypos+19];
+          stemXPos = (xpos+12).toString();
+          stemYPos = (ypos+10).toString();
+          var stem = paper.path("M" + stemXPos + " " + stemYPos +
+                                "c -0.3 -7 -6 -7 -11 -8, 2 4 4 8 -1 13");
+        } else {
+          rightBerryPos = [xpos-13, ypos+14];
+          leftBerryPos = [xpos-1, ypos+19];
+          stemXPos = (xpos-12).toString();
+          stemYPos = (ypos+10).toString();
+          var stem = paper.path("M" + stemXPos + " " + stemYPos +
+                                "c 0.3 -7 6 -7 11 -8, -2 4 -4 8 1 13");
+        }
+        stem.attr("stroke", strokeColor);
+        stem.attr("stroke-width", strokeWidth); 
+        drawBerry(rightBerryPos);
+        drawBerry(leftBerryPos);
+      }
+      positions.map(drawBerryClump);
+    }
+    drawBerries(berryPositions);
   }
 
   //-------DRAW TREE------//
@@ -92,7 +151,7 @@ function Tree() {
     paper = Raphael(label, 250, 250);
     drawTrunk(paper, trunkX, trunkY);
     drawBranches(paper, trunkX, trunkY);
-    if (berries) {drawBerries()};
+    if (berries) {drawBerries(paper, trunkX, trunkY)};
   }
 }
 
