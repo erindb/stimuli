@@ -21,7 +21,7 @@ function myDrawPath(pathString) {
   myPath.attr("stroke-width", strokeWidth); 
 }
 
-function Tree(label) {
+function Tree() {
   this.draw = draw;
 
   //-----------HEIGHT AND WIDTH OF TREE----------//
@@ -72,8 +72,11 @@ function Tree(label) {
     branchPathStrings.map(myDrawPath);
   }
 
+  function drawBerries() {
+  }
+
   //-------DRAW TREE------//
-  function draw(label) {
+  function draw(label, berries) {
     var widthFactor = Math.random()*1.5 + 0.7; //gaussian better?
     var heightFactor = Math.random() + 0.7; //gaussian better?
     trunkX = origTrunkX.map(randWidth);
@@ -89,9 +92,10 @@ function Tree(label) {
     paper = Raphael(label, 250, 250);
     drawTrunk(paper, trunkX, trunkY);
     drawBranches(paper, trunkX, trunkY);
+    if (berries) {drawBerries()};
   }
 }
 
-var fep = new Tree("hi");
-fep.draw("holder");
-fep.draw("another");
+var fep = new Tree();
+fep.draw("holder", true);
+fep.draw("another", false);
