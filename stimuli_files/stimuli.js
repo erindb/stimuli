@@ -1,5 +1,5 @@
 // Creates canvas 320 × 200 at 10, 50
-var paper = Raphael("holder", 207, 207);
+var paper = Raphael("holder", 250, 250);
 var strokeWidth = 2;
 var strokeColor = "#000000";
 
@@ -28,15 +28,20 @@ function myDrawPath(pathString) {
 var locs = {"bottom left": 0, "small lower": 3, "lower left": 9,
             "upper left": 15, "upper right": 24, "lower right": 30,
             "bottom right": 39};
-var origTrunkX = [76, 81, 85, 89, 93, 94, 93, 92, 90, 87, 90, 94, 93, 94, 94, 94, 94, 94, 96, 101, 104, 105, 106, 108, 107, 105, 103, 103, 104, 111, 111, 108, 106, 113, 116, 121, 127, 110, 93, 76];
-var origTrunkY = [206, 197, 187, 177, 163, 148, 134, 128, 122, 117, 122, 114, 110, 107, 100, 98, 104, 110, 115, 117, 112, 109, 108, 101, 106, 115, 123, 132, 137, 132, 133, 151, 171, 189, 196, 202, 206, 206, 206, 206];
-var xCenter = 101.5;
+var origTrunkX = [96, 101, 105, 109, 113, 114, 113, 112, 110, 107, 110, 114, 113, 114, 114, 114, 114, 114, 116, 121, 124, 125, 126, 128, 127, 125, 123, 123, 124, 131, 131, 128, 126, 133, 136, 141, 147, 130, 113, 96];
+var origTrunkY = [249, 240, 230, 220, 206, 191, 177, 171, 165, 160, 165, 157, 153, 150, 143, 141, 147, 153, 158, 160, 155, 152, 151, 144, 149, 158, 166, 175, 180, 175, 176, 194, 214, 232, 239, 245, 249, 249, 249, 249];
+var xCenter = 121.5;
 var widthFactor = Math.random()*1.5 + 0.7; //gaussian better?
+var heightFactor = Math.random() + 0.7; //gaussian better?
 function randWidth(x) {
   return (xCenter + (x-xCenter)*widthFactor).toString();
 }
+function randHeight(y) {
+  lowest = origTrunkY[locs["bottom left"]];
+  return lowest + heightFactor * (y - lowest);
+}
 trunkX = origTrunkX.map(randWidth);
-trunkY = origTrunkY.map(function(x){return x.toString()});
+trunkY = origTrunkY.map(randHeight);
 
 //-----------TRUNK--------------//
 
@@ -95,17 +100,17 @@ var leavesPositions = [150, 138, "counter"];
 /*xposition and yposition of upper left-hand corner, direction berries "fall":
 either out to the left or out to the right, and then what branch the berry
 is on.*/
-var berryPositions = [ [31, 67, "left", "upper left"],
-                       [63, 54, "left", "upper left"],
-                       [95, 41, "right", "upper left"],
-                       [96, 71, "right", "upper left"],
-                       [137, 58, "right", "upper left"],
-                       [162, 88, "right", "upper right"],
-                       [50, 106, "left", "lower left"],
-                       [70, 124, "right", "lower left"],
-                       [123, 124, "right", "lower right"],
-                       [34, 152, "left", "lower left"],
-                       [152, 150, "right", "lower right"] ];
+var berryPositions = [ [51, 110, "left", "upper left"],
+                       [83, 97, "left", "upper left"],
+                       [115, 84, "right", "upper left"],
+                       [116, 114, "right", "upper left"],
+                       [157, 101, "right", "upper left"],
+                       [182, 131, "right", "upper right"],
+                       [70, 149, "left", "lower left"],
+                       [90, 167, "right", "lower left"],
+                       [143, 167, "right", "lower right"],
+                       [54, 195, "left", "lower left"],
+                       [172, 193, "right", "lower right"] ];
 function drawBerries(positions) {
   //var berryColor = "#fffc5b";
   //var berryColor = color.get(true, no1beta(0,5), no1beta(0,20));
@@ -123,9 +128,10 @@ function drawBerries(positions) {
     }
     branch = pos[3];
     index = locs[branch];
-    change = trunkX[index] - origTrunkX[index];
-    xpos = pos[0] + change;
-    ypos = pos[1];
+    changeX = trunkX[index] - origTrunkX[index];
+    changeY = trunkY[index] - origTrunkY[index];
+    xpos = pos[0] + changeX;
+    ypos = pos[1] + changeY;
     direction = pos[2];
     if (direction == "right") {
       rightBerryPos = [xpos+13, ypos+14];
@@ -150,46 +156,3 @@ function drawBerries(positions) {
   positions.map(drawBerryClump);
 }
 drawBerries(berryPositions);
-
-/* a python script i'm using to manipulate svg path strings:
-
-def manipulate(s, xmanip=0, ymanip=0):
-  new_pairs = []
-  pairs = s.split(" ")
-  for pair in pairs:
-    x, y = pair.split(",")
-    new_x = str(int(round(float(x) + xmanip)))
-    new_y = str(int(round(float(y) + ymanip)))
-    new_pair = ",".join([new_x, new_y])
-    new_pairs.append(new_pair)
-  print " ".join(new_pairs)
-
-def sign(x):
-  if (x<0):
-    return -1
-  else:
-    return 1
-
-def expand(s, xmanip=20, ymanip=1, xcenter=101.5):
-  new_pairs = []
-  pairs = s.split(" ")
-  for pair in pairs:
-    x, y = pair.split(",")
-    new_x = str(int(round(float(x) + xmanip*sign(float(x)-xcenter))))
-    new_y = str(int(round(float(y) * ymanip)))
-    new_pair = ",".join([new_x, new_y])
-    new_pairs.append(new_pair)
-  print " ".join(new_pairs)
-
-def expand(s, xmanip=1.2, ymanip=1, xcenter=101.5):
-  new_pairs = []
-  pairs = s.split(" ")
-  for pair in pairs:
-    x, y = pair.split(",")
-    new_x = str(int(round(xcenter + xmanip*(float(x)-xcenter))))
-    new_y = str(int(round(float(y) * ymanip)))
-    new_pair = ",".join([new_x, new_y])
-    new_pairs.append(new_pair)
-  print " ".join(new_pairs)
-
-*/
