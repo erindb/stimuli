@@ -156,5 +156,5 @@ function Tree() {
 }
 
 var fep = new Tree();
-fep.draw("holder", true);
+fep.draw("holder", false);
 fep.draw("another", false);
