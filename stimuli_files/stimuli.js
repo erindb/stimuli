@@ -1,6 +1,8 @@
-// Creates canvas 320 × 200 at 10, 50
 var strokeWidth = 2;
 var strokeColor = "#000000";
+
+width = 250;
+height = 270;
 
 var color = new RColor;
 
@@ -70,10 +72,10 @@ function Tree() {
                     113, 114, 114, 114, 114, 114, 116, 121, 124, 125, 126, 128,
                     127, 125, 123, 123, 124, 131, 131, 128, 126, 133, 136, 141,
                     147, 130, 113, 96];
-  var origTrunkY = [249, 240, 230, 220, 206, 191, 177, 171, 165, 160, 165, 157,
-                    153, 150, 143, 141, 147, 153, 158, 160, 155, 152, 151, 144,
-                    149, 158, 166, 175, 180, 175, 176, 194, 214, 232, 239, 245,
-                    249, 249, 249, 249];
+  var origTrunkY = [1, 10, 20, 30, 44, 59, 73, 79, 85, 90, 85, 93, 97,
+                    100, 107, 109, 103, 97, 92, 90, 95, 98, 99, 106,
+                    101, 92, 84, 75, 70, 75, 74, 56, 36, 18, 11, 5, 1,
+                    1, 1, 1].map(function(y) {return height - y;});
   var xCenter = (origTrunkX[locs["bottom left"]] +
                  origTrunkX[locs["bottom right"]])/2;
 
@@ -178,19 +180,20 @@ function Tree() {
     /*xposition and yposition of where stem attaches to tree, direction leaves
     curve toward: either clockwise or counterclockwise, and then what branch the
     berry is on, and then the angle of rotation.*/
-    var leafPositions = [ [75, 98, "clock", "upper left", -20],
-                          [95, 102, "clock", "upper left", 0],
-                          [128, 96, "counter", "upper left", 0],
-                          [145, 92, "counter", "upper left", 10],
-                          [155, 98, "counter", "upper left", 60],
-                          [180, 134, "counter", "upper right", 0],
-                          [192, 144, "counter", "upper right", 25],
-                          [195, 154, "counter", "upper right", 60],
-                          [97, 152, "clock", "lower left", 20],
-                          [49, 175, "clock", "lower left", -40],
-                          [46, 185, "clock", "lower left", -100],
-                          [145, 168, "counter", "lower right", -5],
-                          [170, 185, "counter", "lower right", 80] ];
+    leafYs = [152, 148, 154, 158, 152, 116, 106, 96, 98, 75, 65, 82, 65].map(function(x) {return height - x;});
+    var leafPositions = [ [75, leafYs[0], "clock", "upper left", -20],
+                          [95, leafYs[1], "clock", "upper left", 0],
+                          [128, leafYs[2], "counter", "upper left", 0],
+                          [145, leafYs[3], "counter", "upper left", 10],
+                          [155, leafYs[4], "counter", "upper left", 60],
+                          [180, leafYs[5], "counter", "upper right", 0],
+                          [192, leafYs[6], "counter", "upper right", 25],
+                          [195, leafYs[7], "counter", "upper right", 60],
+                          [97, leafYs[8], "clock", "lower left", 20],
+                          [49, leafYs[9], "clock", "lower left", -40],
+                          [46, leafYs[10], "clock", "lower left", -100],
+                          [145, leafYs[11], "counter", "lower right", -5],
+                          [170, leafYs[12], "counter", "lower right", 80] ];
     var leafColor = myColor(baseLeafColor);
     function drawLeaf(pos) {
       direction = pos[2];
@@ -234,17 +237,18 @@ function Tree() {
     /*xposition and yposition of upper left-hand corner, direction berries "fall":
     either out to the left or out to the right, and then what branch the berry
     is on.*/
-    var berryPositions = [ [51, 110, "left", "upper left"],
-                           [83, 97, "left", "upper left"],
-                           [115, 84, "right", "upper left"],
-                           [116, 114, "right", "upper left"],
-                           [157, 101, "right", "upper left"],
-                           [182, 131, "right", "upper right"],
-                           [70, 149, "left", "lower left"],
-                           [90, 167, "right", "lower left"],
-                           [143, 167, "right", "lower right"],
-                           [54, 195, "left", "lower left"],
-                           [172, 193, "right", "lower right"] ];
+    berriesYs = [140, 153, 166, 136, 149, 119, 101, 83, 83, 55, 57].map(function(x) {return height - x;});
+    var berryPositions = [ [51, berriesYs[0], "left", "upper left"],
+                           [83, berriesYs[1], "left", "upper left"],
+                           [115, berriesYs[2], "right", "upper left"],
+                           [116, berriesYs[3], "right", "upper left"],
+                           [157, berriesYs[4], "right", "upper left"],
+                           [182, berriesYs[5], "right", "upper right"],
+                           [70, berriesYs[6], "left", "lower left"],
+                           [90, berriesYs[7], "right", "lower left"],
+                           [143, berriesYs[8], "right", "lower right"],
+                           [54, berriesYs[9], "left", "lower left"],
+                           [172, berriesYs[10], "right", "lower right"] ];
     var berryColor = myColor(baseBerryColor);
     function drawBerryClumps(positions) {
       var berryRadius = 4.5;
@@ -307,7 +311,7 @@ function Tree() {
       return lowest + heightFactor * (y - lowest);
     }
 
-    paper = Raphael(label, 250, 250);
+    paper = Raphael(label, width, height);
     trunkColor = drawTrunk(paper, trunkX, trunkY);
     drawBranches(paper, trunkX, trunkY);
     if (leaves) {
