@@ -7,26 +7,27 @@
 <body>
 
 <div>
-<p>feps</p>
-<span id="holder"></span>
-<span id="another"></span>
-<span id="yetAnother"></span>
-<span id="hi"></span>
-<span id="fep1"></span>
-<span id="fep2"></span>
-<span id="fep3"></span>
-<span id="fep4"></span>
+<p> feps </p>
+<svg id="a"></svg>
+<svg id="b"></svg>
+<svg id="c"></svg>
+<svg id="d"></svg> <br/>
+<svg id="e"></svg>
+<svg id="f"></svg>
+<svg id="g"></svg>
+<svg id="h"></svg>
 </div>
+
 <div>
-<p>wugs</p>
-<span id="a"></span>
-<span id="b"></span>
-<span id="c"></span>
-<span id="d"></span>
-<span id="wug1"></span>
-<span id="wug2"></span>
-<span id="wug3"></span>
-<span id="wug4"></span>
+<p> wugs </p>
+<svg id="i"></svg>
+<svg id="j"></svg>
+<svg id="k"></svg>
+<svg id="l"></svg> <br/>
+<svg id="m"></svg>
+<svg id="n"></svg>
+<svg id="o"></svg>
+<svg id="p"></svg>
 </div>
 
 <!-- Scripts -->
@@ -35,34 +36,29 @@
 <script src="./stimuli_files/stimuli.js" type="text/javascript"></script>
 
 <script>
-var scale = 1;
+var scale = 0.5;
 var fep = new Tree();
-fep.draw("holder", false, false, scale);
-anotherProps = fep.draw("another", true, false, scale);
-anotherProps.berryColor;
-anotherProps.width;
-anotherProps.height;
-anotherProps.leafColor;
-anotherProps.trunkColor;
-fep.draw("yetAnother", false, true, scale);
-fep.draw("hi", true, true, scale);
-fep.draw("fep1", false, false, scale);
-fep.draw("fep2", true, false, scale);
-fep.draw("fep3", false, true, scale);
-fep.draw("fep4", true, true, scale);
-
+fep.draw("a", false, false, scale);
+fep.draw("b", false, true, scale);
+fep.draw("c", true, false, scale);
+fep.draw("d", true, true, scale);
+fep.draw("e", false, false, scale);
+fep.draw("f", false, true, scale);
+fep.draw("g", true, false, scale);
+fep.draw("h", true, true, scale);
 var wug = new Tree();
-wug.draw("a", false, false, scale);
-wug.draw("b", true, false, scale);
-wug.draw("c", false, true, scale);
-wug.draw("d", true, true, scale);
-wug.draw("wug1", false, false, scale);
-wug.draw("wug2", true, false, scale);
-wug.draw("wug3", false, true, scale);
-wug.draw("wug4", true, true, scale);
+wug.draw("i", false, false, scale);
+wug.draw("j", false, true, scale);
+wug.draw("k", true, false, scale);
+wug.draw("l", true, true, scale);
+wug.draw("m", false, false, scale);
+wug.draw("n", false, true, scale);
+wug.draw("o", true, false, scale);
+wug.draw("p", true, true, scale);
 
 //fep.color = mean color
 //anotherProps.color
 </script>
+
 
 </body></html>

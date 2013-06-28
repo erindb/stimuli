@@ -300,11 +300,11 @@ function Tree() {
   }
 
   //-------DRAW TREE------//
-  function draw(label, berries, leaves) {
+  function draw(label, berries, leaves, scale) {
     var w = myRnd(baseWidth, 0.1);
     var h = myRnd(baseHeight, 0.1);
     var widthFactor = w * 1.5 + 0.7;
-    var heightFactor = h + 0.5;
+    var heightFactor = h + 0.7;
     function randWidth(x) {
       return (xCenter + (x-xCenter)*widthFactor).toString();
     }
@@ -328,6 +328,10 @@ function Tree() {
     } else {
       berryColor = null;
     };
+    var svgContainer = document.getElementById(label);
+    svgContainer.setAttribute("width", (scale*width).toString() + "px");
+    svgContainer.setAttribute("height", (scale*height).toString() + "px");
+    svgContainer.setAttribute("viewBox", "0 0 250 270");
     return {
       berryColor: berryColor,
       leafColor: leafColor,
