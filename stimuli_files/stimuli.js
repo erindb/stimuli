@@ -35,10 +35,27 @@ function myDrawPath(pathString) {
 
 function myColor(meanColor) {
   c = Raphael.color(meanColor);
-  hue = c.h;
+  hue = myRnd(c.h, 0.05);
   saturation = myRnd(c.s, 0.5);
   value = myRnd(c.v, 0.4);
   newColor = Raphael.hsb2rgb(hue, saturation, value);
+  return newColor.hex;
+}
+
+function lighten(origColor) {
+  c = Raphael.color(origColor);
+  hue = myRnd(c.h, 0.05);
+  if (c.s - 0.5 > 0) {
+    saturation = c.s - 0.5;
+  } else {
+    saturation = 0;
+  }
+  if (c.v + 0.5 < 1) {
+    value = c.v + 0.5;
+  } else {
+    value = 1;
+  }
+  newColor = Raphael.hsb2rgb(c.h, saturation, value);
   return newColor.hex;
 }
 
@@ -46,7 +63,7 @@ function Tree() {
   this.draw = draw;
   //var berryColor = color.get(true, no1beta(0,5), no1beta(0,20));
   var baseBerryColor = color.get(true, .5, .99);
-  var baseTrunkColor = color.get(true, .99, .5);
+  var baseTrunkColor = color.get(true, .5, .8);
   var baseLeafColor = color.get(true, .5, .99);
   //var trunkGradient = "0-#fff-"+color.get(true, no1beta(0,5), no1beta(5,10));
 
@@ -71,6 +88,9 @@ function Tree() {
   function drawTrunk(paper, trunkX, trunkY) {
     //var trunkGradient = "0-#fff-"+color.get(true, no1beta(0,5), no1beta(5,10));
     var trunkGradient = "0-#fff-"+myColor(baseTrunkColor);
+    //var trunkColor = myColor(baseTrunkColor);
+    //var trunkGradient = "0-" + lighten(trunkColor) + "-" + trunkColor;
+    //var trunkGradient = "0-" + myColor(baseTrunkColor) +"-#000";
     trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
     for (i=1; i < trunkX.length; i++) {
       trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
@@ -183,11 +203,14 @@ function Tree() {
     //var leafColor = color.get(true, .5, .99);
     var leafColor = myColor(baseLeafColor);
     function drawLeaf(pos) {
-      xpos = pos[0];
-      ypos = pos[1];
       direction = pos[2];
       branch = pos[3];
-      angle = pos[4]
+      angle = pos[4];
+      index = locs[branch];
+      changeX = trunkX[index] - origTrunkX[index];
+      changeY = trunkY[index] - origTrunkY[index];
+      xpos = pos[0] + changeX;
+      ypos = pos[1] + changeY;
       if (direction == "clock") {
         stemPath = "M " + xpos.toString() + "," + ypos.toString() +
                    "c -4.66532,-5.31951 -8.13198,-12.67083 -8.09411,-19.20008";
@@ -280,10 +303,10 @@ function Tree() {
 
   //-------DRAW TREE------//
   function draw(label, berries, leaves) {
-    //var widthFactor = Math.random()*1.5 + 0.7; //gaussian better?
-    //var heightFactor = Math.random() + 0.7; //gaussian better?
-    var widthFactor = 1; //gaussian better?
-    var heightFactor = 1; //gaussian better?
+    var widthFactor = Math.random()*1.5 + 0.7; //gaussian better?
+    var heightFactor = Math.random() + 0.7; //gaussian better?
+    //var widthFactor = 1; //gaussian better?
+    //var heightFactor = 1; //gaussian better?
     trunkX = origTrunkX.map(randWidth);
     trunkY = origTrunkY.map(randHeight);
     function randWidth(x) {
