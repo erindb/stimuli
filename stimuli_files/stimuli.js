@@ -12,6 +12,21 @@ function no1beta(a, b) {
   if (sample < 1) {return sample} else {return 0.99}
 }
 
+myRnd = function(mean, range) {
+  if (mean + range < 1) {
+    upper = mean + range;
+  } else {
+    upper = 1;
+  }
+  if (mean - range > .1) {
+    lower = mean - range;
+  } else {
+    lower = .1;
+  }
+  interval = upper - lower;
+  return Math.random() * interval + lower;
+}
+
 function myDrawPath(pathString) {
   myPath = paper.path(pathString);
   myPath.attr("stroke", strokeColor);
@@ -19,8 +34,12 @@ function myDrawPath(pathString) {
 }
 
 function myColor(meanColor) {
-  Raphael.color(meanColor);
-  return meanColor;
+  c = Raphael.color(meanColor);
+  hue = c.h;
+  saturation = myRnd(c.s, 0.5);
+  value = myRnd(c.v, 0.4);
+  newColor = Raphael.hsb2rgb(hue, saturation, value);
+  return newColor.hex;
 }
 
 function Tree() {
