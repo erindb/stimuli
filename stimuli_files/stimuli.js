@@ -18,11 +18,17 @@ function myDrawPath(pathString) {
   myPath.attr("stroke-width", strokeWidth); 
 }
 
+function myColor(meanColor) {
+  Raphael.color(meanColor);
+  return meanColor;
+}
+
 function Tree() {
   this.draw = draw;
   //var berryColor = color.get(true, no1beta(0,5), no1beta(0,20));
   var baseBerryColor = color.get(true, .5, .99);
-  var baseTrunkColor = "0-#fff-"+color.get(true, .99, .5);
+  var baseTrunkColor = color.get(true, .99, .5);
+  var baseLeafColor = color.get(true, .5, .99);
   //var trunkGradient = "0-#fff-"+color.get(true, no1beta(0,5), no1beta(5,10));
 
   //-----------HEIGHT AND WIDTH OF TREE----------//
@@ -45,7 +51,7 @@ function Tree() {
   //-----------TRUNK--------------//
   function drawTrunk(paper, trunkX, trunkY) {
     //var trunkGradient = "0-#fff-"+color.get(true, no1beta(0,5), no1beta(5,10));
-    var trunkGradient = "0-#fff-"+color.get(true, .99, .5);
+    var trunkGradient = "0-#fff-"+myColor(baseTrunkColor);
     trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
     for (i=1; i < trunkX.length; i++) {
       trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
@@ -152,10 +158,11 @@ function Tree() {
                           [195, 154, "counter", "upper right", 60],
                           [97, 152, "clock", "lower left", 20],
                           [49, 175, "clock", "lower left", -40],
-                          [46, 190, "clock", "lower left", -100],
+                          [46, 185, "clock", "lower left", -100],
                           [145, 168, "counter", "lower right", -5],
-                          [170, 200, "counter", "lower right", 45] ];
-    var leafColor = color.get(true, .5, .99);
+                          [170, 185, "counter", "lower right", 80] ];
+    //var leafColor = color.get(true, .5, .99);
+    var leafColor = myColor(baseLeafColor);
     function drawLeaf(pos) {
       xpos = pos[0];
       ypos = pos[1];
@@ -207,7 +214,8 @@ function Tree() {
                            [172, 193, "right", "lower right"] ];
     function drawBerryClumps(positions) {
       //var berryColor = color.get(true, no1beta(0,5), no1beta(0,20));
-      var berryColor = color.get(true, .5, .99);
+      //var berryColor = color.get(true, .5, .99);
+      var berryColor = myColor(baseBerryColor);
       var berryRadius = 4.5;
       /* drawBerryClump takes in the position where the stem connects to the
       branch and draws two joined berries there */
