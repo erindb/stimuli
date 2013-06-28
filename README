@@ -3,4 +3,4 @@ callable like this:
 var fep = new Tree();
 fep.draw(label, berries, leaves);
 
-where label is a string which is the id for a span in the html file (I haven't figured out why yet, but it looks like right now, one of the labels has to be "holder"), and berries and leaves are booleans saying whether the tree drawn should have those properties. Right now berries actually makes berries show up on the tree if it's true, but leaves doesn't do anything.
+where label is a string which is the id for a span in the html file (I haven't figured out why yet, but it looks like right now, one of the labels has to be "holder"), and berries and leaves are booleans saying whether the tree drawn should have those properties.
