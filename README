@@ -1,4 +1,4 @@
-ble like this:
+callable like this:
 
 var fep = new Tree();
 fep.draw(label, berries, leaves);
