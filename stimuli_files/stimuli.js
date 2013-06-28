@@ -56,6 +56,9 @@ function Tree() {
   var baseBerryColor = color.get(true, .5, .99);
   var baseTrunkColor = color.get(true, .5, .8);
   var baseLeafColor = color.get(true, .5, .99);
+  this.baseBerryColor = baseBerryColor;
+  this.baseLeafColor = baseLeafColor;
+  this.baseTrunkColor = baseTrunkColor;
 
   //-----------HEIGHT AND WIDTH OF TREE----------//
   //for x values, distance from 101.5 should multiply by 1+ uniform(0,1)
@@ -76,7 +79,8 @@ function Tree() {
 
   //-----------TRUNK--------------//
   function drawTrunk(paper, trunkX, trunkY) {
-    var trunkGradient = "0-#fff-"+myColor(baseTrunkColor);
+    var trunkColor = myColor(baseTrunkColor);
+    var trunkGradient = "0-#fff-"+trunkColor;
     trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
     for (i=1; i < trunkX.length; i++) {
       trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
@@ -85,6 +89,7 @@ function Tree() {
     trunk = paper.path(trunkPath);
     trunk.attr("fill", trunkGradient);
     trunk.attr("stroke-width", strokeWidth);
+    return trunkColor;
   }
 
   //-----------BRANCHES-----------//
@@ -186,7 +191,6 @@ function Tree() {
                           [46, 185, "clock", "lower left", -100],
                           [145, 168, "counter", "lower right", -5],
                           [170, 185, "counter", "lower right", 80] ];
-    //var leafColor = color.get(true, .5, .99);
     var leafColor = myColor(baseLeafColor);
     function drawLeaf(pos) {
       direction = pos[2];
@@ -222,6 +226,7 @@ function Tree() {
       //              ypos.toString());
     }
     leafPositions.map(drawLeaf);
+    return leafColor;
   }
 
   //------------BERRIES------------//
@@ -240,8 +245,8 @@ function Tree() {
                            [143, 167, "right", "lower right"],
                            [54, 195, "left", "lower left"],
                            [172, 193, "right", "lower right"] ];
+    var berryColor = myColor(baseBerryColor);
     function drawBerryClumps(positions) {
-      var berryColor = myColor(baseBerryColor);
       var berryRadius = 4.5;
       /* drawBerryClump takes in the position where the stem connects to the
       branch and draws two joined berries there */
@@ -283,6 +288,7 @@ function Tree() {
       positions.map(drawBerryClump);
     }
     drawBerryClumps(berryPositions);
+    return berryColor;
   }
 
   //-------DRAW TREE------//
@@ -302,9 +308,22 @@ function Tree() {
     }
 
     paper = Raphael(label, 250, 250);
-    drawTrunk(paper, trunkX, trunkY);
+    trunkColor = drawTrunk(paper, trunkX, trunkY);
     drawBranches(paper, trunkX, trunkY);
-    if (leaves) {drawLeaves(paper, trunkX, trunkY)};
-    if (berries) {drawBerries(paper, trunkX, trunkY)};
+    if (leaves) {
+      leafColor = drawLeaves(paper, trunkX, trunkY)
+    } else {
+      leafColor = null;
+    };
+    if (berries) {
+      berryColor = drawBerries(paper, trunkX, trunkY)
+    } else {
+      berryColor = null;
+    };
+    return {
+      berryColor: berryColor,
+      leafColor: leafColor,
+      trunkColor: trunkColor
+    };
   }
 }
