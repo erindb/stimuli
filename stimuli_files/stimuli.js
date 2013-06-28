@@ -58,9 +58,13 @@ function Tree() {
   var baseBerryColor = color.get(true, .5, .99);
   var baseTrunkColor = color.get(true, .5, .8);
   var baseLeafColor = color.get(true, .5, .99);
+  var baseWidth = Math.random();
+  var baseHeight = Math.random();
   this.baseBerryColor = baseBerryColor;
   this.baseLeafColor = baseLeafColor;
   this.baseTrunkColor = baseTrunkColor;
+  this.baseWidth = baseWidth;
+  this.baseHeight = baseHeight;
 
   //-----------HEIGHT AND WIDTH OF TREE----------//
   //for x values, distance from 101.5 should multiply by 1+ uniform(0,1)
@@ -297,10 +301,10 @@ function Tree() {
 
   //-------DRAW TREE------//
   function draw(label, berries, leaves) {
-    var widthFactor = Math.random()*1.5 + 0.7; //gaussian better?
-    var heightFactor = Math.random() + 0.7; //gaussian better?
-    //var widthFactor = 1; //gaussian better?
-    //var heightFactor = 1; //gaussian better?
+    var w = myRnd(baseWidth, 0.4);
+    var h = myRnd(baseHeight, 0.4);
+    var widthFactor = w * 1.5 + 0.7;
+    var heightFactor = h + 0.7;
     trunkX = origTrunkX.map(randWidth);
     trunkY = origTrunkY.map(randHeight);
     function randWidth(x) {
@@ -327,7 +331,12 @@ function Tree() {
     return {
       berryColor: berryColor,
       leafColor: leafColor,
-      trunkColor: trunkColor
+      trunkColor: trunkColor,
+      width: w,
+      height: h,
+      label: label,
+      berries: berries,
+      leaves: leaves
     };
   }
 }
