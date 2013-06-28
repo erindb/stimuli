@@ -4,14 +4,6 @@ var strokeColor = "#000000";
 
 var color = new RColor;
 
-/*lol i don't actually know how to sample a beta using a sample from uniform...
-should figure that out INVERSE TRANSFORM SAMPLING*/
-function no1beta(a, b) {
-  unif = Math.random();
-  sample = Math.sin(unif*Math.PI/2)^2;
-  if (sample < 1) {return sample} else {return 0.99}
-}
-
 myRnd = function(mean, range) {
   if (mean + range < 1) {
     upper = mean + range;
@@ -61,11 +53,9 @@ function lighten(origColor) {
 
 function Tree() {
   this.draw = draw;
-  //var berryColor = color.get(true, no1beta(0,5), no1beta(0,20));
   var baseBerryColor = color.get(true, .5, .99);
   var baseTrunkColor = color.get(true, .5, .8);
   var baseLeafColor = color.get(true, .5, .99);
-  //var trunkGradient = "0-#fff-"+color.get(true, no1beta(0,5), no1beta(5,10));
 
   //-----------HEIGHT AND WIDTH OF TREE----------//
   //for x values, distance from 101.5 should multiply by 1+ uniform(0,1)
@@ -86,11 +76,7 @@ function Tree() {
 
   //-----------TRUNK--------------//
   function drawTrunk(paper, trunkX, trunkY) {
-    //var trunkGradient = "0-#fff-"+color.get(true, no1beta(0,5), no1beta(5,10));
     var trunkGradient = "0-#fff-"+myColor(baseTrunkColor);
-    //var trunkColor = myColor(baseTrunkColor);
-    //var trunkGradient = "0-" + lighten(trunkColor) + "-" + trunkColor;
-    //var trunkGradient = "0-" + myColor(baseTrunkColor) +"-#000";
     trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
     for (i=1; i < trunkX.length; i++) {
       trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
@@ -255,8 +241,6 @@ function Tree() {
                            [54, 195, "left", "lower left"],
                            [172, 193, "right", "lower right"] ];
     function drawBerryClumps(positions) {
-      //var berryColor = color.get(true, no1beta(0,5), no1beta(0,20));
-      //var berryColor = color.get(true, .5, .99);
       var berryColor = myColor(baseBerryColor);
       var berryRadius = 4.5;
       /* drawBerryClump takes in the position where the stem connects to the
