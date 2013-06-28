@@ -29,7 +29,7 @@ function myDrawPath(pathString) {
 
 function myColor(meanColor) {
   c = Raphael.color(meanColor);
-  hue = myRnd(c.h, 0.05);
+  hue = myRnd(c.h, 0.02);
   saturation = myRnd(c.s, 0.5);
   value = myRnd(c.v, 0.4);
   newColor = Raphael.hsb2rgb(hue, saturation, value);
@@ -301,12 +301,10 @@ function Tree() {
 
   //-------DRAW TREE------//
   function draw(label, berries, leaves) {
-    var w = myRnd(baseWidth, 0.4);
-    var h = myRnd(baseHeight, 0.4);
+    var w = myRnd(baseWidth, 0.1);
+    var h = myRnd(baseHeight, 0.1);
     var widthFactor = w * 1.5 + 0.7;
-    var heightFactor = h + 0.7;
-    trunkX = origTrunkX.map(randWidth);
-    trunkY = origTrunkY.map(randHeight);
+    var heightFactor = h + 0.5;
     function randWidth(x) {
       return (xCenter + (x-xCenter)*widthFactor).toString();
     }
@@ -314,6 +312,8 @@ function Tree() {
       lowest = origTrunkY[locs["bottom left"]];
       return lowest + heightFactor * (y - lowest);
     }
+    trunkX = origTrunkX.map(randWidth);
+    trunkY = origTrunkY.map(randHeight);
 
     paper = Raphael(label, width, height);
     trunkColor = drawTrunk(paper, trunkX, trunkY);
