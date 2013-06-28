@@ -6,14 +6,28 @@
 
 <body>
 
-<span>Hey Wassup?</span>
 <span id="holder"></span>
-<span>foo bar</span>
 <span id="another"></span>
+<span id="yetAnother"></span>
+<span id="hi"></span>
+<span id="b"></span>
+<span id="c"></span>
+<span id="a"></span>
 
 <!-- Scripts -->
 <script src="./stimuli_files/rcolor.js" type="text/javascript"></script>
 <script src="./stimuli_files/raphael.js" type="text/javascript"></script>
 <script src="./stimuli_files/stimuli.js" type="text/javascript"></script>
+
+<script>
+var fep = new Tree();
+fep.draw("another", true, true);
+fep.draw("holder", true, true);
+fep.draw("yetAnother", true, true);
+fep.draw("hi", true, true);
+fep.draw("a", false, false);
+fep.draw("b", false, true);
+fep.draw("c", true, false);
+</script>
 
 </body></html>
