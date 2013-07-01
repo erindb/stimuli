@@ -1,9 +1,6 @@
 var strokeWidth = 2;
 var strokeColor = "#000000";
 
-width = 250;
-height = 270;
-
 var color = new RColor;
 
 myRnd = function(mean, range) {
@@ -27,33 +24,45 @@ function myDrawPath(pathString) {
   myPath.attr("stroke-width", strokeWidth); 
 }
 
-function myColor(meanColor) {
+function myColor(meanColor, hVar, sVar, vVar) {
+  if (hVar == null) {hVar = 0.02};
+  if (sVar == null) {sVar = 0.5};
+  if (vVar == null) {vVar = 0.4};
   c = Raphael.color(meanColor);
-  hue = myRnd(c.h, 0.02);
-  saturation = myRnd(c.s, 0.5);
-  value = myRnd(c.v, 0.4);
+  hue = myRnd(c.h, hVar);
+  saturation = myRnd(c.s, sVar);
+  value = myRnd(c.v, vVar);
   newColor = Raphael.hsb2rgb(hue, saturation, value);
   return newColor.hex;
 }
 
 function lighten(origColor) {
+  eps = 0.3;
   c = Raphael.color(origColor);
-  hue = myRnd(c.h, 0.05);
-  if (c.s - 0.5 > 0) {
-    saturation = c.s - 0.5;
-  } else {
-    saturation = 0;
-  }
-  if (c.v + 0.5 < 1) {
-    value = c.v + 0.5;
+  if (c.v + eps < 1) {
+    value = c.v + eps;
   } else {
     value = 1;
   }
-  newColor = Raphael.hsb2rgb(c.h, saturation, value);
+  newColor = Raphael.hsb2rgb(c.h, c.s, value);
+  return newColor.hex;
+}
+
+function darken(origColor) {
+  eps = 0.3;
+  c = Raphael.color(origColor);
+  if (c.v - eps < 1) {
+    value = c.v - eps;
+  } else {
+    value = 1;
+  }
+  newColor = Raphael.hsb2rgb(c.h, c.s, value);
   return newColor.hex;
 }
 
 function Tree() {
+  width = 250;
+  height = 270;
   this.draw = draw;
   var baseBerryColor = color.get(true, .5, .99);
   var baseTrunkColor = color.get(true, .5, .8);
@@ -85,8 +94,9 @@ function Tree() {
 
   //-----------TRUNK--------------//
   function drawTrunk(paper, trunkX, trunkY) {
-    var trunkColor = myColor(baseTrunkColor);
-    var trunkGradient = "0-#fff-"+trunkColor;
+    var trunkColor = myColor(baseTrunkColor, 0.01, 0, 0.1);
+    //var trunkGradient = "0-#fff-"+trunkColor;
+    var trunkGradient = "0-"+lighten(trunkColor)+"-"+darken(trunkColor);
     trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
     for (i=1; i < trunkX.length; i++) {
       trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
@@ -331,7 +341,7 @@ function Tree() {
     var svgContainer = document.getElementById(label);
     svgContainer.setAttribute("width", (scale*width).toString() + "px");
     svgContainer.setAttribute("height", (scale*height).toString() + "px");
-    svgContainer.setAttribute("viewBox", "0 0 250 270");
+    svgContainer.setAttribute("viewBox", "0 0 " + width + " " + height);
     return {
       berryColor: berryColor,
       leafColor: leafColor,
@@ -343,4 +353,19 @@ function Tree() {
       leaves: leaves
     };
   }
+}
+
+function Bug() {
+  width = 250;
+  height = 270;
+  this.draw = draw;
+  var baseBodyColor = color.get(true, .5, .99);
+  var baseStripesColor = color.get(true, .5, .8);
+  var baseFatness = Math.random();
+  var baseHeight = Math.random();
+  this.baseBerryColor = baseBerryColor;
+  this.baseLeafColor = baseLeafColor;
+  this.baseTrunkColor = baseTrunkColor;
+  this.baseWidth = baseWidth;
+  this.baseHeight = baseHeight;
 }
