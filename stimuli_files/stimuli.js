@@ -36,28 +36,30 @@ function myColor(meanColor, hVar, sVar, vVar) {
   return newColor.hex;
 }
 
-function lighten(origColor) {
-  eps = 0.3;
-  c = Raphael.color(origColor);
-  if (c.v + eps < 1) {
-    value = c.v + eps;
-  } else {
-    value = 1;
+function makeGradient(intro, origColor) {
+  function lighten(origColor) {
+    eps = 0.3;
+    c = Raphael.color(origColor);
+    if (c.v + eps < 1) {
+      value = c.v + eps;
+    } else {
+      value = 1;
+    }
+    newColor = Raphael.hsb2rgb(c.h, c.s, value);
+    return newColor.hex;
   }
-  newColor = Raphael.hsb2rgb(c.h, c.s, value);
-  return newColor.hex;
-}
-
-function darken(origColor) {
-  eps = 0.3;
-  c = Raphael.color(origColor);
-  if (c.v - eps < 1) {
-    value = c.v - eps;
-  } else {
-    value = 1;
+  function darken(origColor) {
+    eps = 0.3;
+    c = Raphael.color(origColor);
+    if (c.v - eps < 1) {
+      value = c.v - eps;
+    } else {
+      value = 1;
+    }
+    newColor = Raphael.hsb2rgb(c.h, c.s, value);
+    return newColor.hex;
   }
-  newColor = Raphael.hsb2rgb(c.h, c.s, value);
-  return newColor.hex;
+  return intro + lighten(origColor) + "-" + darken(origColor);
 }
 
 function Tree() {
@@ -95,8 +97,7 @@ function Tree() {
   //-----------TRUNK--------------//
   function drawTrunk(paper, trunkX, trunkY) {
     var trunkColor = myColor(baseTrunkColor, 0.01, 0, 0.1);
-    //var trunkGradient = "0-#fff-"+trunkColor;
-    var trunkGradient = "0-"+lighten(trunkColor)+"-"+darken(trunkColor);
+    var trunkGradient = makeGradient("0-", trunkColor);
     trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
     for (i=1; i < trunkX.length; i++) {
       trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
@@ -358,14 +359,115 @@ function Tree() {
 function Bug() {
   width = 250;
   height = 270;
+  center = [width/2, height/2];
   this.draw = draw;
   var baseBodyColor = color.get(true, .5, .99);
-  var baseStripesColor = color.get(true, .5, .8);
-  var baseFatness = Math.random();
-  var baseHeight = Math.random();
-  this.baseBerryColor = baseBerryColor;
-  this.baseLeafColor = baseLeafColor;
-  this.baseTrunkColor = baseTrunkColor;
-  this.baseWidth = baseWidth;
-  this.baseHeight = baseHeight;
+  var baseWingsColor = color.get(true, .5, .99);
+  var baseAntennaeColor = color.get(true, .5, .99);
+  var baseBodyFatness = Math.random();
+  var baseHeadFatness = Math.random();
+  this.baseBodyColor = baseBodyColor;
+  this.baseWingsColor = baseWingsColor;
+  this.baseAntennaeColor = baseAntennaeColor;
+  this.baseBodyFatness = baseBodyFatness;
+  this.baseHeadFatness = baseHeadFatness;
+  function draw(label, wings, stripes, scale) {
+    bodyColor = myColor(baseBodyColor, 0.03, 0.07, 0.1);
+    wingsColor = myColor(baseWingsColor, 0.03, 0.07, 0.1);
+    antennaeColor = myColor(baseAntennaeColor, 0.01, 0, 0.1);
+    bodyFatness = myRnd(baseBodyFatness, 0.1);
+    headFatness = myRnd(baseHeadFatness, 0.1);
+    headYRadius = (headFatness)*30 + 20;
+    headXRadius = 25;
+    bodyYRadius = (bodyFatness)*30 + 20;
+    bodyXRadius = 50;
+    eyeRadius = 10;
+    eyeOffset = [15, 10];
+    paper = Raphael(label, width, height);
+    //antennae
+    antennaeXPos = center[0]-bodyXRadius-headXRadius+(eyeRadius/3);
+    leftAntennaYPos = center[1] + (headYRadius/3);
+    rightAntennaYPos = center[1] - (headYRadius/3);
+    leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+                             leftAntennaYPos.toString() +
+                             "c -23,-7 -22,12 -41,9");
+    leftAntenna.attr("stroke-width", 8);
+    leftAntenna.attr("stroke", antennaeColor);
+    rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+                             rightAntennaYPos.toString() +
+                             " c -6,2 -12,2 -17,0 -10,-5 -13,-10 -24,-9");
+    rightAntenna.attr("stroke-width", 8);
+    rightAntenna.attr("stroke", antennaeColor);
+    //wings
+    if (wings) {
+      frontLeftWing = paper.path("M " + center[0].toString() + "," + 
+                                  (center[1]+(bodyYRadius/2)).toString() +
+                                  "c -16,9 -28,42 -33,58 -9,37 3,63 45,8 " +
+                                  "14,-18 11,-41 11,-61 z");
+      frontLeftWing.attr("fill", makeGradient("0-",wingsColor));
+      frontLeftWing.attr("stroke", strokeColor);
+      frontLeftWing.attr("stroke-width", strokeWidth);
+      frontRightWing = paper.path("M " + center[0].toString() + "," + 
+                                  (center[1]-(bodyYRadius/2)).toString() +
+                                  "c -16,-9 -28,-42 -33,-58 -9,-37 3,-63 45,-8 " +
+                                  "14,18 11,41 11,61 z");
+      frontRightWing.attr("fill", makeGradient("0-",wingsColor));
+      frontRightWing.attr("stroke", strokeColor);
+      frontRightWing.attr("stroke-width", strokeWidth);
+      backLeftWing = paper.path("M " + (center[0]+35).toString() + "," + 
+                                  (center[1]+(bodyYRadius/2)).toString() +
+                                  "c 11,8 20,34 23,47 6,30 -2,50 -31,6 -10,-15" +
+                                  " -8,-33 -8,-49 z");
+      backLeftWing.attr("fill", makeGradient("180-",wingsColor));
+      backLeftWing.attr("stroke", strokeColor);
+      backLeftWing.attr("stroke-width", strokeWidth);
+      backRightWing = paper.path("M " + (center[0]+35).toString() + "," + 
+                                  (center[1]-(bodyYRadius/2)).toString() +
+                                  "c 11,-8 20,-34 23,-47 6,-30 -2,-50 -31,-6 -10,15" +
+                                  " -8,33 -8,49 z");
+      backRightWing.attr("fill", makeGradient("180-",wingsColor));
+      backRightWing.attr("stroke", strokeColor);
+      backRightWing.attr("stroke-width", strokeWidth);
+    }
+    //stripes
+    if (stripes) {
+    }
+    //body
+    body = paper.ellipse(center[0], center[1], bodyXRadius, bodyYRadius);
+    body.attr("fill", bodyColor);
+    body.attr("stroke", strokeColor);
+    body.attr("stroke-width", strokeWidth);
+    //head
+    headXPos = center[0]-bodyXRadius;
+    headYPos = center[1];
+    head = paper.ellipse(headXPos, headYPos,
+                         headXRadius, headYRadius);
+    head.attr("fill", "r#777777-#555555");
+    head.attr("stroke", strokeColor);
+    head.attr("stroke-width", strokeWidth);
+    //eyes
+    leftEye = paper.circle(center[0]-bodyXRadius-eyeOffset[0],
+                           center[1]-headYRadius+eyeOffset[1],
+                           eyeRadius);
+    leftEye.attr("fill", "#000000");
+    rightEye = paper.circle(center[0]-bodyXRadius-eyeOffset[0],
+                            center[1]+headYRadius-eyeOffset[1],
+                            eyeRadius);
+    rightEye.attr("fill", "#000000");
+    //resize
+    var svgContainer = document.getElementById(label);
+    svgContainer.setAttribute("width", (scale*width).toString() + "px");
+    svgContainer.setAttribute("height", (scale*height).toString() + "px");
+    svgContainer.setAttribute("viewBox", "0 0 " + width + " " + height);
+    return {
+      bodyColor: bodyColor,
+      wingsColor: wingsColor,
+      antennaeColor: antennaeColor,
+      bodyFatness: bodyFatness,
+      headFatness: headFatness,
+      label: label,
+      wings: wings,
+      stripes: stripes
+    };
+  }
 }
