@@ -371,12 +371,12 @@ function Bug() {
   this.baseAntennaeColor = baseAntennaeColor;
   this.baseBodyFatness = baseBodyFatness;
   this.baseHeadFatness = baseHeadFatness;
-  function draw(label, wings, stripes, scale) {
-    bodyColor = myColor(baseBodyColor, 0.03, 0.07, 0.1);
-    wingsColor = myColor(baseWingsColor, 0.03, 0.07, 0.1);
+  function draw(label, wings, stripes, scaleFactor) {
+    bodyColor = myColor(baseBodyColor, 0.01, 0.07, 0.1);
+    wingsColor = myColor(baseWingsColor, 0.01, 0.07, 0.1);
     antennaeColor = myColor(baseAntennaeColor, 0.01, 0, 0.1);
-    bodyFatness = myRnd(baseBodyFatness, 0.1);
-    headFatness = myRnd(baseHeadFatness, 0.1);
+    bodyFatness = myRnd(baseBodyFatness, 0.15);
+    headFatness = myRnd(baseHeadFatness, 0.15);
     headYRadius = (headFatness)*30 + 20;
     headXRadius = 25;
     bodyYRadius = (bodyFatness)*30 + 20;
@@ -398,6 +398,47 @@ function Bug() {
                              " c -6,2 -12,2 -17,0 -10,-5 -13,-10 -24,-9");
     rightAntenna.attr("stroke-width", 8);
     rightAntenna.attr("stroke", antennaeColor);
+    //legs (lower left ordering)
+    offsets = [[43, -14], [50, -4], [57, 6],
+               [30, -10], [32, 0], [34, 10], [36, 20],
+               [15, -3], [15, 7], [15, 17] ];
+      legPieceRadius = 8;
+    for (i=0; i< offsets.length; i++) {
+      //back left legs
+      x = center[0] + offsets[i][0];
+      y = center[1] + bodyYRadius + offsets[i][1];
+      legPiece = paper.circle(x, y, legPieceRadius);
+      legPiece.attr("fill", "#666666");
+      legPiece.attr("stroke-width", "0");
+      legPiece.attr("stroke", "#666666");
+    }
+    for (i=0; i< offsets.length; i++) {
+      //front left legs
+      x = center[0] - offsets[i][0] + 5;
+      y = center[1] + bodyYRadius + offsets[i][1];
+      legPiece = paper.circle(x, y, legPieceRadius);
+      legPiece.attr("fill", "#666666");
+      legPiece.attr("stroke-width", "0");
+      legPiece.attr("stroke", "#666666");
+    }
+    for (i=0; i< offsets.length; i++) {
+      //front right legs
+      x = center[0] - offsets[i][0] + 5;
+      y = center[1] - bodyYRadius - offsets[i][1];
+      legPiece = paper.circle(x, y, legPieceRadius);
+      legPiece.attr("fill", "#666666");
+      legPiece.attr("stroke-width", "0");
+      legPiece.attr("stroke", "#666666");
+    }
+    for (i=0; i< offsets.length; i++) {
+      //back right legs
+      x = center[0] + offsets[i][0];
+      y = center[1] - bodyYRadius - offsets[i][1];
+      legPiece = paper.circle(x, y, legPieceRadius);
+      legPiece.attr("fill", "#666666");
+      legPiece.attr("stroke-width", "0");
+      legPiece.attr("stroke", "#666666");
+    }
     //wings
     if (wings) {
       frontLeftWing = paper.path("M " + center[0].toString() + "," + 
@@ -429,9 +470,6 @@ function Bug() {
       backRightWing.attr("stroke", strokeColor);
       backRightWing.attr("stroke-width", strokeWidth);
     }
-    //stripes
-    if (stripes) {
-    }
     //body
     body = paper.ellipse(center[0], center[1], bodyXRadius, bodyYRadius);
     body.attr("fill", bodyColor);
@@ -454,10 +492,27 @@ function Bug() {
                             center[1]+headYRadius-eyeOffset[1],
                             eyeRadius);
     rightEye.attr("fill", "#000000");
+    //stripes
+    if (stripes) {
+      var stripesX = -2*(bodyXRadius/3);
+      var stripesY = - Math.sqrt( Math.pow(bodyYRadius,2) *
+                                  (1 - ( Math.pow(stripesX,2) /
+                                         Math.pow(bodyXRadius,2) ) ) );
+      xTop = (center[0]+stripesX).toString();
+      yTop = (center[1]+stripesY).toString();
+      stripe = paper.path("M" + xTop + "," + yTop + " c 5.94547,8.34735 10.11697,18.52451 9.11743,28.93311 -0.73892,8.54531 -4.80033,16.46672 -10.11743,23.06689 2.5,1 5,2 7.5,3 6.3906,-8.39092 10.76528,-18.74912 10.22609,-29.44874 -0.41154,-10.22457 -4.88695,-19.81576 -10.72609,-28.05126 -2,0.83333 -4,1.66667 -6,2.5 z");
+      stripe.attr("fill", "#000000");
+      stripe.transform("s10");
+    }
+    //rotate
+    angle = 0;//Math.random() * 360;
+    paper.forEach(function (el) {
+                    el.transform("r"+angle+","+center[0].toString()+","+center[1].toString());
+                  });
     //resize
     var svgContainer = document.getElementById(label);
-    svgContainer.setAttribute("width", (scale*width).toString() + "px");
-    svgContainer.setAttribute("height", (scale*height).toString() + "px");
+    svgContainer.setAttribute("width", (scaleFactor*width).toString() + "px");
+    svgContainer.setAttribute("height", (scaleFactor*height).toString() + "px");
     svgContainer.setAttribute("viewBox", "0 0 " + width + " " + height);
     return {
       bodyColor: bodyColor,
