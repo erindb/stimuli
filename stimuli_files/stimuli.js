@@ -3,13 +3,12 @@ var strokeColor = "#000000";
 
 var color = new RColor;
 
-function myDrawPath(pathString) {
+var Stimuli = {
+drawPath: function(pathString) {
   myPath = paper.path(pathString);
   myPath.attr("stroke", strokeColor);
   myPath.attr("stroke-width", strokeWidth); 
-}
-
-var Stimuli = {
+},
 
 makeGradient: function(intro, origColor) {
   function lighten(origColor) {
@@ -189,7 +188,7 @@ myColor: function(meanColor, hVar, sVar, vVar) {
                            "8,-13 14,-11 5,1 9,6 8,12 -1,4 -5,7 -8,6 -2,-1 " +
                            "-4,-3 -3,-6 1,-1 2,-3 4,-2" //lower right branch
                           ];
-      branchPathStrings.map(myDrawPath);
+      branchPathStrings.map(Stimuli.drawPath);
     }
 
     //------------LEAVES------------//
