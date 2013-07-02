@@ -356,7 +356,7 @@ var Stimuli = {
     },
 
     Bug: function() {
-    var color = new RColor;
+      var color = new RColor;
       var width = 250;
       var height = 270;
       var center = [width/2, height/2];
@@ -371,6 +371,7 @@ var Stimuli = {
       this.baseAntennaeColor = baseAntennaeColor;
       this.baseBodyFatness = baseBodyFatness;
       this.baseHeadFatness = baseHeadFatness;
+      
       //eyes
       function drawEyes(paper, bodyXRadius, headYRadius) {
         var eyeRadius = 10;
@@ -384,74 +385,58 @@ var Stimuli = {
                                 eyeRadius);
         rightEye.attr("fill", "#000000");
       }
-      function draw(label, wings, stripes, scaleFactor) {
-        var bodyColor = Stimuli.myColor(baseBodyColor, 0.01, 0.07, 0.1);
-        var wingsColor = Stimuli.myColor(baseWingsColor, 0.01, 0.07, 0.1);
-        var antennaeColor = Stimuli.myColor(baseAntennaeColor, 0.01, 0, 0.1);
-        var bodyFatness = Stimuli.myRnd(baseBodyFatness, 0.15);
-        var headFatness = Stimuli.myRnd(baseHeadFatness, 0.15);
-        var headYRadius = (headFatness)*30 + 20;
-        var headXRadius = 25;
-        var bodyYRadius = (bodyFatness)*30 + 20;
-        var bodyXRadius = 50;
-        var paper = Raphael(label, width, height);
-        //antennae
-        //antennaeXPos = center[0]-bodyXRadius-headXRadius+(eyeRadius/3);
-        var antennaeXPos = center[0]-bodyXRadius-headXRadius+(10/3);
-        var leftAntennaYPos = center[1] + (headYRadius/3);
-        var rightAntennaYPos = center[1] - (headYRadius/3);
-        var leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
-                                 leftAntennaYPos.toString() +
-                                 "c -23,-7 -22,12 -41,9");
-        leftAntenna.attr("stroke-width", 8);
-        leftAntenna.attr("stroke", antennaeColor);
-        var rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
-                                 rightAntennaYPos.toString() +
-                                 " c -6,2 -12,2 -17,0 -10,-5 -13,-10 -24,-9");
-        rightAntenna.attr("stroke-width", 8);
-        rightAntenna.attr("stroke", antennaeColor);
+      
+      function drawLegs(paper, bodyYRadius) {
         //legs (lower left ordering)
         var offsets = [[43, -14], [50, -4], [57, 6],
                    [30, -10], [32, 0], [34, 10], [36, 20],
                    [15, -3], [15, 7], [15, 17] ];
+        var legSets = [ ["back","left"], ["front","left"], ["back","right"], ["front","right"] ];
         var legPieceRadius = 8;
-        for (var i=0; i< offsets.length; i++) {
-          //back left legs
-          var x = center[0] + offsets[i][0];
-          var y = center[1] + bodyYRadius + offsets[i][1];
-          var legPiece = paper.circle(x, y, legPieceRadius);
-          legPiece.attr("fill", "#666666");
-          legPiece.attr("stroke-width", "0");
-          legPiece.attr("stroke", "#666666");
+        for (var j=0; j<legSets.length; j++) {
+          legSet = legSets[j];
+          for (var i=0; i< offsets.length; i++) {
+            if (legSet[0] == "back") {
+              var x = center[0] + offsets[i][0];
+            } else {
+              var x = center[0] - offsets[i][0];
+            }
+            if (legSet[1] == "left") {
+              var y = center[1] + bodyYRadius + offsets[i][1];
+            } else {
+              var y = center[1] - bodyYRadius - offsets[i][1];
+            }
+            var legPiece = paper.circle(x, y, legPieceRadius);
+            legPiece.attr("fill", "#666666");
+            legPiece.attr("stroke-width", "0");
+            legPiece.attr("stroke", "#666666");
+          }
         }
-        for (var i=0; i< offsets.length; i++) {
-          //front left legs
-          var x = center[0] - offsets[i][0] + 5;
-          var y = center[1] + bodyYRadius + offsets[i][1];
-          var legPiece = paper.circle(x, y, legPieceRadius);
-          legPiece.attr("fill", "#666666");
-          legPiece.attr("stroke-width", "0");
-          legPiece.attr("stroke", "#666666");
-        }
-        for (var i=0; i< offsets.length; i++) {
-          //front right legs
-          var x = center[0] - offsets[i][0] + 5;
-          var y = center[1] - bodyYRadius - offsets[i][1];
-          var legPiece = paper.circle(x, y, legPieceRadius);
-          legPiece.attr("fill", "#666666");
-          legPiece.attr("stroke-width", "0");
-          legPiece.attr("stroke", "#666666");
-        }
-        for (var i=0; i< offsets.length; i++) {
-          //back right legs
-          var x = center[0] + offsets[i][0];
-          var y = center[1] - bodyYRadius - offsets[i][1];
-          var legPiece = paper.circle(x, y, legPieceRadius);
-          legPiece.attr("fill", "#666666");
-          legPiece.attr("stroke-width", "0");
-          legPiece.attr("stroke", "#666666");
-        }
+      }
+      
+      function drawAntennae(paper, bodyXRadius, headXRadius, headYRadius) {
+        //antennae
+        //antennaeXPos = center[0]-bodyXRadius-headXRadius+(eyeRadius/3);
+        var antennaeColor = Stimuli.myColor(baseAntennaeColor, 0.01, 0, 0.1);
+        var antennaeXPos = center[0]-bodyXRadius-headXRadius+(10/3);
+        var leftAntennaYPos = center[1] + (headYRadius/3);
+        var rightAntennaYPos = center[1] - (headYRadius/3);
+        var leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+                                     leftAntennaYPos.toString() +
+                                     "c -23,-7 -22,12 -41,9");
+        leftAntenna.attr("stroke-width", 8);
+        leftAntenna.attr("stroke", antennaeColor);
+        var rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+                                      rightAntennaYPos.toString() + " c -6,2" +
+                                      " -12,2 -17,0 -10,-5 -13,-10 -24,-9");
+        rightAntenna.attr("stroke-width", 8);
+        rightAntenna.attr("stroke", antennaeColor);
+        return antennaeColor;
+      }
+      
+      function drawWings(paper, bodyYRadius, wings) {
         //wings
+        var wingsColor = Stimuli.myColor(baseWingsColor, 0.01, 0.07, 0.1);
         if (wings) {
           var frontLeftWing = paper.path("M " + center[0].toString() + "," + 
                                       (center[1]+(bodyYRadius/2)).toString() +
@@ -482,11 +467,19 @@ var Stimuli = {
           backRightWing.attr("stroke", Stimuli.strokeColor);
           backRightWing.attr("stroke-width", Stimuli.strokeWidth);
         }
+        return wingsColor;
+      }
+      
+      function drawBody(paper, bodyXRadius, bodyYRadius) {
         //body
+        var bodyColor = Stimuli.myColor(baseBodyColor, 0.01, 0.07, 0.1);
         var body = paper.ellipse(center[0], center[1], bodyXRadius, bodyYRadius);
         body.attr("fill", bodyColor);
         body.attr("stroke", Stimuli.strokeColor);
         body.attr("stroke-width", Stimuli.strokeWidth);
+      }
+      
+      function drawHead(paper, bodyXRadius, headXRadius, headYRadius) {
         //head
         var headXPos = center[0]-bodyXRadius;
         var headYPos = center[1];
@@ -496,6 +489,21 @@ var Stimuli = {
         head.attr("stroke", Stimuli.strokeColor);
         head.attr("stroke-width", Stimuli.strokeWidth);
         drawEyes(paper, bodyXRadius, headYRadius);
+      }
+      
+      function draw(label, wings, stripes, scaleFactor) {
+        var bodyFatness = Stimuli.myRnd(baseBodyFatness, 0.15);
+        var headFatness = Stimuli.myRnd(baseHeadFatness, 0.15);
+        var headYRadius = (headFatness)*30 + 20;
+        var headXRadius = 25;
+        var bodyYRadius = (bodyFatness)*30 + 20;
+        var bodyXRadius = 50;
+        var paper = Raphael(label, width, height);
+        drawLegs(paper, bodyYRadius);
+        var antennaeColor = drawAntennae(paper, bodyXRadius, headXRadius, headYRadius);
+        var wingsColor = drawWings(paper, bodyYRadius, wings);
+        var bodyColor = drawBody(paper, bodyXRadius, bodyYRadius);
+        drawHead(paper, bodyXRadius, headXRadius, headYRadius);
         //stripes
         if (stripes) {
           var stripesX = -2*(bodyXRadius/3);
@@ -505,8 +513,8 @@ var Stimuli = {
           var xTop = (center[0]+stripesX).toString();
           var yTop = (center[1]+stripesY).toString();
           var stripe = paper.path("M" + xTop + "," + yTop + " c 5.94547,8.34735 10.11697,18.52451 9.11743,28.93311 -0.73892,8.54531 -4.80033,16.46672 -10.11743,23.06689 2.5,1 5,2 7.5,3 6.3906,-8.39092 10.76528,-18.74912 10.22609,-29.44874 -0.41154,-10.22457 -4.88695,-19.81576 -10.72609,-28.05126 -2,0.83333 -4,1.66667 -6,2.5 z");
+          stripe.transform("s2");
           stripe.attr("fill", "#000000");
-          stripe.transform("s10");
         }
         //rotate
         var angle = 0;//Math.random() * 360;
