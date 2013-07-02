@@ -9,7 +9,9 @@ function myDrawPath(pathString) {
   myPath.attr("stroke-width", strokeWidth); 
 }
 
-function makeGradient(intro, origColor) {
+var Stimuli = {
+
+makeGradient: function(intro, origColor) {
   function lighten(origColor) {
     eps = 0.3;
     c = Raphael.color(origColor);
@@ -33,9 +35,8 @@ function makeGradient(intro, origColor) {
     return newColor.hex;
   }
   return intro + lighten(origColor) + "-" + darken(origColor);
-}
+},
 
-var Stimuli = {
 myRnd: function(mean, range) {
   if (mean + range < 1) {
     upper = mean + range;
@@ -98,7 +99,7 @@ myColor: function(meanColor, hVar, sVar, vVar) {
     //-----------TRUNK--------------//
     function drawTrunk(paper, trunkX, trunkY) {
       var trunkColor = Stimuli.myColor(baseTrunkColor, 0.01, 0, 0.1);
-      var trunkGradient = makeGradient("0-", trunkColor);
+      var trunkGradient = Stimuli.makeGradient("0-", trunkColor);
       trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
       for (i=1; i < trunkX.length; i++) {
         trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
@@ -458,28 +459,28 @@ myColor: function(meanColor, hVar, sVar, vVar) {
                                     (center[1]+(bodyYRadius/2)).toString() +
                                     "c -16,9 -28,42 -33,58 -9,37 3,63 45,8 " +
                                     "14,-18 11,-41 11,-61 z");
-        frontLeftWing.attr("fill", makeGradient("0-",wingsColor));
+        frontLeftWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
         frontLeftWing.attr("stroke", strokeColor);
         frontLeftWing.attr("stroke-width", strokeWidth);
         frontRightWing = paper.path("M " + center[0].toString() + "," + 
                                     (center[1]-(bodyYRadius/2)).toString() +
                                     "c -16,-9 -28,-42 -33,-58 -9,-37 3,-63 45,-8 " +
                                     "14,18 11,41 11,61 z");
-        frontRightWing.attr("fill", makeGradient("0-",wingsColor));
+        frontRightWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
         frontRightWing.attr("stroke", strokeColor);
         frontRightWing.attr("stroke-width", strokeWidth);
         backLeftWing = paper.path("M " + (center[0]+35).toString() + "," + 
                                     (center[1]+(bodyYRadius/2)).toString() +
                                     "c 11,8 20,34 23,47 6,30 -2,50 -31,6 -10,-15" +
                                     " -8,-33 -8,-49 z");
-        backLeftWing.attr("fill", makeGradient("180-",wingsColor));
+        backLeftWing.attr("fill", Stimuli.makeGradient("180-",wingsColor));
         backLeftWing.attr("stroke", strokeColor);
         backLeftWing.attr("stroke-width", strokeWidth);
         backRightWing = paper.path("M " + (center[0]+35).toString() + "," + 
                                     (center[1]-(bodyYRadius/2)).toString() +
                                     "c 11,-8 20,-34 23,-47 6,-30 -2,-50 -31,-6 -10,15" +
                                     " -8,33 -8,49 z");
-        backRightWing.attr("fill", makeGradient("180-",wingsColor));
+        backRightWing.attr("fill", Stimuli.makeGradient("180-",wingsColor));
         backRightWing.attr("stroke", strokeColor);
         backRightWing.attr("stroke-width", strokeWidth);
       }
