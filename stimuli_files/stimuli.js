@@ -99,7 +99,7 @@ var Stimuli = {
         var trunkColor = Stimuli.myColor(baseTrunkColor, 0.01, 0, 0.1);
         var trunkGradient = Stimuli.makeGradient("0-", trunkColor);
         var trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
-        for (i=1; i < trunkX.length; i++) {
+        for (var i=1; i < trunkX.length; i++) {
           trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
         }
         trunkPath += " z";
@@ -416,7 +416,7 @@ var Stimuli = {
                    [30, -10], [32, 0], [34, 10], [36, 20],
                    [15, -3], [15, 7], [15, 17] ];
         var legPieceRadius = 8;
-        for (i=0; i< offsets.length; i++) {
+        for (var i=0; i< offsets.length; i++) {
           //back left legs
           var x = center[0] + offsets[i][0];
           var y = center[1] + bodyYRadius + offsets[i][1];
@@ -425,7 +425,7 @@ var Stimuli = {
           legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
-        for (i=0; i< offsets.length; i++) {
+        for (var i=0; i< offsets.length; i++) {
           //front left legs
           var x = center[0] - offsets[i][0] + 5;
           var y = center[1] + bodyYRadius + offsets[i][1];
@@ -434,7 +434,7 @@ var Stimuli = {
           legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
-        for (i=0; i< offsets.length; i++) {
+        for (var i=0; i< offsets.length; i++) {
           //front right legs
           var x = center[0] - offsets[i][0] + 5;
           var y = center[1] - bodyYRadius - offsets[i][1];
@@ -443,7 +443,7 @@ var Stimuli = {
           legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
-        for (i=0; i< offsets.length; i++) {
+        for (var i=0; i< offsets.length; i++) {
           //back right legs
           var x = center[0] + offsets[i][0];
           var y = center[1] - bodyYRadius - offsets[i][1];
