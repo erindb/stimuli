@@ -76,19 +76,19 @@ BugToken.stripes
   whether that drawn tree has stripes - NOT YET IMPLEMENTED
 
 --------Bug-------
-Tree.baseBodyColor
+Bug.baseBodyColor
   latent mean color of bodies for bugs of that category
-Tree.baseWingsColor
+Bug.baseWingsColor
   latent mean color of wings for bugs of that category
-Tree.baseAntennaeColor
+Bug.baseAntennaeColor
   latent mean color of antennae for bugs of that category
-Tree.baseBodyFatness
+Bug.baseBodyFatness
   latent mean fatness of body for bugs of that category (0 is thinnest,
   1 is fattest)
-Tree.baseHeadFatness
+Bug.baseHeadFatness
   latent mean fatness of head for bugs of that category (0 is thinnest,
   1 is fattest)
-Tree.draw(label, wings, stripes, scale)
+Bug.draw(label, wings, stripes, scale)
   a function that draws a token tree and returns a TreeToken class with
   information about the tree that was drawn.
   parameters:
