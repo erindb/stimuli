@@ -572,20 +572,22 @@ var Stimuli = {
   Bird: function() {
     var containerWidth = 250;
     var containerHeight = 270;
-    var paperCenter = [(containerWidth/2), (containerHeight/2)];
+    var paperCenter = [(containerWidth/2), ((containerHeight/2)-25)];
     var baseColor = Stimuli.colorScheme.get();
     var baseHeadStretch = Math.random();
+    var baseBodyStretch = Math.random();
     this.baseColor = baseColor;
     this.baseHeadStretch = baseHeadStretch;
+    this.baseBodyStretch = baseBodyStretch;
     this.draw = draw;
-    function drawHead(paper, color, crest) {
-      var headCenter = [paperCenter[0], paperCenter[1]+16];
+    function drawHead(paper, color, crest, gradColor) {
+      var headCenter = [paperCenter[0], paperCenter[1]-35];
       var headStretch = erinRnd(baseHeadStretch, 0.1) * 2 + .7;
       var head = paper.ellipse(headCenter[0], headCenter[1], 25*headStretch, 25);
-      head.attr("fill", color);
+      head.attr("fill", gradColor);
       head.attr("stroke-width", Stimuli.strokeWidth);
       if (crest) {
-        var crest = paper.path("M "+paperCenter[0]+","+paperCenter[1]+" c -3,-13 -3,-27 -2,-41 0,-5 0,-10 2,-15 2,1 2,6 2,9 1,14 2,29 2,44 1,-14 1,-29 5,-43 0,-2 3,-7 4,-2 1,10 0,20 -1,30 -1,5 -1,10 -2,14 3,-11 5,-23 8,-33 1,-3 2,-2 2,1 0,12 -2,24 -4,36 0,1 1,-3 1,-5 2,-9 4,-18 7,-27 3,-4 2,4 2,6 -1,10 -4,20 -7,30 2,-9 5,-18 9,-26 1,-3 4,-2 3,1 -1,10 -5,19 -9,28 -1,2 -1,2 0,0 2,-5 5,-11 9,-15 3,-1 0,5 0,7 -2,5 -5,10 -8,15 3,-4 6,-8 10,-10 3,1 -1,6 -2,7 -1,2 -5,6 -5,6 4,0 8,-2 12,-1 0,3 -5,4 -7,5 -2,1 -6,3 -7,2 4,1 9,2 12,5 -1,3 -6,1 -8,1 -2,0 -5,-1 -5,-2 3,2 7,3 9,7 -2,2 -7,0 -10,0 -2,-1 -5,-1 -2,-3 3,-4 4,-9 4,-14 -1,-7 -5,-14 -11,-18 -4,-3 -9,-1 -12,2 -2,1 -3,6 -4,5 -5,-10 -8,-21 -8,-32 -1,-3 2,-6 4,-2 4,8 5,17 7,26 0,1 0,3 1,4 z");
+        var crest = paper.path("M "+headCenter[0].toString()+","+(headCenter[1]-16).toString()+" c -3,-13 -3,-27 -2,-41 0,-5 0,-10 2,-15 2,1 2,6 2,9 1,14 2,29 2,44 1,-14 1,-29 5,-43 0,-2 3,-7 4,-2 1,10 0,20 -1,30 -1,5 -1,10 -2,14 3,-11 5,-23 8,-33 1,-3 2,-2 2,1 0,12 -2,24 -4,36 0,1 1,-3 1,-5 2,-9 4,-18 7,-27 3,-4 2,4 2,6 -1,10 -4,20 -7,30 2,-9 5,-18 9,-26 1,-3 4,-2 3,1 -1,10 -5,19 -9,28 -1,2 -1,2 0,0 2,-5 5,-11 9,-15 3,-1 0,5 0,7 -2,5 -5,10 -8,15 3,-4 6,-8 10,-10 3,1 -1,6 -2,7 -1,2 -5,6 -5,6 4,0 8,-2 12,-1 0,3 -5,4 -7,5 -2,1 -6,3 -7,2 4,1 9,2 12,5 -1,3 -6,1 -8,1 -2,0 -5,-1 -5,-2 3,2 7,3 9,7 -2,2 -7,0 -10,0 -2,-1 -5,-1 -2,-3 3,-4 4,-9 4,-14 -1,-7 -5,-14 -11,-18 -4,-3 -9,-1 -12,2 -2,1 -3,6 -4,5 -5,-10 -8,-21 -8,-32 -1,-3 2,-6 4,-2 4,8 5,17 7,26 0,1 0,3 1,4 z");
         crest.attr("fill", color);
         crest.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
         crest.attr("stroke-width", Stimuli.strokeWidth);
@@ -606,12 +608,55 @@ var Stimuli = {
       beak.attr("stroke", Stimuli.strokeColor);
       return headStretch;
     }
-    //function drawTail() {
-    //}
+    function drawBody(paper, color, tail, gradColor) {
+      var bodyStretch = erinRnd(baseBodyStretch, 0.1) * 1 + 0.5;
+      if (tail) {
+        var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c  93.041702,66.6439 62.708612,55.1315 0.566359,6.6972 24.219543,16.1729 127.541683,98.4836 -2.315079,6.5466 70.203552,48.3289 71.370392,57.77 -4.801623,3.2366 31.342565,20.6587 80.305665,60.7674 -7.288272,-0.073 60.818577,41.2828 21.46453,21.8232 -8.136197,-2.2717 z");
+        tail.attr("fill", color);
+        tail.attr("stroke-width", Stimuli.strokeWidth);
+        tail.attr("stroke", Stimuli.strokeColor);
+      }
+      var feetPositions = [[paperCenter[0]-6, paperCenter[1]+(47*bodyStretch)],
+                           [paperCenter[0]+9, paperCenter[1]+(52*bodyStretch)]];
+      function drawFeet(footPos) {
+        var foot = paper.path("M "+footPos[0].toString()+","+footPos[1].toString()+" c   -4.399089,0.11316 -7.038982,4.87269 -10.212137,8.224 4.826226,-2.61036 8.926115,-5.61798 10.461214,-3.94752 -1.485313,6.67276 -0.358531,8.74561 0,12.17151 l 3.487071,-12.17151 c 5.224559,2.71563 6.202493,7.26752 9.215831,10.52671 -1.077715,-3.29906 -2.116802,-8.64624 -4.711083,-10.91146 0.779699,-1.28702 4.098125,-1.19294 4.581633,-1.11636 -0.273048,-0.92977 -5.365348,-1.37347 -6.844693,-1.78849 z");
+        foot.attr("fill", "#999999");
+        foot.attr("stroke-width", Stimuli.strokeWidth);
+        foot.attr("stroke", Stimuli.strokeColor);
+      }
+      feetPositions.map(drawFeet);
+      
+      var leftLeg = paper.path("M "+(paperCenter[0]-14).toString()+","+(paperCenter[1]+20).toString()+" c   0,2.96064 7.472295,25.98784 7.472295,25.98784 l 5.977836,1.31584 c 2.371438,-4.19555 4.387931,-8.67243 3.487072,-15.46112 z");
+      leftLeg.attr("fill", color);
+      leftLeg.attr("stroke-width", Stimuli.strokeWidth);
+      leftLeg.attr("stroke", Stimuli.strokeColor);
+      leftLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+      
+      var rightLeg = paper.path("M "+(paperCenter[0]).toString()+","+(paperCenter[1]+25).toString()+" c 0,2.96064 7.472295,25.98785 7.472295,25.98785 l 5.977836,1.31584 c 2.371438,-4.19569 4.387931,-8.67258 3.487071,-15.46113 z");
+      rightLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+      rightLeg.attr("fill", color);
+      rightLeg.attr("stroke-width", Stimuli.strokeWidth);
+      rightLeg.attr("stroke", Stimuli.strokeColor);
+      
+      var body = paper.path("m "+(paperCenter[0]+30).toString()+","+(paperCenter[1]+5).toString()+" c 2,8 6,15 6,24 0,4 -3,8 -7,9 -7,2 -15,0 -22,-2 -9,-2 -17,-7 -23,-14 -4,-6 -8,-12 -10,-19 -2,-7 1,-14 6,-18 7,-6 16,-8 25,-7 8,1 15,7 18,14 3,5 5,10 6,15 z");
+      body.attr("fill", color);
+      //body.attr("fill", color);
+      //body.attr("fill", Stimuli.makeGradient("0-",color));
+      body.attr("stroke-width", Stimuli.strokeWidth);
+      body.attr("stroke", Stimuli.strokeColor);
+      body.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+      var wing = paper.path("m "+(paperCenter[0]).toString()+","+(paperCenter[1]-15).toString()+" c -4,13 -7,28 -3,42 22,24 45,48 67,72 -8,-23 -11,-48 -18,-72 -4,-14 -8,-28 -17,-40 -4,-6 -12,-10 -20,-7 -3,1 -6,3 -9,5 z");
+      wing.attr("fill", color);
+      wing.attr("stroke-width", Stimuli.strokeWidth);
+      wing.attr("stroke", Stimuli.strokeColor);
+      wing.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+    }
     function draw(label, crest, tail, scaleFactor) {
       var paper = Raphael(label, containerWidth, containerHeight);
       var color = Stimuli.myColor(baseColor);
-      var headStretch = drawHead(paper, color, crest);
+      var gradColor = Stimuli.makeGradient("r",color);
+      drawBody(paper, color, tail, gradColor);
+      var headStretch = drawHead(paper, color, crest, gradColor);
       //if (tail) {drawTail();}
       var svgContainer = document.getElementById(label);
       svgContainer.setAttribute("width", (scaleFactor*containerWidth).toString() + "px");
