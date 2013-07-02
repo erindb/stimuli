@@ -3,32 +3,32 @@ var Stimuli = {
   strokeWidth: 2,
 
   drawPath: function(pathString) {
-    myPath = paper.path(pathString);
+    var myPath = paper.path(pathString);
     myPath.attr("stroke", Stimuli.strokeColor);
     myPath.attr("stroke-width", Stimuli.strokeWidth); 
   },
 
   makeGradient: function(intro, origColor) {
     function lighten(origColor) {
-      eps = 0.3;
-      c = Raphael.color(origColor);
+      var eps = 0.3;
+      var c = Raphael.color(origColor);
       if (c.v + eps < 1) {
-        value = c.v + eps;
+        var value = c.v + eps;
       } else {
-        value = 1;
+        var value = 1;
       }
-      newColor = Raphael.hsb2rgb(c.h, c.s, value);
+      var newColor = Raphael.hsb2rgb(c.h, c.s, value);
       return newColor.hex;
     }
     function darken(origColor) {
-      eps = 0.3;
-      c = Raphael.color(origColor);
+      var eps = 0.3;
+      var c = Raphael.color(origColor);
       if (c.v - eps < 1) {
-        value = c.v - eps;
+        var value = c.v - eps;
       } else {
-        value = 1;
+        var value = 1;
       }
-      newColor = Raphael.hsb2rgb(c.h, c.s, value);
+      var newColor = Raphael.hsb2rgb(c.h, c.s, value);
       return newColor.hex;
     }
     return intro + lighten(origColor) + "-" + darken(origColor);
@@ -36,35 +36,35 @@ var Stimuli = {
 
   myRnd: function(mean, range) {
     if (mean + range < 1) {
-      upper = mean + range;
+      var upper = mean + range;
     } else {
-      upper = 1;
+      var upper = 1;
     }
     if (mean - range > .1) {
-      lower = mean - range;
+      var lower = mean - range;
     } else {
-      lower = .1;
+      var lower = .1;
     }
-    interval = upper - lower;
+    var interval = upper - lower;
     return Math.random() * interval + lower;
   },
 
   myColor: function(meanColor, hVar, sVar, vVar) {
-    if (hVar == null) {hVar = 0.02};
-    if (sVar == null) {sVar = 0.5};
-    if (vVar == null) {vVar = 0.4};
-    c = Raphael.color(meanColor);
-    hue = Stimuli.myRnd(c.h, hVar);
-    saturation = Stimuli.myRnd(c.s, sVar);
-    value = Stimuli.myRnd(c.v, vVar);
-    newColor = Raphael.hsb2rgb(hue, saturation, value);
+    if (hVar == null) {var hVar = 0.02};
+    if (sVar == null) {var sVar = 0.5};
+    if (vVar == null) {var vVar = 0.4};
+    var c = Raphael.color(meanColor);
+    var hue = Stimuli.myRnd(c.h, hVar);
+    var saturation = Stimuli.myRnd(c.s, sVar);
+    var value = Stimuli.myRnd(c.v, vVar);
+    var newColor = Raphael.hsb2rgb(hue, saturation, value);
     return newColor.hex;
   },
 
     Tree: function() {
       var color = new RColor;
-      width = 250;
-      height = 270;
+      var width = 250;
+      var height = 270;
       this.draw = draw;
       var baseBerryColor = color.get(true, .5, .99);
       var baseTrunkColor = color.get(true, .5, .8);
@@ -98,12 +98,12 @@ var Stimuli = {
       function drawTrunk(paper, trunkX, trunkY) {
         var trunkColor = Stimuli.myColor(baseTrunkColor, 0.01, 0, 0.1);
         var trunkGradient = Stimuli.makeGradient("0-", trunkColor);
-        trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
+        var trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
         for (i=1; i < trunkX.length; i++) {
           trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
         }
         trunkPath += " z";
-        trunk = paper.path(trunkPath);
+        var trunk = paper.path(trunkPath);
         trunk.attr("fill", trunkGradient);
         trunk.attr("stroke-width", Stimuli.strokeWidth);
         return trunkColor;
@@ -111,7 +111,7 @@ var Stimuli = {
 
       //-----------BRANCHES-----------//
       function drawBranches(paper, trunkX, trunkY) {
-        branchPathStrings = [
+        var branchPathStrings = [
                              "M " + trunkX[locs["small lower"]] + "," + 
                              trunkY[locs["small lower"]] + " c 0,-3 0,-6 -1,-9 " +
                              "-1,-5 -4,-9 -8,-12 -4,-2 -9,-2 -12,1 -3,2 -4,7 " +
@@ -195,7 +195,7 @@ var Stimuli = {
         /*xposition and yposition of where stem attaches to tree, direction leaves
         curve toward: either clockwise or counterclockwise, and then what branch the
         berry is on, and then the angle of rotation.*/
-        leafYs = [152, 148, 154, 158, 152, 116, 106, 96, 98, 75, 65, 82, 65].map(function(x) {return height - x;});
+        var leafYs = [152, 148, 154, 158, 152, 116, 106, 96, 98, 75, 65, 82, 65].map(function(x) {return height - x;});
         var leafPositions = [ [75, leafYs[0], "clock", "upper left", -20],
                               [95, leafYs[1], "clock", "upper left", 0],
                               [128, leafYs[2], "counter", "upper left", 0],
@@ -211,23 +211,23 @@ var Stimuli = {
                               [170, leafYs[12], "counter", "lower right", 80] ];
         var leafColor = Stimuli.myColor(baseLeafColor);
         function drawLeaf(pos) {
-          direction = pos[2];
-          branch = pos[3];
-          angle = pos[4];
-          index = locs[branch];
-          changeX = trunkX[index] - origTrunkX[index];
-          changeY = trunkY[index] - origTrunkY[index];
-          xpos = pos[0] + changeX;
-          ypos = pos[1] + changeY;
+          var direction = pos[2];
+          var branch = pos[3];
+          var angle = pos[4];
+          var index = locs[branch];
+          var changeX = trunkX[index] - origTrunkX[index];
+          var changeY = trunkY[index] - origTrunkY[index];
+          var xpos = pos[0] + changeX;
+          var ypos = pos[1] + changeY;
           if (direction == "clock") {
-            stemPath = "M " + xpos.toString() + "," + ypos.toString() +
+            var stemPath = "M " + xpos.toString() + "," + ypos.toString() +
                        "c -4.66532,-5.31951 -8.13198,-12.67083 -8.09411,-19.20008";
-            leafPath = "M " + (xpos - 9).toString() + "," + (ypos-29).toString() +
+            var leafPath = "M " + (xpos - 9).toString() + "," + (ypos-29).toString() +
                        " c 7.88487,4.26057 10.52989,11.20663 10.52989,11.20663 0.32771,12.87926 -8.71699,17.94538 -15.71952,8.05647 -0.86462,-4.4842 0.51588,-14.34595 5.18963,-19.2631 z";
           } else {
-            stemPath = "M " + xpos.toString() + "," + ypos.toString() +
+            var stemPath = "M " + xpos.toString() + "," + ypos.toString() +
                        "c 4.46508,-4.3145 8.59388,-12.94298 8.52128,-19.01436";
-            leafPath = "M " + (xpos+10).toString() + "," + (ypos-29).toString() +
+            var leafPath = "M " + (xpos+10).toString() + "," + (ypos-29).toString() +
                        " c -7.97815,4.08324 -10.77777,10.96844 -10.77777,10.96844 0.44351,4.6407 0.50774,7.66519 4.207,11.9888 3.95476,2.09474 8.30737,0.62026 11.3285,-3.58295 0.96464,-4.46375 -0.19507,-14.3539 -4.75773,-19.37429 z";
           }
           var leaf = paper.path(leafPath);
@@ -252,7 +252,7 @@ var Stimuli = {
         /*xposition and yposition of upper left-hand corner, direction berries "fall":
         either out to the left or out to the right, and then what branch the berry
         is on.*/
-        berriesYs = [140, 153, 166, 136, 149, 119, 101, 83, 83, 55, 57].map(function(x) {return height - x;});
+        var berriesYs = [140, 153, 166, 136, 149, 119, 101, 83, 83, 55, 57].map(function(x) {return height - x;});
         var berryPositions = [ [51, berriesYs[0], "left", "upper left"],
                                [83, berriesYs[1], "left", "upper left"],
                                [115, berriesYs[2], "right", "upper left"],
@@ -277,25 +277,25 @@ var Stimuli = {
               berry.attr("stroke", Stimuli.strokeColor);
               berry.attr("stroke-width", Stimuli.strokeWidth);   
             }
-            branch = pos[3];
-            index = locs[branch];
-            changeX = trunkX[index] - origTrunkX[index];
-            changeY = trunkY[index] - origTrunkY[index];
-            xpos = pos[0] + changeX;
-            ypos = pos[1] + changeY;
-            direction = pos[2];
+            var branch = pos[3];
+            var index = locs[branch];
+            var changeX = trunkX[index] - origTrunkX[index];
+            var changeY = trunkY[index] - origTrunkY[index];
+            var xpos = pos[0] + changeX;
+            var ypos = pos[1] + changeY;
+            var direction = pos[2];
             if (direction == "right") {
-              rightBerryPos = [xpos+13, ypos+14];
-              leftBerryPos = [xpos+1, ypos+19];
-              stemXPos = (xpos+12).toString();
-              stemYPos = (ypos+10).toString();
+              var rightBerryPos = [xpos+13, ypos+14];
+              var leftBerryPos = [xpos+1, ypos+19];
+              var stemXPos = (xpos+12).toString();
+              var stemYPos = (ypos+10).toString();
               var stem = paper.path("M" + stemXPos + " " + stemYPos +
                                     "c -0.3 -7 -6 -7 -11 -8, 2 4 4 8 -1 13");
             } else {
-              rightBerryPos = [xpos-13, ypos+14];
-              leftBerryPos = [xpos-1, ypos+19];
-              stemXPos = (xpos-12).toString();
-              stemYPos = (ypos+10).toString();
+              var rightBerryPos = [xpos-13, ypos+14];
+              var leftBerryPos = [xpos-1, ypos+19];
+              var stemXPos = (xpos-12).toString();
+              var stemYPos = (ypos+10).toString();
               var stem = paper.path("M" + stemXPos + " " + stemYPos +
                                     "c 0.3 -7 6 -7 11 -8, -2 4 -4 8 1 13");
             }
@@ -320,24 +320,24 @@ var Stimuli = {
           return (xCenter + (x-xCenter)*widthFactor).toString();
         }
         function randHeight(y) {
-          lowest = origTrunkY[locs["bottom left"]];
+          var lowest = origTrunkY[locs["bottom left"]];
           return lowest + heightFactor * (y - lowest);
         }
-        trunkX = origTrunkX.map(randWidth);
-        trunkY = origTrunkY.map(randHeight);
+        var trunkX = origTrunkX.map(randWidth);
+        var trunkY = origTrunkY.map(randHeight);
 
-        paper = Raphael(label, width, height);
-        trunkColor = drawTrunk(paper, trunkX, trunkY);
+        paper = Raphael(label, width, height); //apparently can't put var here
+        var trunkColor = drawTrunk(paper, trunkX, trunkY);
         drawBranches(paper, trunkX, trunkY);
         if (leaves) {
-          leafColor = drawLeaves(paper, trunkX, trunkY)
+          var leafColor = drawLeaves(paper, trunkX, trunkY)
         } else {
-          leafColor = null;
+          var leafColor = null;
         };
         if (berries) {
-          berryColor = drawBerries(paper, trunkX, trunkY)
+          var berryColor = drawBerries(paper, trunkX, trunkY)
         } else {
-          berryColor = null;
+          var berryColor = null;
         };
         var svgContainer = document.getElementById(label);
         svgContainer.setAttribute("width", (scale*width).toString() + "px");
@@ -358,9 +358,9 @@ var Stimuli = {
 
     Bug: function() {
     var color = new RColor;
-      width = 250;
-      height = 270;
-      center = [width/2, height/2];
+      var width = 250;
+      var height = 270;
+      var center = [width/2, height/2];
       this.draw = draw;
       var baseBodyColor = color.get(true, .5, .99);
       var baseWingsColor = color.get(true, .5, .99);
@@ -374,108 +374,108 @@ var Stimuli = {
       this.baseHeadFatness = baseHeadFatness;
       //eyes
       function drawEyes(paper, bodyXRadius, headYRadius) {
-        eyeRadius = 10;
-        eyeOffset = [15, 10];
-        leftEye = paper.circle(center[0]-bodyXRadius-eyeOffset[0],
+        var eyeRadius = 10;
+        var eyeOffset = [15, 10];
+        var leftEye = paper.circle(center[0]-bodyXRadius-eyeOffset[0],
                                center[1]-headYRadius+eyeOffset[1],
                                eyeRadius);
         leftEye.attr("fill", "#000000");
-        rightEye = paper.circle(center[0]-bodyXRadius-eyeOffset[0],
+        var rightEye = paper.circle(center[0]-bodyXRadius-eyeOffset[0],
                                 center[1]+headYRadius-eyeOffset[1],
                                 eyeRadius);
         rightEye.attr("fill", "#000000");
       }
       function draw(label, wings, stripes, scaleFactor) {
-        bodyColor = Stimuli.myColor(baseBodyColor, 0.01, 0.07, 0.1);
-        wingsColor = Stimuli.myColor(baseWingsColor, 0.01, 0.07, 0.1);
-        antennaeColor = Stimuli.myColor(baseAntennaeColor, 0.01, 0, 0.1);
-        bodyFatness = Stimuli.myRnd(baseBodyFatness, 0.15);
-        headFatness = Stimuli.myRnd(baseHeadFatness, 0.15);
-        headYRadius = (headFatness)*30 + 20;
-        headXRadius = 25;
-        bodyYRadius = (bodyFatness)*30 + 20;
-        bodyXRadius = 50;
+        var bodyColor = Stimuli.myColor(baseBodyColor, 0.01, 0.07, 0.1);
+        var wingsColor = Stimuli.myColor(baseWingsColor, 0.01, 0.07, 0.1);
+        var antennaeColor = Stimuli.myColor(baseAntennaeColor, 0.01, 0, 0.1);
+        var bodyFatness = Stimuli.myRnd(baseBodyFatness, 0.15);
+        var headFatness = Stimuli.myRnd(baseHeadFatness, 0.15);
+        var headYRadius = (headFatness)*30 + 20;
+        var headXRadius = 25;
+        var bodyYRadius = (bodyFatness)*30 + 20;
+        var bodyXRadius = 50;
         paper = Raphael(label, width, height);
         //antennae
         //antennaeXPos = center[0]-bodyXRadius-headXRadius+(eyeRadius/3);
-        antennaeXPos = center[0]-bodyXRadius-headXRadius+(10/3);
-        leftAntennaYPos = center[1] + (headYRadius/3);
-        rightAntennaYPos = center[1] - (headYRadius/3);
-        leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+        var antennaeXPos = center[0]-bodyXRadius-headXRadius+(10/3);
+        var leftAntennaYPos = center[1] + (headYRadius/3);
+        var rightAntennaYPos = center[1] - (headYRadius/3);
+        var leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
                                  leftAntennaYPos.toString() +
                                  "c -23,-7 -22,12 -41,9");
         leftAntenna.attr("stroke-width", 8);
         leftAntenna.attr("stroke", antennaeColor);
-        rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+        var rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
                                  rightAntennaYPos.toString() +
                                  " c -6,2 -12,2 -17,0 -10,-5 -13,-10 -24,-9");
         rightAntenna.attr("stroke-width", 8);
         rightAntenna.attr("stroke", antennaeColor);
         //legs (lower left ordering)
-        offsets = [[43, -14], [50, -4], [57, 6],
+        var offsets = [[43, -14], [50, -4], [57, 6],
                    [30, -10], [32, 0], [34, 10], [36, 20],
                    [15, -3], [15, 7], [15, 17] ];
-          legPieceRadius = 8;
+        var legPieceRadius = 8;
         for (i=0; i< offsets.length; i++) {
           //back left legs
-          x = center[0] + offsets[i][0];
-          y = center[1] + bodyYRadius + offsets[i][1];
-          legPiece = paper.circle(x, y, legPieceRadius);
+          var x = center[0] + offsets[i][0];
+          var y = center[1] + bodyYRadius + offsets[i][1];
+          var legPiece = paper.circle(x, y, legPieceRadius);
           legPiece.attr("fill", "#666666");
           legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
         for (i=0; i< offsets.length; i++) {
           //front left legs
-          x = center[0] - offsets[i][0] + 5;
-          y = center[1] + bodyYRadius + offsets[i][1];
-          legPiece = paper.circle(x, y, legPieceRadius);
+          var x = center[0] - offsets[i][0] + 5;
+          var y = center[1] + bodyYRadius + offsets[i][1];
+          var legPiece = paper.circle(x, y, legPieceRadius);
           legPiece.attr("fill", "#666666");
           legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
         for (i=0; i< offsets.length; i++) {
           //front right legs
-          x = center[0] - offsets[i][0] + 5;
-          y = center[1] - bodyYRadius - offsets[i][1];
-          legPiece = paper.circle(x, y, legPieceRadius);
+          var x = center[0] - offsets[i][0] + 5;
+          var y = center[1] - bodyYRadius - offsets[i][1];
+          var legPiece = paper.circle(x, y, legPieceRadius);
           legPiece.attr("fill", "#666666");
           legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
         for (i=0; i< offsets.length; i++) {
           //back right legs
-          x = center[0] + offsets[i][0];
-          y = center[1] - bodyYRadius - offsets[i][1];
-          legPiece = paper.circle(x, y, legPieceRadius);
+          var x = center[0] + offsets[i][0];
+          var y = center[1] - bodyYRadius - offsets[i][1];
+          var legPiece = paper.circle(x, y, legPieceRadius);
           legPiece.attr("fill", "#666666");
           legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
         //wings
         if (wings) {
-          frontLeftWing = paper.path("M " + center[0].toString() + "," + 
+          var frontLeftWing = paper.path("M " + center[0].toString() + "," + 
                                       (center[1]+(bodyYRadius/2)).toString() +
                                       "c -16,9 -28,42 -33,58 -9,37 3,63 45,8 " +
                                       "14,-18 11,-41 11,-61 z");
           frontLeftWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
           frontLeftWing.attr("stroke", Stimuli.strokeColor);
           frontLeftWing.attr("stroke-width", Stimuli.strokeWidth);
-          frontRightWing = paper.path("M " + center[0].toString() + "," + 
+          var frontRightWing = paper.path("M " + center[0].toString() + "," + 
                                       (center[1]-(bodyYRadius/2)).toString() +
                                       "c -16,-9 -28,-42 -33,-58 -9,-37 3,-63 45,-8 " +
                                       "14,18 11,41 11,61 z");
           frontRightWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
           frontRightWing.attr("stroke", Stimuli.strokeColor);
           frontRightWing.attr("stroke-width", Stimuli.strokeWidth);
-          backLeftWing = paper.path("M " + (center[0]+35).toString() + "," + 
+          var backLeftWing = paper.path("M " + (center[0]+35).toString() + "," + 
                                       (center[1]+(bodyYRadius/2)).toString() +
                                       "c 11,8 20,34 23,47 6,30 -2,50 -31,6 -10,-15" +
                                       " -8,-33 -8,-49 z");
           backLeftWing.attr("fill", Stimuli.makeGradient("180-",wingsColor));
           backLeftWing.attr("stroke", Stimuli.strokeColor);
           backLeftWing.attr("stroke-width", Stimuli.strokeWidth);
-          backRightWing = paper.path("M " + (center[0]+35).toString() + "," + 
+          var backRightWing = paper.path("M " + (center[0]+35).toString() + "," + 
                                       (center[1]-(bodyYRadius/2)).toString() +
                                       "c 11,-8 20,-34 23,-47 6,-30 -2,-50 -31,-6 -10,15" +
                                       " -8,33 -8,49 z");
@@ -484,14 +484,14 @@ var Stimuli = {
           backRightWing.attr("stroke-width", Stimuli.strokeWidth);
         }
         //body
-        body = paper.ellipse(center[0], center[1], bodyXRadius, bodyYRadius);
+        var body = paper.ellipse(center[0], center[1], bodyXRadius, bodyYRadius);
         body.attr("fill", bodyColor);
         body.attr("stroke", Stimuli.strokeColor);
         body.attr("stroke-width", Stimuli.strokeWidth);
         //head
-        headXPos = center[0]-bodyXRadius;
-        headYPos = center[1];
-        head = paper.ellipse(headXPos, headYPos,
+        var headXPos = center[0]-bodyXRadius;
+        var headYPos = center[1];
+        var head = paper.ellipse(headXPos, headYPos,
                              headXRadius, headYRadius);
         head.attr("fill", "r#777777-#555555");
         head.attr("stroke", Stimuli.strokeColor);
@@ -503,14 +503,14 @@ var Stimuli = {
           var stripesY = - Math.sqrt( Math.pow(bodyYRadius,2) *
                                       (1 - ( Math.pow(stripesX,2) /
                                              Math.pow(bodyXRadius,2) ) ) );
-          xTop = (center[0]+stripesX).toString();
-          yTop = (center[1]+stripesY).toString();
-          stripe = paper.path("M" + xTop + "," + yTop + " c 5.94547,8.34735 10.11697,18.52451 9.11743,28.93311 -0.73892,8.54531 -4.80033,16.46672 -10.11743,23.06689 2.5,1 5,2 7.5,3 6.3906,-8.39092 10.76528,-18.74912 10.22609,-29.44874 -0.41154,-10.22457 -4.88695,-19.81576 -10.72609,-28.05126 -2,0.83333 -4,1.66667 -6,2.5 z");
+          var xTop = (center[0]+stripesX).toString();
+          var yTop = (center[1]+stripesY).toString();
+          var stripe = paper.path("M" + xTop + "," + yTop + " c 5.94547,8.34735 10.11697,18.52451 9.11743,28.93311 -0.73892,8.54531 -4.80033,16.46672 -10.11743,23.06689 2.5,1 5,2 7.5,3 6.3906,-8.39092 10.76528,-18.74912 10.22609,-29.44874 -0.41154,-10.22457 -4.88695,-19.81576 -10.72609,-28.05126 -2,0.83333 -4,1.66667 -6,2.5 z");
           stripe.attr("fill", "#000000");
           stripe.transform("s10");
         }
         //rotate
-        angle = 0;//Math.random() * 360;
+        var angle = 0;//Math.random() * 360;
         paper.forEach(function (el) {
                         el.transform("r"+angle+","+center[0].toString()+","+center[1].toString());
                       });
