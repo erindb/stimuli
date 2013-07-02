@@ -417,19 +417,29 @@ var Stimuli = {
       function drawAntennae(paper, bodyXRadius, headXRadius, headYRadius) {
         //antennae
         //antennaeXPos = paperCenter[0]-bodyXRadius-headXRadius+(eyeRadius/3);
-        var antennaeColor = Stimuli.myColor(baseAntennaeColor, 0.01, 0, 0.1);
+        var antennaeColor = Stimuli.myColor(baseAntennaeColor, 0, 0, 0);
         var antennaeXPos = paperCenter[0]-bodyXRadius-headXRadius+(10/3);
         var leftAntennaYPos = paperCenter[1] + (headYRadius/3);
         var rightAntennaYPos = paperCenter[1] - (headYRadius/3);
+        var leftAntennaStroke = paper.path("M " + antennaeXPos.toString() + "," + 
+                                     leftAntennaYPos.toString() +
+                                     "c -23,-7 -22,12 -42,9");
+        leftAntennaStroke.attr("stroke-width", 8);
+        leftAntennaStroke.attr("stroke", "#000000");
         var leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
                                      leftAntennaYPos.toString() +
                                      "c -23,-7 -22,12 -41,9");
-        leftAntenna.attr("stroke-containerWidth", 8);
+        leftAntenna.attr("stroke-width", 6);
         leftAntenna.attr("stroke", antennaeColor);
+        var rightAntennaStroke = paper.path("M " + antennaeXPos.toString() + "," + 
+                                      rightAntennaYPos.toString() + " c -6,2" +
+                                      " -12,2 -17,0 -10,-5 -13,-10 -25,-9");
+        rightAntennaStroke.attr("stroke-width", 8);
+        rightAntennaStroke.attr("stroke", "#000000");
         var rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
                                       rightAntennaYPos.toString() + " c -6,2" +
                                       " -12,2 -17,0 -10,-5 -13,-10 -24,-9");
-        rightAntenna.attr("stroke-containerWidth", 8);
+        rightAntenna.attr("stroke-width", 6);
         rightAntenna.attr("stroke", antennaeColor);
         return antennaeColor;
       }
@@ -474,7 +484,7 @@ var Stimuli = {
         //body
         var bodyColor = Stimuli.myColor(baseBodyColor, 0.01, 0.07, 0.1);
         var body = paper.ellipse(paperCenter[0], paperCenter[1], bodyXRadius, bodyYRadius);
-        body.attr("fill", bodyColor);
+        body.attr("fill", Stimuli.makeGradient("r",bodyColor));
         body.attr("stroke", Stimuli.strokeColor);
         body.attr("stroke-containerWidth", Stimuli.strokeWidth);
       }
@@ -491,7 +501,7 @@ var Stimuli = {
         drawEyes(paper, bodyXRadius, headYRadius);
       }
       
-      function draw(label, wings, stripes, scaleFactor) {
+      function draw(label, wings, antennae, scaleFactor) {
         var bodyFatness = Stimuli.myRnd(baseBodyFatness, 0.15);
         var headFatness = Stimuli.myRnd(baseHeadFatness, 0.15);
         var headYRadius = (headFatness)*30 + 20;
@@ -500,43 +510,31 @@ var Stimuli = {
         var bodyXRadius = 50;
         var paper = Raphael(label, containerWidth, containerHeight);
         drawLegs(paper, bodyYRadius);
-        var antennaeColor = drawAntennae(paper, bodyXRadius, headXRadius, headYRadius);
+        if (antennae) {
+          var antennaeColor = drawAntennae(paper, bodyXRadius, headXRadius, headYRadius);
+        }
         var wingsColor = drawWings(paper, bodyYRadius, wings);
         var bodyColor = drawBody(paper, bodyXRadius, bodyYRadius);
         drawHead(paper, bodyXRadius, headXRadius, headYRadius);
-        //stripes
-        if (stripes) {
-          var stripesX = -2*(bodyXRadius/3);
-          var stripesY = - Math.sqrt( Math.pow(bodyYRadius,2) *
-                                      (1 - ( Math.pow(stripesX,2) /
-                                             Math.pow(bodyXRadius,2) ) ) );
-          var xTop = (paperCenter[0]+stripesX).toString();
-          var yTop = (paperCenter[1]+stripesY).toString();
-          var stripe = paper.path("M" + xTop + "," + yTop + " c 5.94547,8.34735 10.11697,18.52451 9.11743,28.93311 -0.73892,8.54531 -4.80033,16.46672 -10.11743,23.06689 2.5,1 5,2 7.5,3 6.3906,-8.39092 10.76528,-18.74912 10.22609,-29.44874 -0.41154,-10.22457 -4.88695,-19.81576 -10.72609,-28.05126 -2,0.83333 -4,1.66667 -6,2.5 z");
-          //stripe = paper.path("M10,10 c 5.94547,8.34735 10.11697,18.52451 9.11743,28.93311 -0.73892,8.54531 -4.80033,16.46672 -10.11743,23.06689 2.5,1 5,2 7.5,3 6.3906,-8.39092 10.76528,-18.74912 10.22609,-29.44874 -0.41154,-10.22457 -4.88695,-19.81576 -10.72609,-28.05126 -2,0.83333 -4,1.66667 -6,2.5 z");
-          //stripe.transform("s1,"+(stripesY/27).toString(), center[0].toString(), center[1].toString());
-          stripe.transform("s2");
-          stripe.attr("fill", "#000000");
-        }
         //rotate
-        var angle = 0;//Math.random() * 360;
-        /*paper.forEach(function (el) {
+        var angle = Math.random() * 360;
+        paper.forEach(function (el) {
                         el.transform("r"+angle+","+paperCenter[0].toString()+","+paperCenter[1].toString());
-                      });*/
+                      });
         //resize
         var svgContainer = document.getElementById(label);
-        svgContainer.setAttribute("containerWidth", (scaleFactor*containerWidth).toString() + "px");
-        svgContainer.setAttribute("containerHeight", (scaleFactor*containerHeight).toString() + "px");
-        svgContainer.setAttribute("viewBox", "0 0 " + containerWidth + " " + containerHeight);
+        svgContainer.setAttribute("width", (scaleFactor*containerWidth).toString() + "px");
+        svgContainer.setAttribute("height", (scaleFactor*containerHeight).toString() + "px");
+        svgContainer.setAttribute("viewBox", "0 0 " + containerWidth.toString() + " " + containerHeight.toString());
         return {
-          /*bodyColor: bodyColor,
+          bodyColor: bodyColor,
           wingsColor: wingsColor,
           antennaeColor: antennaeColor,
           bodyFatness: bodyFatness,
-          headFatness: headFatness,*/
+          headFatness: headFatness,
           label: label,
           wings: wings,
-          stripes: stripes
+          antennae: antennae
         };
       }
     }
