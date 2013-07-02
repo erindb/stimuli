@@ -2,12 +2,6 @@ var Stimuli = {
   strokeColor: "#000000",
   strokeWidth: 2,
 
-  drawPath: function(pathString) {
-    var myPath = paper.path(pathString);
-    myPath.attr("stroke", Stimuli.strokeColor);
-    myPath.attr("stroke-width", Stimuli.strokeWidth); 
-  },
-
   makeGradient: function(intro, origColor) {
     function lighten(origColor) {
       var eps = 0.3;
@@ -187,7 +181,12 @@ var Stimuli = {
                              "8,-13 14,-11 5,1 9,6 8,12 -1,4 -5,7 -8,6 -2,-1 " +
                              "-4,-3 -3,-6 1,-1 2,-3 4,-2" //lower right branch
                             ];
-        branchPathStrings.map(Stimuli.drawPath);
+        for (var i=0; i<branchPathStrings.length; i++) {
+          var pathString = branchPathStrings[i];
+          var myPath = paper.path(pathString);
+          myPath.attr("stroke", Stimuli.strokeColor);
+          myPath.attr("stroke-width", Stimuli.strokeWidth); 
+        }
       }
 
       //------------LEAVES------------//
@@ -326,7 +325,7 @@ var Stimuli = {
         var trunkX = origTrunkX.map(randWidth);
         var trunkY = origTrunkY.map(randHeight);
 
-        paper = Raphael(label, width, height); //apparently can't put var here
+        var paper = Raphael(label, width, height); //apparently can't put var here
         var trunkColor = drawTrunk(paper, trunkX, trunkY);
         drawBranches(paper, trunkX, trunkY);
         if (leaves) {
@@ -395,7 +394,7 @@ var Stimuli = {
         var headXRadius = 25;
         var bodyYRadius = (bodyFatness)*30 + 20;
         var bodyXRadius = 50;
-        paper = Raphael(label, width, height);
+        var paper = Raphael(label, width, height);
         //antennae
         //antennaeXPos = center[0]-bodyXRadius-headXRadius+(eyeRadius/3);
         var antennaeXPos = center[0]-bodyXRadius-headXRadius+(10/3);
