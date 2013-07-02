@@ -6,55 +6,46 @@
 
 <body>
 
-<div>
-<p> feps </p>
-<svg id="a"></svg>
-<svg id="b"></svg>
-<svg id="c"></svg>
-<svg id="d"></svg>
-
-<svg id="q"></svg>
-<svg id="r"></svg>
-<svg id="s"></svg>
-<svg id="t"></svg>
-
-<br/>
-
-<svg id="e"></svg>
-<svg id="f"></svg>
-<svg id="g"></svg>
-<svg id="h"></svg>
-
-<svg id="y"></svg>
-<svg id="z"></svg>
-<svg id="aa"></svg>
-<svg id="ab"></svg>
-</div>
-
-<div>
-<p> wugs </p>
-<svg id="i"></svg>
-<svg id="j"></svg>
-<svg id="k"></svg>
-<svg id="l"></svg>
-
-<svg id="u"></svg>
-<svg id="v"></svg>
-<svg id="w"></svg>
-<svg id="x"></svg>
-
-<br/>
-
-<svg id="m"></svg>
-<svg id="n"></svg>
-<svg id="o"></svg>
-<svg id="p"></svg>
-
-<svg id="ac"></svg>
-<svg id="ad"></svg>
-<svg id="ae"></svg>
-<svg id="af"></svg>
-</div>
+<table border="0">
+<tr>
+<td>feps</td>
+<td></td>
+</tr>
+<tr>
+<td>
+  <svg id="a"></svg>
+  <svg id="b"></svg><br/>
+  <svg id="c"></svg>
+  <svg id="d"></svg>
+</td>
+<td>
+  <svg id="e"></svg>
+  <svg id="f"></svg><br/>
+  <svg id="g"></svg>
+  <svg id="h"></svg>
+</td>
+<td>
+  <svg id="q"></svg>
+  <svg id="r"></svg><br/>
+  <svg id="s"></svg>
+  <svg id="t"></svg>
+</td>
+</tr>
+<tr>
+<td>
+  <svg id="i"></svg>
+  <svg id="j"></svg><br/>
+  <svg id="k"></svg>
+  <svg id="l"></svg>
+</td>
+<td>
+  <svg id="m"></svg>
+  <svg id="n"></svg><br/>
+  <svg id="o"></svg>
+  <svg id="p"></svg>
+</td>
+</tr>
+</table>
 
 <!-- Scripts -->
 <script src="./stimuli_files/rcolor.js" type="text/javascript"></script>
@@ -63,44 +54,35 @@
 
 <script>
 var scale = 0.5;
-var fep = new Stimuli.Tree();
-fep.draw("a", true, true, scale);
-fep.draw("b", true, true, scale);
-fep.draw("c", true, true, scale);
-fep.draw("d", true, true, scale);
-fep.draw("e", false, true, scale);
-fep.draw("f", false, false, scale);
-fep.draw("g", true, true, scale);
-fep.draw("h", true, false, scale);
-var wug = new Stimuli.Tree();
-wug.draw("i", true, true, scale);
-wug.draw("j", true, true, scale);
-wug.draw("k", true, true, scale);
-wug.draw("l", true, true, scale);
-wug.draw("m", false, false, scale);
-wug.draw("n", false, true, scale);
-wug.draw("o", true, false, scale);
-wug.draw("p", true, true, scale);
+var treeFep = new Stimuli.Tree();
+treeFep.draw("a", false, true, scale);
+treeFep.draw("b", false, false, scale);
+treeFep.draw("c", true, false, scale);
+treeFep.draw("d", true, true, scale);
+//
 var bugFep = new Stimuli.Bug();
-bugFep.draw("q", true, true, scale);
-bugFep.draw("r", true, true, scale);
-bugFep.draw("s", true, true, scale);
-bugFep.draw("t", true, true, scale);
-bugFep.draw("y", false, true, scale);
-bugFep.draw("z", false, false, scale);
-bugFep.draw("aa", true, true, scale);
-bugFep.draw("ab", true, false, scale);
+bugFep.draw("e", false, true, scale);
+bugFep.draw("f", false, false, scale);
+bugFep.draw("g", true, true, scale);
+bugFep.draw("h", true, false, scale);
+//
+var birdFep = new Stimuli.Bird();
+birdFep.draw("q", false, true, scale);
+birdFep.draw("r", false, false, scale);
+birdFep.draw("s", true, true, scale);
+birdFep.draw("t", true, false, scale);
+//
+var treeWug = new Stimuli.Tree();
+treeWug.draw("i", false, true, scale);
+treeWug.draw("j", false, false, scale);
+treeWug.draw("k", true, false, scale);
+treeWug.draw("l", true, true, scale);
+//
 var bugWug = new Stimuli.Bug();
-bugWug.draw("u", true, true, scale);
-bugWug.draw("v", true, true, scale);
-bugWug.draw("w", true, true, scale);
-bugWug.draw("x", true, true, scale);
-bugWug.draw("ac", false, true, scale);
-bugWug.draw("ad", false, false, scale);
-bugWug.draw("ae", true, true, scale);
-bugWug.draw("af", true, false, scale);
-//fep.color = mean color
-//anotherProps.color
+bugWug.draw("m", false, true, scale);
+bugWug.draw("n", false, false, scale);
+bugWug.draw("o", true, true, scale);
+bugWug.draw("p", true, false, scale);
 </script>
 
 
