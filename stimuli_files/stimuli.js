@@ -310,7 +310,7 @@ var Stimuli = {
       }
 
       //-------DRAW TREE------//
-      function draw(label, berries, leaves, scale) {
+      function draw(label, berries, leaves, scaleFactor) {
         var w = Stimuli.myRnd(baseWidth, 0.1);
         var h = Stimuli.myRnd(baseHeight, 0.1);
         var widthFactor = w * 1.5 + 0.7;
@@ -339,9 +339,9 @@ var Stimuli = {
           var berryColor = null;
         };
         var svgContainer = document.getElementById(label);
-        svgContainer.setAttribute("containerWidth", (scale*containerWidth).toString() + "px");
-        svgContainer.setAttribute("containerHeight", (scale*containerHeight).toString() + "px");
-        svgContainer.setAttribute("viewBox", "0 0 " + containerWidth + " " + containerHeight);
+        svgContainer.setAttribute("width", (scaleFactor*containerWidth).toString() + "px");
+        svgContainer.setAttribute("height", (scaleFactor*containerHeight).toString() + "px");
+        svgContainer.setAttribute("viewBox", "0 0 " + containerWidth.toString() + " " + containerHeight.toString());
         return {
           berryColor: berryColor,
           leafColor: leafColor,
@@ -512,6 +512,8 @@ var Stimuli = {
         drawLegs(paper, bodyYRadius);
         if (antennae) {
           var antennaeColor = drawAntennae(paper, bodyXRadius, headXRadius, headYRadius);
+        } else {
+          var antennaeColor = null;
         }
         var wingsColor = drawWings(paper, bodyYRadius, wings);
         var bodyColor = drawBody(paper, bodyXRadius, bodyYRadius);

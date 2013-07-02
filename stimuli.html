@@ -64,18 +64,18 @@
 <script>
 var scale = 0.5;
 var fep = new Stimuli.Tree();
-fep.draw("a", false, true, scale);
-fep.draw("b", false, true, scale);
+fep.draw("a", true, true, scale);
+fep.draw("b", true, true, scale);
 fep.draw("c", true, true, scale);
 fep.draw("d", true, true, scale);
 fep.draw("e", false, true, scale);
-fep.draw("f", false, true, scale);
+fep.draw("f", false, false, scale);
 fep.draw("g", true, true, scale);
-fep.draw("h", true, true, scale);
+fep.draw("h", true, false, scale);
 var wug = new Stimuli.Tree();
-wug.draw("i", false, false, scale);
-wug.draw("j", false, true, scale);
-wug.draw("k", true, false, scale);
+wug.draw("i", true, true, scale);
+wug.draw("j", true, true, scale);
+wug.draw("k", true, true, scale);
 wug.draw("l", true, true, scale);
 wug.draw("m", false, false, scale);
 wug.draw("n", false, true, scale);
@@ -87,18 +87,18 @@ bugFep.draw("r", true, true, scale);
 bugFep.draw("s", true, true, scale);
 bugFep.draw("t", true, true, scale);
 bugFep.draw("y", false, true, scale);
-bugFep.draw("z", false, true, scale);
+bugFep.draw("z", false, false, scale);
 bugFep.draw("aa", true, true, scale);
-bugFep.draw("ab", true, true, scale);
+bugFep.draw("ab", true, false, scale);
 var bugWug = new Stimuli.Bug();
 bugWug.draw("u", true, true, scale);
 bugWug.draw("v", true, true, scale);
 bugWug.draw("w", true, true, scale);
 bugWug.draw("x", true, true, scale);
 bugWug.draw("ac", false, true, scale);
-bugWug.draw("ad", false, true, scale);
+bugWug.draw("ad", false, false, scale);
 bugWug.draw("ae", true, true, scale);
-bugWug.draw("af", true, true, scale);
+bugWug.draw("af", true, false, scale);
 //fep.color = mean color
 //anotherProps.color
 </script>
