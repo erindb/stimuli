@@ -1,3 +1,50 @@
+
+
+var ErinTools = {
+  shuffle: function(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;}, // non-destructive.
+
+  ColorRandomizer: function(nSteps) {
+    if (nSteps==null) {var nSteps=10}
+    this.get = get;
+    
+    function hues(n) {
+      var h = [];
+      for (i=0;i<n-1;i++) {
+        var offset = Math.random() * .99 / n;
+        h.push((i/n)+offset);
+      }
+      return ErinTools.shuffle(h);
+    }
+    
+    var myHues = hues(nSteps);
+    
+    function get(something, saturation, value) {
+      if (myHues.length < 1) {
+        myHues = hues(nSteps);
+      }
+      var h = myHues.shift();
+      var s = ErinTools.uniformAroundMean(.99, .1);
+      var v = ErinTools.uniformAroundMean(.99, .1);
+      return Raphael.hsb2rgb(h, s, v).hex;
+    }
+  },
+  
+  uniformAroundMean: function(mean, radius) {
+    if (mean + radius < 1) {
+      var upper = mean + radius;
+    } else {
+      var upper = 1;
+    }
+    if (mean - radius > .1) {
+      var lower = mean - radius;
+    } else {
+      var lower = .1;
+    }
+    var interval = upper - lower;
+    return Math.random() * interval + lower;
+  }
+}
+
 var Stimuli = {
   strokeColor: "#000000",
   strokeWidth: 2,
@@ -5,6 +52,14 @@ var Stimuli = {
   containerHeight: 270,
   colorScheme: new ErinTools.ColorRandomizer(),
   
+  viewBox: function(label, scaleFactor) {
+    var svgContainer = document.getElementById(label);
+    svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
+    svgContainer.setAttribute("height", (scaleFactor*Stimuli.containerHeight).toString() + "px");
+    svgContainer.setAttribute("viewBox", "0 0 " +
+                              Stimuli.containerWidth.toString() +
+                              " " + Stimuli.containerHeight.toString());
+  },
   
   lighten: function(origColor) {
     var eps = 0.3;
@@ -18,6 +73,10 @@ var Stimuli = {
     return newColor.hex;
   },
   
+  stroke: function(object) {
+    object.attr("stroke", Stimuli.strokeColor);
+    object.attr("stroke-width", Stimuli.strokeWidth);
+  },
   
   darken: function(origColor) {
     var eps = 0.3;
@@ -88,7 +147,7 @@ var Stimuli = {
       trunkPath += " z";
       var trunk = paper.path(trunkPath);
       trunk.attr("fill", trunkGradient);
-      trunk.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+      Stimuli.stroke(trunk);
       return trunkColor;
     }
 
@@ -173,8 +232,7 @@ var Stimuli = {
       for (var i=0; i<branchPathStrings.length; i++) {
         var pathString = branchPathStrings[i];
         var myPath = paper.path(pathString);
-        myPath.attr("stroke", Stimuli.strokeColor);
-        myPath.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth); 
+        Stimuli.stroke(myPath); 
       }
     }
 
@@ -220,13 +278,11 @@ var Stimuli = {
         }
         var leaf = paper.path(leafPath);
         leaf.attr("fill", leafColor);
-        leaf.attr("stroke", Stimuli.strokeColor);
-        leaf.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+        Stimuli.stroke(leaf);
         leaf.rotate(angle, xpos, ypos);
 
         var stem = paper.path(stemPath);
-        stem.attr("stroke", Stimuli.strokeColor);
-        stem.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+        Stimuli.stroke(stem);
         stem.rotate(angle, xpos, ypos);
         //stem.transorm("r" + angle.toString + "," + xpos.toString() + "," +
         //              ypos.toString());
@@ -262,8 +318,7 @@ var Stimuli = {
           function drawBerry(p) {
             var berry = paper.circle(p[0], p[1], berryRadius);
             berry.attr("fill", berryColor);
-            berry.attr("stroke", Stimuli.strokeColor);
-            berry.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);   
+            Stimuli.stroke(berry);  
           }
           var branch = pos[3];
           var index = locs[branch];
@@ -287,8 +342,7 @@ var Stimuli = {
             var stem = paper.path("M" + stemXPos + " " + stemYPos +
                                   "c 0.3 -7 6 -7 11 -8, -2 4 -4 8 1 13");
           }
-          stem.attr("stroke", Stimuli.strokeColor);
-          stem.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth); 
+          Stimuli.stroke(stem);
           drawBerry(rightBerryPos);
           drawBerry(leftBerryPos);
         }
@@ -394,7 +448,7 @@ var Stimuli = {
           }
           var legPiece = paper.circle(x, y, legPieceRadius);
           legPiece.attr("fill", "#666666");
-          legPiece.attr("stroke-Stimuli.containerWidth", "0");
+          legPiece.attr("stroke-width", "0");
           legPiece.attr("stroke", "#666666");
         }
       }
@@ -411,7 +465,7 @@ var Stimuli = {
                                    leftAntennaYPos.toString() +
                                    "c -23,-7 -22,12 -42,9");
       leftAntennaStroke.attr("stroke-width", 8);
-      leftAntennaStroke.attr("stroke", "#000000");
+      leftAntennaStroke.attr("stroke", Stimuli.strokeColor);
       var leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
                                    leftAntennaYPos.toString() +
                                    "c -23,-7 -22,12 -41,9");
@@ -421,7 +475,7 @@ var Stimuli = {
                                     rightAntennaYPos.toString() + " c -6,2" +
                                     " -12,2 -17,0 -10,-5 -13,-10 -25,-9");
       rightAntennaStroke.attr("stroke-width", 8);
-      rightAntennaStroke.attr("stroke", "#000000");
+      rightAntennaStroke.attr("stroke", Stimuli.strokeColor);
       var rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
                                     rightAntennaYPos.toString() + " c -6,2" +
                                     " -12,2 -17,0 -10,-5 -13,-10 -24,-9");
@@ -439,29 +493,25 @@ var Stimuli = {
                                     "c -16,9 -28,42 -33,58 -9,37 3,63 45,8 " +
                                     "14,-18 11,-41 11,-61 z");
         frontLeftWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
-        frontLeftWing.attr("stroke", Stimuli.strokeColor);
-        frontLeftWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+        Stimuli.stroke(frontLeftWing);
         var frontRightWing = paper.path("M " + paperCenter[0].toString() + "," + 
                                     (paperCenter[1]-(bodyYRadius/2)).toString() +
                                     "c -16,-9 -28,-42 -33,-58 -9,-37 3,-63 45,-8 " +
                                     "14,18 11,41 11,61 z");
         frontRightWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
-        frontRightWing.attr("stroke", Stimuli.strokeColor);
-        frontRightWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+        Stimuli.stroke(frontRightWing);
         var backLeftWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
                                     (paperCenter[1]+(bodyYRadius/2)).toString() +
                                     "c 11,8 20,34 23,47 6,30 -2,50 -31,6 -10,-15" +
                                     " -8,-33 -8,-49 z");
         backLeftWing.attr("fill", Stimuli.makeGradient("180-",wingsColor));
-        backLeftWing.attr("stroke", Stimuli.strokeColor);
-        backLeftWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+        Stimuli.stroke(backLeftWing);
         var backRightWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
                                     (paperCenter[1]-(bodyYRadius/2)).toString() +
                                     "c 11,-8 20,-34 23,-47 6,-30 -2,-50 -31,-6 -10,15" +
                                     " -8,33 -8,49 z");
         backRightWing.attr("fill", Stimuli.makeGradient("180-",wingsColor));
-        backRightWing.attr("stroke", Stimuli.strokeColor);
-        backRightWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+        Stimuli.stroke(backRightWing);
       }
       return wingsColor;
     }
@@ -471,8 +521,7 @@ var Stimuli = {
       var bodyColor = Stimuli.myColor(baseBodyColor);
       var body = paper.ellipse(paperCenter[0], paperCenter[1], bodyXRadius, bodyYRadius);
       body.attr("fill", Stimuli.makeGradient("r",bodyColor));
-      body.attr("stroke", Stimuli.strokeColor);
-      body.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+      Stimuli.stroke(body);
     }
     
     function drawHead(paper, bodyXRadius, headXRadius, headYRadius) {
@@ -482,8 +531,7 @@ var Stimuli = {
       var head = paper.ellipse(headXPos, headYPos,
                            headXRadius, headYRadius);
       head.attr("fill", "r#777777-#555555");
-      head.attr("stroke", Stimuli.strokeColor);
-      head.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
+      Stimuli.stroke(head);
       drawEyes(paper, bodyXRadius, headYRadius);
     }
     
@@ -541,12 +589,12 @@ var Stimuli = {
       var headStretch = ErinTools.uniformAroundMean(baseHeadStretch, 0.1) * 2 + .7;
       var head = paper.ellipse(headCenter[0], headCenter[1], 25*headStretch, 25);
       head.attr("fill", gradColor);
-      head.attr("stroke-width", Stimuli.strokeWidth);
+      Stimuli.stroke(head);
       if (crest) {
         var crest = paper.path("M "+headCenter[0].toString()+","+(headCenter[1]-16).toString()+" c -3,-13 -3,-27 -2,-41 0,-5 0,-10 2,-15 2,1 2,6 2,9 1,14 2,29 2,44 1,-14 1,-29 5,-43 0,-2 3,-7 4,-2 1,10 0,20 -1,30 -1,5 -1,10 -2,14 3,-11 5,-23 8,-33 1,-3 2,-2 2,1 0,12 -2,24 -4,36 0,1 1,-3 1,-5 2,-9 4,-18 7,-27 3,-4 2,4 2,6 -1,10 -4,20 -7,30 2,-9 5,-18 9,-26 1,-3 4,-2 3,1 -1,10 -5,19 -9,28 -1,2 -1,2 0,0 2,-5 5,-11 9,-15 3,-1 0,5 0,7 -2,5 -5,10 -8,15 3,-4 6,-8 10,-10 3,1 -1,6 -2,7 -1,2 -5,6 -5,6 4,0 8,-2 12,-1 0,3 -5,4 -7,5 -2,1 -6,3 -7,2 4,1 9,2 12,5 -1,3 -6,1 -8,1 -2,0 -5,-1 -5,-2 3,2 7,3 9,7 -2,2 -7,0 -10,0 -2,-1 -5,-1 -2,-3 3,-4 4,-9 4,-14 -1,-7 -5,-14 -11,-18 -4,-3 -9,-1 -12,2 -2,1 -3,6 -4,5 -5,-10 -8,-21 -8,-32 -1,-3 2,-6 4,-2 4,8 5,17 7,26 0,1 0,3 1,4 z");
         crest.attr("fill", color);
         crest.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
-        crest.attr("stroke-width", Stimuli.strokeWidth);
+        Stimuli.stroke(crest);
       }
       var leftEyePatch = paper.path("M "+(headCenter[0]-20).toString() +","+(headCenter[1]+5).toString() +" c 2,1 12,0 12,0 4,0 1,-8 -2,-12 -9,-10 -15,8 -11,12 z");
       leftEyePatch.attr("fill", "#000000");
@@ -560,8 +608,7 @@ var Stimuli = {
       rightEyeDot.attr("fill","#ffffff");
       var beak = paper.path("M "+(headCenter[0]-(6*headStretch)).toString()+","+(headCenter[1]+5).toString()+" c 0.0805,5.09883 -0.02228,10.30964 4,13 5.55789,-1.10878 6.47702,-6.85631 9,-11 -2.24042,-1.18583 -4.85841,-1.61651 -6.5,-4 -3.148068,2.13877 -4.594123,1.72452 -6.5,2 z");
       beak.attr("fill", "#ffff00");
-      beak.attr("stroke-width", Stimuli.strokeWidth);
-      beak.attr("stroke", Stimuli.strokeColor);
+      Stimuli.stroke(beak);
       return headStretch;
     }
     function drawBody(paper, color, tail, gradColor) {
@@ -569,42 +616,36 @@ var Stimuli = {
       if (tail) {
         var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c  93.041702,66.6439 62.708612,55.1315 0.566359,6.6972 24.219543,16.1729 127.541683,98.4836 -2.315079,6.5466 70.203552,48.3289 71.370392,57.77 -4.801623,3.2366 31.342565,20.6587 80.305665,60.7674 -7.288272,-0.073 60.818577,41.2828 21.46453,21.8232 -8.136197,-2.2717 z");
         tail.attr("fill", color);
-        tail.attr("stroke-width", Stimuli.strokeWidth);
-        tail.attr("stroke", Stimuli.strokeColor);
+        Stimuli.stroke(tail);
       }
       var feetPositions = [[paperCenter[0]-6, paperCenter[1]+(47*bodyStretch)],
                            [paperCenter[0]+9, paperCenter[1]+(52*bodyStretch)]];
       function drawFeet(footPos) {
         var foot = paper.path("M "+footPos[0].toString()+","+footPos[1].toString()+" c   -4.399089,0.11316 -7.038982,4.87269 -10.212137,8.224 4.826226,-2.61036 8.926115,-5.61798 10.461214,-3.94752 -1.485313,6.67276 -0.358531,8.74561 0,12.17151 l 3.487071,-12.17151 c 5.224559,2.71563 6.202493,7.26752 9.215831,10.52671 -1.077715,-3.29906 -2.116802,-8.64624 -4.711083,-10.91146 0.779699,-1.28702 4.098125,-1.19294 4.581633,-1.11636 -0.273048,-0.92977 -5.365348,-1.37347 -6.844693,-1.78849 z");
         foot.attr("fill", "#999999");
-        foot.attr("stroke-width", Stimuli.strokeWidth);
-        foot.attr("stroke", Stimuli.strokeColor);
+        Stimuli.stroke(foot);
       }
       feetPositions.map(drawFeet);
       
       var leftLeg = paper.path("M "+(paperCenter[0]-14).toString()+","+(paperCenter[1]+20).toString()+" c   0,2.96064 7.472295,25.98784 7.472295,25.98784 l 5.977836,1.31584 c 2.371438,-4.19555 4.387931,-8.67243 3.487072,-15.46112 z");
       leftLeg.attr("fill", color);
-      leftLeg.attr("stroke-width", Stimuli.strokeWidth);
-      leftLeg.attr("stroke", Stimuli.strokeColor);
+      Stimuli.stroke(leftLeg);
       leftLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
       
       var rightLeg = paper.path("M "+(paperCenter[0]).toString()+","+(paperCenter[1]+25).toString()+" c 0,2.96064 7.472295,25.98785 7.472295,25.98785 l 5.977836,1.31584 c 2.371438,-4.19569 4.387931,-8.67258 3.487071,-15.46113 z");
       rightLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
       rightLeg.attr("fill", color);
-      rightLeg.attr("stroke-width", Stimuli.strokeWidth);
-      rightLeg.attr("stroke", Stimuli.strokeColor);
+      Stimuli.stroke(rightLeg);
       
       var body = paper.path("m "+(paperCenter[0]+30).toString()+","+(paperCenter[1]+5).toString()+" c 2,8 6,15 6,24 0,4 -3,8 -7,9 -7,2 -15,0 -22,-2 -9,-2 -17,-7 -23,-14 -4,-6 -8,-12 -10,-19 -2,-7 1,-14 6,-18 7,-6 16,-8 25,-7 8,1 15,7 18,14 3,5 5,10 6,15 z");
       body.attr("fill", color);
       //body.attr("fill", color);
       //body.attr("fill", Stimuli.makeGradient("0-",color));
-      body.attr("stroke-width", Stimuli.strokeWidth);
-      body.attr("stroke", Stimuli.strokeColor);
+      Stimuli.stroke(body);
       body.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
       var wing = paper.path("m "+(paperCenter[0]).toString()+","+(paperCenter[1]-15).toString()+" c -4,13 -7,28 -3,42 22,24 45,48 67,72 -8,-23 -11,-48 -18,-72 -4,-14 -8,-28 -17,-40 -4,-6 -12,-10 -20,-7 -3,1 -6,3 -9,5 z");
       wing.attr("fill", color);
-      wing.attr("stroke-width", Stimuli.strokeWidth);
-      wing.attr("stroke", Stimuli.strokeColor);
+      Stimuli.stroke(wing);
       wing.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
     }
     function draw(label, crest, tail, scaleFactor) {
@@ -628,23 +669,101 @@ var Stimuli = {
   },
   
   Microbe: function() {
+    var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
     var baseColor = Stimuli.colorScheme.get();
     var baseAccentColor = Stimuli.colorScheme.get();
     this.baseColor = baseColor;
     this.baseAccentColor = baseAccentColor;
+    this.baseXRad = baseXRad;
+    var baseXRad = Math.random();
+    this.baseYRad = baseYRad;
+    var baseYRad = Math.random();
     this.draw = draw;
     function draw(label, spikes, bumps, scaleFactor) {
+      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var color = Stimuli.myColor(baseColor);
       var accentColor = Stimuli.myColor(baseAccentColor);
-      var svgContainer = document.getElementById(label);
-      svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
-      svgContainer.setAttribute("height", (scaleFactor*Stimuli.containerHeight).toString() + "px");
-      svgContainer.setAttribute("viewBox", "0 0 " +
-                                Stimuli.containerWidth.toString() +
-                                " " + Stimuli.containerHeight.toString());
+      var xRadius = ErinTools.uniformAroundMean(baseXRad, 0.1);
+      var yRadius = ErinTools.uniformAroundMean(baseYRad, 0.1);
+      var xRad = getRadius(xRadius);
+      var yRad = getRadius(yRadius);
+      function getRadius(r) {
+        var minRad = 50;
+        var maxRad = 75;
+        return (r*(maxRad-minRad))+minRad;
+      }
+      function drawMicrobe() {
+        var microbe = paper.ellipse(paperCenter[0], paperCenter[1],
+                                    xRad, yRad);
+        microbe.attr("fill", Stimuli.makeGradient("r",color));
+        Stimuli.stroke(microbe);
+        var c1 = Stimuli.lighten(accentColor);
+        var c2 = Stimuli.darken(accentColor);
+        function drawBlob(pos) {
+          var xPos = pos[0];
+          var yPos = pos[1];
+          var path = pos[2];
+          var innerBlob = pos[3];
+          var blob = paper.path("M "+xPos+","+yPos+path);
+          blob.attr("fill", c1);
+          blob.attr("stroke", c1);
+          if (innerBlob) {
+            var innerBlob = paper.path("M "+xPos+","+yPos+path);
+            innerBlob.transform("s0.7");
+            innerBlob.attr("fill", c2);
+            innerBlob.attr("stroke", c2);
+          }
+        }
+        var blobs = [ [(paperCenter[0]-(xRad*0.5)).toString(),
+                     (paperCenter[1]-(yRad*0.6)).toString(),
+                     " c -16.35345,2.36071 -13.80528,9.48045 -9.87547,13.67374 17.36804,15.37965 16.34772,7.7738 18.23164,3.79826 3.81829,-15.55565 19.52862,-20.65425 -8.35617,-17.472 z",
+                   true],
+                    [(paperCenter[0]+(xRad*0.35)).toString(),
+                     (paperCenter[1]+(yRad*0.1)).toString(),
+                     " c -8.4037,4.30166 -15.63981,11.53231 -12.15445,15.57287 17.36807,15.37964 18.43678,3.59571 20.3207,-0.37982 0.92151,-3.75422 12.60105,-6.32959 14.12788,-8.89624 4.79965,-8.06835 -1.13906,-8.71107 -22.29413,-6.29681 z",
+                     true],
+                    [(paperCenter[0]+(xRad*0.3)).toString(),
+                     (paperCenter[1]-(yRad*0.4)).toString(),
+                     " c -14.84341,3.35478 -4.31549,8.33402 2.88477,7.75081 9.08515,2.49067 13.57482,-19.81467 -2.88477,-7.75081 z",
+                     false] ];
+        blobs.map(drawBlob);
+        var spots = [ [0, -6, 1, "light"],
+                      [4, 0, 2, "light"],
+                      [7, 5, 1, "light"],
+                      [3, 9, 1, "light"],
+                      [2, 5, 1, "dark"],
+                      [-4, -4, 1, "dark"],
+                      [-4, 4, 2, "dark"],
+                      [-8, -2, 1, "dark"] ];
+        var spotsCenter = [paperCenter[0]-(xRad*0.3), paperCenter[1]+(yRad*0.4)];
+        function drawSpots(pos) {
+          var xPos = (spotsCenter[0] + (pos[0]*xRad/30)).toString();
+          var yPos = (spotsCenter[1] + (pos[1]*yRad/35)).toString();
+          var size = pos[2];
+          if (pos[3] == "light") {
+            var c = c1;
+          } else {
+            var c = c2;
+          }
+          var spot = paper.circle(xPos, yPos, size);
+          spot.attr("fill", c);
+          spot.attr("stroke", c);
+        }
+        spots.map(drawSpots);
+      }
+      function drawSpikes() {
+      }
+      function drawBumps() {
+      }
+      drawMicrobe();
+      if (spikes) {drawSpikes};
+      if (bumps) {drawBumps};
+      Stimuli.viewBox(label, scaleFactor);
       return {
         color: color,
         accentColor: accentColor,
+        xRadius: xRadius, //a number from 0 to 1
+        yRadius: yRadius, //0 means min, 1 means max
         label: label,
         spikes: spikes,
         bumps: bumps

@@ -61,12 +61,17 @@
   <svg id="w"></svg>
   <svg id="x"></svg>
 </td>
+<td>
+  <svg id="ae"></svg>
+  <svg id="af"></svg><br/>
+  <svg id="ag"></svg>
+  <svg id="ah"></svg>
+</td>
 </tr>
 </table>
 
 <!-- Scripts -->
 <script src="./stimuli_files/raphael.js" type="text/javascript"></script>
-<script src="./stimuli_files/erintools.js" type="text/javascript"></script>
 <script src="./stimuli_files/stimuli.js" type="text/javascript"></script>
 
 <script>
@@ -112,6 +117,12 @@ birdWug.draw("u", false, true, scale);
 birdWug.draw("v", false, false, scale);
 birdWug.draw("w", true, true, scale);
 birdWug.draw("x", true, false, scale);
+//
+var microbeWug = new Stimuli.Microbe();
+microbeWug.draw("ae", false, true, scale);
+microbeWug.draw("af", false, false, scale);
+microbeWug.draw("ag", true, true, scale);
+microbeWug.draw("ah", true, false, scale);
 </script>
 
 
