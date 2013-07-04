@@ -1,76 +1,38 @@
-function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
-
-function ErinColorRandomizer(nSteps) {
-  if (nSteps==null) {var nSteps=10}
-  this.get = get;
-  
-  hues = function(n) {
-    var h = [];
-    for (i=0;i<n-1;i++) {
-      var offset = Math.random() * .99 / n;
-      h.push((i/n)+offset);
-    }
-    return shuffle(h);
-  }
-  
-  var myHues = hues(nSteps);
-  
-  function get(something, saturation, value) {
-    if (myHues.length < 1) {
-      myHues = hues(nSteps);
-    }
-    var h = myHues.shift();
-    var s = erinRnd(.99, .1);
-    var v = erinRnd(.99, .1);
-    return Raphael.hsb2rgb(h, s, v).hex;
-  }
-}
-
-
-function erinRnd(mean, range) {
-  if (mean + range < 1) {
-    var upper = mean + range;
-  } else {
-    var upper = 1;
-  }
-  if (mean - range > .1) {
-    var lower = mean - range;
-  } else {
-    var lower = .1;
-  }
-  var interval = upper - lower;
-  return Math.random() * interval + lower;
-}
-
 var Stimuli = {
   strokeColor: "#000000",
   strokeWidth: 2,
-  colorScheme: new ErinColorRandomizer(),
+  containerWidth: 250,
+  containerHeight: 270,
+  colorScheme: new ErinTools.ColorRandomizer(),
+  
+  
+  lighten: function(origColor) {
+    var eps = 0.3;
+    var c = Raphael.color(origColor);
+    if (c.v + eps < 1) {
+      var value = c.v + eps;
+    } else {
+      var value = 1;
+    }
+    var newColor = Raphael.hsb2rgb(c.h, c.s, value);
+    return newColor.hex;
+  },
+  
+  
+  darken: function(origColor) {
+    var eps = 0.3;
+    var c = Raphael.color(origColor);
+    if (c.v - eps < 1) {
+      var value = c.v - eps;
+    } else {
+      var value = 1;
+    }
+    var newColor = Raphael.hsb2rgb(c.h, c.s, value);
+    return newColor.hex;
+  },
 
   makeGradient: function(intro, origColor) {
-    function lighten(origColor) {
-      var eps = 0.3;
-      var c = Raphael.color(origColor);
-      if (c.v + eps < 1) {
-        var value = c.v + eps;
-      } else {
-        var value = 1;
-      }
-      var newColor = Raphael.hsb2rgb(c.h, c.s, value);
-      return newColor.hex;
-    }
-    function darken(origColor) {
-      var eps = 0.3;
-      var c = Raphael.color(origColor);
-      if (c.v - eps < 1) {
-        var value = c.v - eps;
-      } else {
-        var value = 1;
-      }
-      var newColor = Raphael.hsb2rgb(c.h, c.s, value);
-      return newColor.hex;
-    }
-    return intro + lighten(origColor) + "-" + darken(origColor);
+    return intro + Stimuli.lighten(origColor) + "-" + Stimuli.darken(origColor);
   },
 
   myColor: function(meanColor, hVar, sVar, vVar) {
@@ -78,16 +40,14 @@ var Stimuli = {
     if (sVar == null) {var sVar = 0.1};
     if (vVar == null) {var vVar = 0.1};
     var c = Raphael.color(meanColor);
-    var hue = erinRnd(c.h, hVar);
-    var saturation = erinRnd(c.s, sVar);
-    var value = erinRnd(c.v, vVar);
+    var hue = ErinTools.uniformAroundMean(c.h, hVar);
+    var saturation = ErinTools.uniformAroundMean(c.s, sVar);
+    var value = ErinTools.uniformAroundMean(c.v, vVar);
     var newColor = Raphael.hsb2rgb(hue, saturation, value);
     return newColor.hex;
   },
 
   Tree: function() {
-    var containerWidth = 250;
-    var containerHeight = 270;
     this.draw = draw;
     var baseBerryColor = Stimuli.colorScheme.get(true, .5, .99);
     var baseTrunkColor = Stimuli.colorScheme.get(true, .5, .8);
@@ -113,7 +73,7 @@ var Stimuli = {
     var origTrunkY = [1, 10, 20, 30, 44, 59, 73, 79, 85, 90, 85, 93, 97,
                       100, 107, 109, 103, 97, 92, 90, 95, 98, 99, 106,
                       101, 92, 84, 75, 70, 75, 74, 56, 36, 18, 11, 5, 1,
-                      1, 1, 1].map(function(y) {return containerHeight - y;});
+                      1, 1, 1].map(function(y) {return Stimuli.containerHeight - y;});
     var xCenter = (origTrunkX[locs["bottom left"]] +
                    origTrunkX[locs["bottom right"]])/2;
 
@@ -128,7 +88,7 @@ var Stimuli = {
       trunkPath += " z";
       var trunk = paper.path(trunkPath);
       trunk.attr("fill", trunkGradient);
-      trunk.attr("stroke-containerWidth", Stimuli.strokeWidth);
+      trunk.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
       return trunkColor;
     }
 
@@ -214,7 +174,7 @@ var Stimuli = {
         var pathString = branchPathStrings[i];
         var myPath = paper.path(pathString);
         myPath.attr("stroke", Stimuli.strokeColor);
-        myPath.attr("stroke-containerWidth", Stimuli.strokeWidth); 
+        myPath.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth); 
       }
     }
 
@@ -223,7 +183,7 @@ var Stimuli = {
       /*xposition and yposition of where stem attaches to tree, direction leaves
       curve toward: either clockwise or counterclockwise, and then what branch the
       berry is on, and then the angle of rotation.*/
-      var leafYs = [152, 148, 154, 158, 152, 116, 106, 96, 98, 75, 65, 82, 65].map(function(x) {return containerHeight - x;});
+      var leafYs = [152, 148, 154, 158, 152, 116, 106, 96, 98, 75, 65, 82, 65].map(function(x) {return Stimuli.containerHeight - x;});
       var leafPositions = [ [75, leafYs[0], "clock", "upper left", -20],
                             [95, leafYs[1], "clock", "upper left", 0],
                             [128, leafYs[2], "counter", "upper left", 0],
@@ -261,12 +221,12 @@ var Stimuli = {
         var leaf = paper.path(leafPath);
         leaf.attr("fill", leafColor);
         leaf.attr("stroke", Stimuli.strokeColor);
-        leaf.attr("stroke-containerWidth", Stimuli.strokeWidth);
+        leaf.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
         leaf.rotate(angle, xpos, ypos);
 
         var stem = paper.path(stemPath);
         stem.attr("stroke", Stimuli.strokeColor);
-        stem.attr("stroke-containerWidth", Stimuli.strokeWidth);
+        stem.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
         stem.rotate(angle, xpos, ypos);
         //stem.transorm("r" + angle.toString + "," + xpos.toString() + "," +
         //              ypos.toString());
@@ -280,7 +240,7 @@ var Stimuli = {
       /*xposition and yposition of upper left-hand corner, direction berries "fall":
       either out to the left or out to the right, and then what branch the berry
       is on.*/
-      var berriesYs = [140, 153, 166, 136, 149, 119, 101, 83, 83, 55, 57].map(function(x) {return containerHeight - x;});
+      var berriesYs = [140, 153, 166, 136, 149, 119, 101, 83, 83, 55, 57].map(function(x) {return Stimuli.containerHeight - x;});
       var berryPositions = [ [51, berriesYs[0], "left", "upper left"],
                              [83, berriesYs[1], "left", "upper left"],
                              [115, berriesYs[2], "right", "upper left"],
@@ -303,7 +263,7 @@ var Stimuli = {
             var berry = paper.circle(p[0], p[1], berryRadius);
             berry.attr("fill", berryColor);
             berry.attr("stroke", Stimuli.strokeColor);
-            berry.attr("stroke-containerWidth", Stimuli.strokeWidth);   
+            berry.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);   
           }
           var branch = pos[3];
           var index = locs[branch];
@@ -328,7 +288,7 @@ var Stimuli = {
                                   "c 0.3 -7 6 -7 11 -8, -2 4 -4 8 1 13");
           }
           stem.attr("stroke", Stimuli.strokeColor);
-          stem.attr("stroke-containerWidth", Stimuli.strokeWidth); 
+          stem.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth); 
           drawBerry(rightBerryPos);
           drawBerry(leftBerryPos);
         }
@@ -340,8 +300,8 @@ var Stimuli = {
 
     //-------DRAW TREE------//
     function draw(label, berries, leaves, scaleFactor) {
-      var w = erinRnd(baseWidth, 0.1);
-      var h = erinRnd(baseHeight, 0.1);
+      var w = ErinTools.uniformAroundMean(baseWidth, 0.1);
+      var h = ErinTools.uniformAroundMean(baseHeight, 0.1);
       var widthFactor = w * 1.5 + 0.7;
       var heightFactor = h + 0.7;
       function randWidth(x) {
@@ -354,7 +314,7 @@ var Stimuli = {
       var trunkX = origTrunkX.map(randWidth);
       var trunkY = origTrunkY.map(randHeight);
 
-      var paper = Raphael(label, containerWidth, containerHeight); //apparently can't put var here
+      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight); //apparently can't put var here
       var trunkColor = drawTrunk(paper, trunkX, trunkY);
       drawBranches(paper, trunkX, trunkY);
       if (leaves) {
@@ -368,9 +328,9 @@ var Stimuli = {
         var berryColor = null;
       };
       var svgContainer = document.getElementById(label);
-      svgContainer.setAttribute("width", (scaleFactor*containerWidth).toString() + "px");
-      svgContainer.setAttribute("height", (scaleFactor*containerHeight).toString() + "px");
-      svgContainer.setAttribute("viewBox", "0 0 " + containerWidth.toString() + " " + containerHeight.toString());
+      svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
+      svgContainer.setAttribute("height", (scaleFactor*Stimuli.containerHeight).toString() + "px");
+      svgContainer.setAttribute("viewBox", "0 0 " + Stimuli.containerWidth.toString() + " " + Stimuli.containerHeight.toString());
       return {
         berryColor: berryColor,
         leafColor: leafColor,
@@ -385,9 +345,7 @@ var Stimuli = {
   },
 
   Bug: function() {
-    var containerWidth = 250;
-    var containerHeight = 270;
-    var paperCenter = [(containerWidth/2), (containerHeight/2)];
+    var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
     this.draw = draw;
     var baseBodyColor = Stimuli.colorScheme.get(true, .5, .99);
     var baseWingsColor = Stimuli.colorScheme.get(true, .5, .99);
@@ -436,7 +394,7 @@ var Stimuli = {
           }
           var legPiece = paper.circle(x, y, legPieceRadius);
           legPiece.attr("fill", "#666666");
-          legPiece.attr("stroke-containerWidth", "0");
+          legPiece.attr("stroke-Stimuli.containerWidth", "0");
           legPiece.attr("stroke", "#666666");
         }
       }
@@ -482,28 +440,28 @@ var Stimuli = {
                                     "14,-18 11,-41 11,-61 z");
         frontLeftWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
         frontLeftWing.attr("stroke", Stimuli.strokeColor);
-        frontLeftWing.attr("stroke-containerWidth", Stimuli.strokeWidth);
+        frontLeftWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
         var frontRightWing = paper.path("M " + paperCenter[0].toString() + "," + 
                                     (paperCenter[1]-(bodyYRadius/2)).toString() +
                                     "c -16,-9 -28,-42 -33,-58 -9,-37 3,-63 45,-8 " +
                                     "14,18 11,41 11,61 z");
         frontRightWing.attr("fill", Stimuli.makeGradient("0-",wingsColor));
         frontRightWing.attr("stroke", Stimuli.strokeColor);
-        frontRightWing.attr("stroke-containerWidth", Stimuli.strokeWidth);
+        frontRightWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
         var backLeftWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
                                     (paperCenter[1]+(bodyYRadius/2)).toString() +
                                     "c 11,8 20,34 23,47 6,30 -2,50 -31,6 -10,-15" +
                                     " -8,-33 -8,-49 z");
         backLeftWing.attr("fill", Stimuli.makeGradient("180-",wingsColor));
         backLeftWing.attr("stroke", Stimuli.strokeColor);
-        backLeftWing.attr("stroke-containerWidth", Stimuli.strokeWidth);
+        backLeftWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
         var backRightWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
                                     (paperCenter[1]-(bodyYRadius/2)).toString() +
                                     "c 11,-8 20,-34 23,-47 6,-30 -2,-50 -31,-6 -10,15" +
                                     " -8,33 -8,49 z");
         backRightWing.attr("fill", Stimuli.makeGradient("180-",wingsColor));
         backRightWing.attr("stroke", Stimuli.strokeColor);
-        backRightWing.attr("stroke-containerWidth", Stimuli.strokeWidth);
+        backRightWing.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
       }
       return wingsColor;
     }
@@ -514,7 +472,7 @@ var Stimuli = {
       var body = paper.ellipse(paperCenter[0], paperCenter[1], bodyXRadius, bodyYRadius);
       body.attr("fill", Stimuli.makeGradient("r",bodyColor));
       body.attr("stroke", Stimuli.strokeColor);
-      body.attr("stroke-containerWidth", Stimuli.strokeWidth);
+      body.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
     }
     
     function drawHead(paper, bodyXRadius, headXRadius, headYRadius) {
@@ -525,18 +483,18 @@ var Stimuli = {
                            headXRadius, headYRadius);
       head.attr("fill", "r#777777-#555555");
       head.attr("stroke", Stimuli.strokeColor);
-      head.attr("stroke-containerWidth", Stimuli.strokeWidth);
+      head.attr("stroke-Stimuli.containerWidth", Stimuli.strokeWidth);
       drawEyes(paper, bodyXRadius, headYRadius);
     }
     
     function draw(label, wings, antennae, scaleFactor) {
-      var bodyFatness = erinRnd(baseBodyFatness, 0.15);
-      var headFatness = erinRnd(baseHeadFatness, 0.15);
+      var bodyFatness = ErinTools.uniformAroundMean(baseBodyFatness, 0.15);
+      var headFatness = ErinTools.uniformAroundMean(baseHeadFatness, 0.15);
       var headYRadius = (headFatness)*30 + 20;
       var headXRadius = 25;
       var bodyYRadius = (bodyFatness)*30 + 20;
       var bodyXRadius = 50;
-      var paper = Raphael(label, containerWidth, containerHeight);
+      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       drawLegs(paper, bodyYRadius);
       if (antennae) {
         var antennaeColor = drawAntennae(paper, bodyXRadius, headXRadius, headYRadius);
@@ -553,9 +511,9 @@ var Stimuli = {
                     });
       //resize
       var svgContainer = document.getElementById(label);
-      svgContainer.setAttribute("width", (scaleFactor*containerWidth).toString() + "px");
-      svgContainer.setAttribute("height", (scaleFactor*containerHeight).toString() + "px");
-      svgContainer.setAttribute("viewBox", "0 0 " + containerWidth.toString() + " " + containerHeight.toString());
+      svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
+      svgContainer.setAttribute("height", (scaleFactor*Stimuli.containerHeight).toString() + "px");
+      svgContainer.setAttribute("viewBox", "0 0 " + Stimuli.containerWidth.toString() + " " + Stimuli.containerHeight.toString());
       return {
         bodyColor: bodyColor,
         wingsColor: wingsColor,
@@ -570,9 +528,7 @@ var Stimuli = {
   },
   
   Bird: function() {
-    var containerWidth = 250;
-    var containerHeight = 270;
-    var paperCenter = [(containerWidth/2), ((containerHeight/2)-25)];
+    var paperCenter = [(Stimuli.containerWidth/2), ((Stimuli.containerHeight/2)-25)];
     var baseColor = Stimuli.colorScheme.get();
     var baseHeadStretch = Math.random();
     var baseBodyStretch = Math.random();
@@ -582,7 +538,7 @@ var Stimuli = {
     this.draw = draw;
     function drawHead(paper, color, crest, gradColor) {
       var headCenter = [paperCenter[0], paperCenter[1]-35];
-      var headStretch = erinRnd(baseHeadStretch, 0.1) * 2 + .7;
+      var headStretch = ErinTools.uniformAroundMean(baseHeadStretch, 0.1) * 2 + .7;
       var head = paper.ellipse(headCenter[0], headCenter[1], 25*headStretch, 25);
       head.attr("fill", gradColor);
       head.attr("stroke-width", Stimuli.strokeWidth);
@@ -609,7 +565,7 @@ var Stimuli = {
       return headStretch;
     }
     function drawBody(paper, color, tail, gradColor) {
-      var bodyStretch = erinRnd(baseBodyStretch, 0.1) * 1 + 0.5;
+      var bodyStretch = ErinTools.uniformAroundMean(baseBodyStretch, 0.1) * 1 + 0.5;
       if (tail) {
         var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c  93.041702,66.6439 62.708612,55.1315 0.566359,6.6972 24.219543,16.1729 127.541683,98.4836 -2.315079,6.5466 70.203552,48.3289 71.370392,57.77 -4.801623,3.2366 31.342565,20.6587 80.305665,60.7674 -7.288272,-0.073 60.818577,41.2828 21.46453,21.8232 -8.136197,-2.2717 z");
         tail.attr("fill", color);
@@ -652,16 +608,15 @@ var Stimuli = {
       wing.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
     }
     function draw(label, crest, tail, scaleFactor) {
-      var paper = Raphael(label, containerWidth, containerHeight);
+      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var color = Stimuli.myColor(baseColor);
       var gradColor = Stimuli.makeGradient("r",color);
       drawBody(paper, color, tail, gradColor);
       var headStretch = drawHead(paper, color, crest, gradColor);
-      //if (tail) {drawTail();}
       var svgContainer = document.getElementById(label);
-      svgContainer.setAttribute("width", (scaleFactor*containerWidth).toString() + "px");
-      svgContainer.setAttribute("height", (scaleFactor*containerHeight).toString() + "px");
-      svgContainer.setAttribute("viewBox", "0 0 " + containerWidth.toString() + " " + containerHeight.toString());
+      svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
+      svgContainer.setAttribute("height", (scaleFactor*Stimuli.containerHeight).toString() + "px");
+      svgContainer.setAttribute("viewBox", "0 0 " + Stimuli.containerWidth.toString() + " " + Stimuli.containerHeight.toString());
       return {
         color: color,
         headStretch: headStretch,
@@ -670,11 +625,36 @@ var Stimuli = {
         tail: tail
       };
     }
+  },
+  
+  Microbe: function() {
+    var baseColor = Stimuli.colorScheme.get();
+    var baseAccentColor = Stimuli.colorScheme.get();
+    this.baseColor = baseColor;
+    this.baseAccentColor = baseAccentColor;
+    this.draw = draw;
+    function draw(label, spikes, bumps, scaleFactor) {
+      var color = Stimuli.myColor(baseColor);
+      var accentColor = Stimuli.myColor(baseAccentColor);
+      var svgContainer = document.getElementById(label);
+      svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
+      svgContainer.setAttribute("height", (scaleFactor*Stimuli.containerHeight).toString() + "px");
+      svgContainer.setAttribute("viewBox", "0 0 " +
+                                Stimuli.containerWidth.toString() +
+                                " " + Stimuli.containerHeight.toString());
+      return {
+        color: color,
+        accentColor: accentColor,
+        label: label,
+        spikes: spikes,
+        bumps: bumps
+      };
+    }
   }
 }
 
 /*
-pythons
+python
 
 def manipulate(string, xadd=0, yadd=0):
   points = string.split(" ")

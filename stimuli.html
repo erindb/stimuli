@@ -30,7 +30,18 @@
   <svg id="s"></svg>
   <svg id="t"></svg>
 </td>
+<td>
+  <svg id="aa"></svg>
+  <svg id="ab"></svg><br/>
+  <svg id="ac"></svg>
+  <svg id="ad"></svg>
+</td>
 </tr>
+<tr>
+<td>wugs</td>
+<td></td>
+</tr>
+<tr>
 <tr>
 <td>
   <svg id="i"></svg>
@@ -44,12 +55,18 @@
   <svg id="o"></svg>
   <svg id="p"></svg>
 </td>
+<td>
+  <svg id="u"></svg>
+  <svg id="v"></svg><br/>
+  <svg id="w"></svg>
+  <svg id="x"></svg>
+</td>
 </tr>
 </table>
 
 <!-- Scripts -->
-<script src="./stimuli_files/rcolor.js" type="text/javascript"></script>
 <script src="./stimuli_files/raphael.js" type="text/javascript"></script>
+<script src="./stimuli_files/erintools.js" type="text/javascript"></script>
 <script src="./stimuli_files/stimuli.js" type="text/javascript"></script>
 
 <script>
@@ -72,6 +89,12 @@ birdFep.draw("r", false, false, scale);
 birdFep.draw("s", true, true, scale);
 birdFep.draw("t", true, false, scale);
 //
+var microbeFep = new Stimuli.Microbe();
+microbeFep.draw("aa", false, true, scale);
+microbeFep.draw("ab", false, false, scale);
+microbeFep.draw("ac", true, true, scale);
+microbeFep.draw("ad", true, false, scale);
+//
 var treeWug = new Stimuli.Tree();
 treeWug.draw("i", false, true, scale);
 treeWug.draw("j", false, false, scale);
@@ -83,6 +106,12 @@ bugWug.draw("m", false, true, scale);
 bugWug.draw("n", false, false, scale);
 bugWug.draw("o", true, true, scale);
 bugWug.draw("p", true, false, scale);
+//
+var birdWug = new Stimuli.Bird();
+birdWug.draw("u", false, true, scale);
+birdWug.draw("v", false, false, scale);
+birdWug.draw("w", true, true, scale);
+birdWug.draw("x", true, false, scale);
 </script>
 
 
