@@ -1,5 +1,3 @@
-long tailfeathers
-
 RANDOMIZATION:
 
 
