@@ -677,10 +677,10 @@ var Stimuli = {
     //var baseAccentColor = Stimuli.colorScheme.get();
     this.baseColor = baseColor;
     //this.baseAccentColor = baseAccentColor;
-    this.baseXRadius = baseXRadius;
     var baseXRadius = Math.random();
-    this.baseYRadis = baseYRadius;
+    this.baseXRadius = baseXRadius;
     var baseYRadius = Math.random();
+    this.baseYRadis = baseYRadius;
     this.draw = draw;
     function draw(label, spikes, bumps, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
