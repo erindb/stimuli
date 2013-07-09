@@ -697,11 +697,13 @@ var Stimuli = {
   },
   
   Microbe: function() {
-    var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+40];
+    var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+30];
     var baseColor = Stimuli.colorScheme.get();
-    var baseAccentColor = Stimuli.colorScheme.get();
+    var baseBumpsColor = Stimuli.colorScheme.get();
+    var baseSpikesColor = Stimuli.colorScheme.get();
     this.baseColor = baseColor;
-    this.baseAccentColor = baseAccentColor;
+    this.baseSpikesColor = baseSpikesColor;
+    this.baseBumpsColor = baseBumpsColor;
     var baseXRadius = Math.random();
     this.baseXRadius = baseXRadius;
     var baseYRadius = Math.random();
@@ -710,7 +712,8 @@ var Stimuli = {
     function draw(label, spikes, bumps, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var color = Stimuli.myColor(baseColor);
-      var accentColor = Stimuli.myColor(baseAccentColor);
+      var bumpsColor = Stimuli.myColor(baseBumpsColor);
+      var spikesColor = Stimuli.myColor(baseSpikesColor);
       var xRadius = ErinTools.uniformAroundMean(baseXRadius, 0.1);
       var yRadius = ErinTools.uniformAroundMean(baseYRadius, 0.1);
       var xRad = getRadius(xRadius);
@@ -756,9 +759,9 @@ var Stimuli = {
           var newX = xPos + paperCenter[0];
           var newY = yPos + paperCenter[1];
           var spike = paper.path("M "+newX+","+newY+path);
-          spike.attr("fill", color);
+          spike.attr("fill", spikesColor);
           Stimuli.stroke(spike);
-          spike.transform("r"+angle.toString()+","+newX+","+newY);
+          spike.transform("r"+angle.toString()+","+newX+","+newY+"s1.2");
         }
       }
       function drawBumps() {
@@ -775,7 +778,7 @@ var Stimuli = {
           var angle = bumps[i][2];
           var size = bumps[i][3];
           var bump = paper.path("M "+xPos+","+yPos+path);
-          bump.attr("fill", color);
+          bump.attr("fill", bumpsColor);
           Stimuli.stroke(bump);
           bump.transform("r"+angle+"s"+size);
         }
@@ -800,7 +803,8 @@ var Stimuli = {
       Stimuli.viewBox(label, scaleFactor);
       return {
         color: color,
-        accentColor: accentColor,
+        bumpsColor: bumpsColor,
+        spikesColor: spikesColor,
         xRadius: xRadius, //a number from 0 to 1
         yRadius: yRadius, //0 means min, 1 means max
         label: label,
