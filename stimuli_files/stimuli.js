@@ -1,5 +1,3 @@
-
-
 var ErinTools = {
   shuffle: function(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;}, // non-destructive.
 
@@ -42,6 +40,33 @@ var ErinTools = {
     }
     var interval = upper - lower;
     return Math.random() * interval + lower;
+  },
+  
+  // creates an image partway between two other images, as in the animations
+  // by Raphael.js
+  intermediate: function(from, to, pos) {
+    var fromCurve = Raphael.path2curve(from);
+    var toCurve = Raphael.path2curve(to);
+    var diff = [];
+    var attr = "path";
+    //compute difference between paths and store in diff
+    for (i = 0, ii = fromCurve.length; i < ii; i++) {
+      diff[i] = [0];
+      for (var j = 1, jj = fromCurve[i].length; j < jj; j++) {
+        diff[i][j] = (toCurve[i][j] - fromCurve[i][j]);
+      }
+    }
+    var S = " ";
+    now = [];
+    //compute new path string for intermediate image
+    for (var i = 0, ii = fromCurve.length; i < ii; i++) {
+      now[i] = [fromCurve[i][0]];
+      for (var j = 1, jj = fromCurve[i].length; j < jj; j++) {
+        now[i][j] = +fromCurve[i][j] + pos * diff[i][j];
+      }
+      now[i] = now[i].join(S);
+    }
+    return now.join(S);
   }
 }
 
@@ -781,6 +806,189 @@ var Stimuli = {
         label: label,
         spikes: spikes,
         bumps: bumps
+      };
+    }
+  },
+  
+  Monster: function() {
+    this.draw = draw;
+    this.baseTallness = Math.random();
+    this.baseFatness = Math.random();
+    this.baseColor = Stimuli.colorScheme.get();
+    this.baseAccentColor = Stimuli.colorScheme.get();
+    var endpoints = { shortSkinny: {"left eye": "",
+                                    "left pupil": "",
+                                    "right eye": "",
+                                    "right pupil": "",
+                                    "mouth": "",
+                                    "body": "m 180.00001,199 c 10.73889,13.71279 6.15721,36.05831 -9.38601,44.15746 -24.85449,16.0425 -56.42647,13.06828 -84.073258,7.59996 -13.762129,-3.11226 -30.703856,-11.67588 -30.467578,-27.96589 0.679317,-16.32231 10.876946,-29.99246 16.028475,-45.03857 8.892153,-20.16777 23.632677,-42.19704 47.516051,-44.73994 19.89895,-1.97807 35.18157,14.67587 43.71234,30.77445 6.41914,11.31349 11.08625,23.48988 16.66998,35.21253 z",
+                                    "left arm": "",
+                                    "right arm": "",
+                                    "left foot": "",
+                                    "right foot": "",
+                                    "left toe1": "",
+                                    "left toe2": "",
+                                    "left toe3": "",
+                                    "right toe1": "",
+                                    "right toe2": "",
+                                    "right toe3": "",
+                                    "left pad": "",
+                                    "right pad": "",
+                                    "left tooth": "",
+                                    "right tooth": "",
+                                    "left horn": "",
+                                    "right horn": "",
+                                    "left horn line1": "",
+                                    "left horn line2": "",
+                                    "right horn line1": "",
+                                    "left horn line2": "" },
+                      shortFat: {"left eye": "",
+                                 "left pupil": "",
+                                 "right eye": "",
+                                 "right pupil": "",
+                                 "mouth": "",
+                                 "body": "m 231.99999,193.99999 c 36.08695,40.64524 -2.92904,60.87795 -41.31031,61.45662 -42.83938,4.1979 -85.7047,-4.573 -128.558913,-0.48455 -35.571432,3.93279 -64.1502383,1.27806 -56.3742294,-39.2093 6.1897904,-16.71923 14.9022284,-30.92929 25.5505904,-42.93419 25.531801,-28.72455 55.104868,-38.94434 90.114572,-41.14621 32.90303,-3.00756 54.98802,12.1456 75.75483,30.18991 12.10406,11.94465 24.97686,20.15634 34.82346,32.12772 z",
+                                 "left arm": "",
+                                 "right arm": "",
+                                 "left foot": "",
+                                 "right foot": "",
+                                 "left toe1": "",
+                                 "left toe2": "",
+                                 "left toe3": "",
+                                 "right toe1": "",
+                                 "right toe2": "",
+                                 "right toe3": "",
+                                 "left pad": "",
+                                 "right pad": "",
+                                 "left tooth": "",
+                                 "right tooth": "",
+                                 "left horn": "",
+                                 "right horn": "",
+                                 "left horn line1": "",
+                                 "left horn line2": "",
+                                 "right horn line1": "",
+                                 "left horn line2": "" },
+                      tallSkinny: {"left eye": "",
+                                   "left pupil": "",
+                                   "right eye": "",
+                                   "right pupil": "",
+                                   "mouth": "",
+                                   "body": "m 183.12272,181.9729 c -1.27868,25.82012 -6.31535,53.2175 -28.30421,66.56187 -20.38503,9.76551 -43.34353,8.02907 -61.868155,-0.93401 C 66.242315,231.08411 54.546987,208.3034 57.621976,180.071 c 3.941758,-18.75168 7.879959,-34.16772 8.624605,-52.04041 -3.374387,-41.978572 -2.694876,-96.158604 52.241869,-95.329459 52.20398,-0.06014 53.45326,54.43981 54.76442,94.807689 -1.4255,18.93949 8.85818,37.98449 9.86985,54.46408 z",
+                                   "left arm": "",
+                                   "right arm": "",
+                                   "left foot": "",
+                                   "right foot": "",
+                                   "left toe1": "",
+                                   "left toe2": "",
+                                   "left toe3": "",
+                                   "right toe1": "",
+                                   "right toe2": "",
+                                   "right toe3": "",
+                                   "left pad": "",
+                                   "right pad": "",
+                                   "left tooth": "",
+                                   "right tooth": "",
+                                   "left horn": "",
+                                   "right horn": "",
+                                   "left horn line1": "",
+                                   "left horn line2": "",
+                                   "right horn line1": "",
+                                   "left horn line2": "" },
+                      tallFat: {"left eye": "",
+                                "left pupil": "",
+                                "right eye": "",
+                                "right pupil": "",
+                                "mouth": "",
+                                "body": "m 246.84146,191.02436 c -0.46247,22.7555 -44.40535,48.58471 -62.33816,54.48631 -37.89852,12.69594 -75.98258,9.52536 -111.081256,0.49967 C 34.838557,237.26932 -1.3059135,224.51467 6.1315782,180.89726 9.9943253,159.74281 14.540356,146.83147 20.528696,128.84004 28.966904,51.770077 82.053663,20.108667 120.65013,18.392656 c 69.00411,4.108983 90.46419,47.828137 101.19432,106.257604 6.32161,24.06101 25.03125,42.87428 24.99701,66.3741 z",
+                                "left arm": "",
+                                "right arm": "",
+                                "left foot": "",
+                                "right foot": "",
+                                "left toe1": "",
+                                "left toe2": "",
+                                "left toe3": "",
+                                "right toe1": "",
+                                "right toe2": "",
+                                "right toe3": "",
+                                "left pad": "",
+                                "right pad": "",
+                                "left tooth": "",
+                                "right tooth": "",
+                                "left horn": "",
+                                "right horn": "",
+                                "left horn line1": "",
+                                "left horn line2": "",
+                                "right horn line1": "",
+                                "left horn line2": "" } };
+    var pieces = ["left eye", "left pupil", "right eye", "right pupil",
+                  "mouth", "body", "left arm", "right arm", "left foot",
+                  "right foot", "left toe1", "left toe2", "left toe3",
+                  "right toe1", "right toe2", "right toe3", "left pad",
+                  "right pad"];
+    var teethPieces = ["left tooth", "right tooth"];
+    var hornPieces = ["left horn", "right horn", "left horn line1",
+                      "left horn line2", "right horn line1",
+                      "left horn line2" ];
+    function getPathString(p, tallness, fatness) {
+      var ss = endpoints.shortSkinny[p];
+      var sf = endpoints.shortFat[p];
+      var shortFatEnough = ErinTools.intermediate(ss, sf, fatness);
+      var ts = endpoints.tallSkinny[p];
+      var tf = endpoints.tallFat[p];
+      var tallFatEnough = ErinTools.intermediate(ts, tf, fatness);
+      return ErinTools.intermediate(shortFatEnough, tallFatEnough, tallness);
+    }
+    function draw(label, horns, teeth, scaleFactor) {
+      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
+      var tallness = ErinTools.uniformAroundMean(this.baseFatness, 0.1);
+      var fatness = ErinTools.uniformAroundMean(this.baseFatness, 0.1);
+      var color = Stimuli.myColor(this.baseColor);
+      var accentColor = Stimuli.myColor(this.baseAccentColor);
+      var lightAccent = Stimuli.lighten(accentColor);
+      var colors = {"left eye": "#ffffff",
+                    "left pupil": "#000000",
+                    "right eye": "#ffffff",
+                    "right pupil": "#000000",
+                    "mouth": color,
+                    "body": color,
+                    "left arm": color,
+                    "right arm": color,
+                    "left foot": accentColor,
+                    "right foot": accentColor,
+                    "left toe1": lightAccent,
+                    "left toe2": lightAccent,
+                    "left toe3": lightAccent,
+                    "right toe1": lightAccent,
+                    "right toe2": lightAccent,
+                    "right toe3": lightAccent,
+                    "left pad": lightAccent,
+                    "right pad": lightAccent,
+                    "left tooth": "#ffffff",
+                    "right tooth": "#ffffff",
+                    "left horn": accentColor,
+                    "right horn": accentColor,
+                    "left horn line1": accentColor,
+                    "left horn line2": accentColor,
+                    "right horn line1": accentColor,
+                    "left horn line2": accentColor };
+      var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
+      for (var i = 0; i < pieces.length; i++) {
+        var piece = pieces[i];
+        var pathString = getPathString(piece, tallness, fatness);
+        var drawnPath = paper.path(pathString);
+        drawnPath.attr("fill", colors[piece]);
+        Stimuli.stroke(drawnPath);
+        drawnPath.transform("s0.8,"+paperCenter[0]+","+paperCenter[1]);
+      }
+      Stimuli.viewBox(label, scaleFactor);
+      return {
+        color: color,
+        accentColor: accentColor,
+        tallness: tallness, //a number from 0 to 1
+        fatness: fatness, //0 means min, 1 means max
+        label: label,
+        teeth: teeth,
+        horns: horns
       };
     }
   }

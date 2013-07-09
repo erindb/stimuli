@@ -36,6 +36,12 @@
   <svg id="ac"></svg>
   <svg id="ad"></svg>
 </td>
+<td>
+  <svg id="bb"></svg>
+  <svg id="bc"></svg><br/>
+  <svg id="bd"></svg>
+  <svg id="be"></svg>
+</td>
 </tr>
 <tr>
 <td>wugs</td>
@@ -66,6 +72,8 @@
   <svg id="af"></svg><br/>
   <svg id="ag"></svg>
   <svg id="ah"></svg>
+</td>
+<td>
 </td>
 </tr>
 </table>
@@ -100,6 +108,12 @@ microbeFep.draw("ab", false, false, scale);
 microbeFep.draw("ac", true, true, scale);
 microbeFep.draw("ad", true, false, scale);
 //
+var monsterFep = new Stimuli.Monster();
+monsterFep.draw("bb", true, true, scale);
+monsterFep.draw("bc", true, true, scale);
+monsterFep.draw("bd", true, true, scale);
+monsterFep.draw("be", true, true, scale);
+//
 var treeWug = new Stimuli.Tree();
 treeWug.draw("i", false, true, scale);
 treeWug.draw("j", false, false, scale);
@@ -122,7 +136,7 @@ var microbeWug = new Stimuli.Microbe();
 microbeWug.draw("ae", false, true, scale);
 microbeWug.draw("af", false, false, scale);
 microbeWug.draw("ag", true, true, scale);
-microbeWug.draw("ah", true, false, scale);
+var instance = microbeWug.draw("ah", true, false, scale);
 </script>
 
 
