@@ -86,6 +86,10 @@ var Stimuli = {
                               " " + Stimuli.containerHeight.toString());
   },
   
+  flipY: function(y) {
+    return (Stimuli.containerHeight - y);
+  },
+  
   lighten: function(origColor) {
     var eps = 0.3;
     var c = Raphael.color(origColor);
@@ -820,11 +824,11 @@ var Stimuli = {
     this.baseFatness = Math.random();
     this.baseColor = Stimuli.colorScheme.get();
     this.baseAccentColor = Stimuli.colorScheme.get();
-    var endpoints = { shortSkinny: {"left eye": "",
-                                    "left pupil": "",
-                                    "right eye": "",
-                                    "right pupil": "",
-                                    "mouth": "",
+    var endpoints = { shortSkinny: {"left eye": "m 159.5,175.625 c 0,6.69645 -6.10012,12.125 -13.625,12.125 -7.52488,0 -13.625,-5.42855 -13.625,-12.125 0,-6.69645 6.10012,-12.125 13.625,-12.125 7.52488,0 13.625,5.42855 13.625,12.125 z",
+                                    "left pupil": "m 139,181.5 c 1.05428,15.09255 21.09255,-4.94572 6,-6 -3.19473,-0.0963 -6.09624,2.80529 -6,6 z",
+                                    "right eye": "m 111.5,175.25 c 0,6.62742 -5.87626,12 -13.125,12 -7.248737,0 -13.125,-5.37258 -13.125,-12 0,-6.62742 5.876263,-12 13.125,-12 7.24874,0 13.125,5.37258 13.125,12 z",
+                                    "right pupil": "m 105,181 c -1.07711,14.64565 -21.209492,-5.15625 -6.11054,-5.96632 3.14779,-0.0486 6.36979,2.64659 6.11054,5.96632 z",
+                                    "mouth": "m 90,194 c 19.89829,9.52145 44.65017,10.4023 64,-1",
                                     "body": "m 180.00001,199 c 10.73889,13.71279 6.15721,36.05831 -9.38601,44.15746 -24.85449,16.0425 -56.42647,13.06828 -84.073258,7.59996 -13.762129,-3.11226 -30.703856,-11.67588 -30.467578,-27.96589 0.679317,-16.32231 10.876946,-29.99246 16.028475,-45.03857 8.892153,-20.16777 23.632677,-42.19704 47.516051,-44.73994 19.89895,-1.97807 35.18157,14.67587 43.71234,30.77445 6.41914,11.31349 11.08625,23.48988 16.66998,35.21253 z",
                                     "left arm": "",
                                     "right arm": "",
@@ -838,7 +842,7 @@ var Stimuli = {
                                     "right toe3": "",
                                     "left pad": "",
                                     "right pad": "",
-                                    "left tooth": "",
+                                    "left tooth": "m 131.75,200.75 c 4.08333,3.58333 8.16667,7.16667 12.25,10.75 0.45981,-5.42896 0.72451,-10.76122 0.81791,-13.27823 0.0862,-2.32247 -5.76196,1.98696 -13.06791,2.52823 z",
                                     "right tooth": "",
                                     "left horn": "",
                                     "right horn": "",
@@ -846,11 +850,11 @@ var Stimuli = {
                                     "left horn line2": "",
                                     "right horn line1": "",
                                     "left horn line2": "" },
-                      shortFat: {"left eye": "",
-                                 "left pupil": "",
-                                 "right eye": "",
-                                 "right pupil": "",
-                                 "mouth": "",
+                      shortFat: {"left eye": "m 159.5,175.625 c 0,6.69645 -6.10012,12.125 -13.625,12.125 -7.52488,0 -13.625,-5.42855 -13.625,-12.125 0,-6.69645 6.10012,-12.125 13.625,-12.125 7.52488,0 13.625,5.42855 13.625,12.125 z",
+                                 "left pupil": "m 139,181.5 c 1.05428,15.09255 21.09255,-4.94572 6,-6 -3.19473,-0.0963 -6.09624,2.80529 -6,6 z",
+                                 "right eye": "m 111.5,175.25 c 0,6.62742 -5.87626,12 -13.125,12 -7.248737,0 -13.125,-5.37258 -13.125,-12 0,-6.62742 5.876263,-12 13.125,-12 7.24874,0 13.125,5.37258 13.125,12 z",
+                                 "right pupil": "m 105,181 c -1.07711,14.64565 -21.209492,-5.15625 -6.11054,-5.96632 3.14779,-0.0486 6.36979,2.64659 6.11054,5.96632 z",
+                                 "mouth": "m 90,194 c 19.89829,9.52145 44.65017,10.4023 64,-1",
                                  "body": "m 231.99999,193.99999 c 36.08695,40.64524 -2.92904,60.87795 -41.31031,61.45662 -42.83938,4.1979 -85.7047,-4.573 -128.558913,-0.48455 -35.571432,3.93279 -64.1502383,1.27806 -56.3742294,-39.2093 6.1897904,-16.71923 14.9022284,-30.92929 25.5505904,-42.93419 25.531801,-28.72455 55.104868,-38.94434 90.114572,-41.14621 32.90303,-3.00756 54.98802,12.1456 75.75483,30.18991 12.10406,11.94465 24.97686,20.15634 34.82346,32.12772 z",
                                  "left arm": "",
                                  "right arm": "",
@@ -864,7 +868,7 @@ var Stimuli = {
                                  "right toe3": "",
                                  "left pad": "",
                                  "right pad": "",
-                                 "left tooth": "",
+                                 "left tooth": "m 131.75,200.75 c 4.08333,3.58333 8.16667,7.16667 12.25,10.75 0.45981,-5.42896 0.72451,-10.76122 0.81791,-13.27823 0.0862,-2.32247 -5.76196,1.98696 -13.06791,2.52823 z",
                                  "right tooth": "",
                                  "left horn": "",
                                  "right horn": "",
@@ -872,11 +876,11 @@ var Stimuli = {
                                  "left horn line2": "",
                                  "right horn line1": "",
                                  "left horn line2": "" },
-                      tallSkinny: {"left eye": "",
-                                   "left pupil": "",
-                                   "right eye": "",
-                                   "right pupil": "",
-                                   "mouth": "",
+                      tallSkinny: {"left eye": "m 155,110.5 c 0,6.90356 -6.04416,12.5 -13.5,12.5 -7.45584,0 -13.5,-5.59644 -13.5,-12.5 0,-6.90356 6.04416,-12.5 13.5,-12.5 7.45584,0 13.5,5.59644 13.5,12.5 z",
+                                   "left pupil": "m 135,116.5 c 1.05428,15.09255 21.09255,-4.94572 6,-6 -3.19473,-0.0963 -6.09624,2.80529 -6,6 z",
+                                "right eye": "m 107,110.25 c 0,6.76549 -5.93223,12.25 -13.25,12.25 -7.317773,0 -13.25,-5.48451 -13.25,-12.25 0,-6.76549 5.932227,-12.25 13.25,-12.25 7.31777,0 13.25,5.48451 13.25,12.25 z",
+                                   "right pupil": "m 101,116 c -1.05428,15.09255 -21.092549,-4.94572 -6,-6 3.19473,-0.0963 6.09624,2.80529 6,6 z",
+                                   "mouth": "m 86,129 c 19.89829,9.52145 44.65017,10.4023 64,-1",
                                    "body": "m 183.12272,181.9729 c -1.27868,25.82012 -6.31535,53.2175 -28.30421,66.56187 -20.38503,9.76551 -43.34353,8.02907 -61.868155,-0.93401 C 66.242315,231.08411 54.546987,208.3034 57.621976,180.071 c 3.941758,-18.75168 7.879959,-34.16772 8.624605,-52.04041 -3.374387,-41.978572 -2.694876,-96.158604 52.241869,-95.329459 52.20398,-0.06014 53.45326,54.43981 54.76442,94.807689 -1.4255,18.93949 8.85818,37.98449 9.86985,54.46408 z",
                                    "left arm": "",
                                    "right arm": "",
@@ -890,7 +894,7 @@ var Stimuli = {
                                    "right toe3": "",
                                    "left pad": "",
                                    "right pad": "",
-                                   "left tooth": "",
+                                   "left tooth": "m 127.75,135.75 c 4.08333,3.58333 8.16667,7.16667 12.25,10.75 0.13448,-4.764 1.0062,-16.31587 -0.0474,-13.4052 -0.30748,0.84944 -4.23792,1.90381 -12.20263,2.6552 z",
                                    "right tooth": "",
                                    "left horn": "",
                                    "right horn": "",
@@ -898,11 +902,11 @@ var Stimuli = {
                                    "left horn line2": "",
                                    "right horn line1": "",
                                    "left horn line2": "" },
-                      tallFat: {"left eye": "",
-                                "left pupil": "",
-                                "right eye": "",
-                                "right pupil": "",
-                                "mouth": "",
+                      tallFat: {"left eye": "m 155,110.5 c 0,6.90356 -6.04416,12.5 -13.5,12.5 -7.45584,0 -13.5,-5.59644 -13.5,-12.5 0,-6.90356 6.04416,-12.5 13.5,-12.5 7.45584,0 13.5,5.59644 13.5,12.5 z",
+                                "left pupil": "m 135,116.5 c 1.05428,15.09255 21.09255,-4.94572 6,-6 -3.19473,-0.0963 -6.09624,2.80529 -6,6 z",
+                                "right eye": "m 107,110.25 c 0,6.76549 -5.93223,12.25 -13.25,12.25 -7.317773,0 -13.25,-5.48451 -13.25,-12.25 0,-6.76549 5.932227,-12.25 13.25,-12.25 7.31777,0 13.25,5.48451 13.25,12.25 z",
+                                "right pupil": "m 101,116 c -1.05428,15.09255 -21.092549,-4.94572 -6,-6 3.19473,-0.0963 6.09624,2.80529 6,6 z",
+                                "mouth": "m 86,129 c 19.89829,9.52145 44.65017,10.4023 64,-1",
                                 "body": "m 246.84146,191.02436 c -0.46247,22.7555 -44.40535,48.58471 -62.33816,54.48631 -37.89852,12.69594 -75.98258,9.52536 -111.081256,0.49967 C 34.838557,237.26932 -1.3059135,224.51467 6.1315782,180.89726 9.9943253,159.74281 14.540356,146.83147 20.528696,128.84004 28.966904,51.770077 82.053663,20.108667 120.65013,18.392656 c 69.00411,4.108983 90.46419,47.828137 101.19432,106.257604 6.32161,24.06101 25.03125,42.87428 24.99701,66.3741 z",
                                 "left arm": "",
                                 "right arm": "",
@@ -916,7 +920,7 @@ var Stimuli = {
                                 "right toe3": "",
                                 "left pad": "",
                                 "right pad": "",
-                                "left tooth": "",
+                                "left tooth": "m 127.75,135.75 c 4.08333,3.58333 8.16667,7.16667 12.25,10.75 0.13448,-4.764 1.0062,-16.31587 -0.0474,-13.4052 -0.30748,0.84944 -4.23792,1.90381 -12.20263,2.6552 z",
                                 "right tooth": "",
                                 "left horn": "",
                                 "right horn": "",
@@ -924,15 +928,15 @@ var Stimuli = {
                                 "left horn line2": "",
                                 "right horn line1": "",
                                 "left horn line2": "" } };
-    var pieces = ["left eye", "left pupil", "right eye", "right pupil",
-                  "mouth", "body", "left arm", "right arm", "left foot",
+    var pieces = ["body", "left eye", "left pupil", "right eye", "right pupil",
+                  "mouth", "left arm", "right arm", "left foot",
                   "right foot", "left toe1", "left toe2", "left toe3",
                   "right toe1", "right toe2", "right toe3", "left pad",
                   "right pad"];
     var teethPieces = ["left tooth", "right tooth"];
-    var hornPieces = ["left horn", "right horn", "left horn line1",
-                      "left horn line2", "right horn line1",
-                      "left horn line2" ];
+    var hornsPieces = ["left horn", "right horn", "left horn line1",
+                       "left horn line2", "right horn line1",
+                       "left horn line2" ];
     function getPathString(p, tallness, fatness) {
       var ss = endpoints.shortSkinny[p];
       var sf = endpoints.shortFat[p];
@@ -983,6 +987,26 @@ var Stimuli = {
         drawnPath.attr("fill", colors[piece]);
         Stimuli.stroke(drawnPath);
         drawnPath.transform("s0.8,"+paperCenter[0]+","+paperCenter[1]);
+      }
+      if (teeth) {
+        for (var i = 0; i < teethPieces.length; i++) {
+          var piece = teethPieces[i];
+          var pathString = getPathString(piece, tallness, fatness);
+          var drawnPath = paper.path(pathString);
+          drawnPath.attr("fill", colors[piece]);
+          Stimuli.stroke(drawnPath);
+          drawnPath.transform("s0.8,"+paperCenter[0]+","+paperCenter[1]);
+        }
+      }
+      if (horns) {
+        for (var i = 0; i < hornsPieces.length; i++) {
+          var piece = hornsPieces[i];
+          var pathString = getPathString(piece, tallness, fatness);
+          var drawnPath = paper.path(pathString);
+          drawnPath.attr("fill", colors[piece]);
+          Stimuli.stroke(drawnPath);
+          drawnPath.transform("s0.8,"+paperCenter[0]+","+paperCenter[1]);
+        }
       }
       Stimuli.viewBox(label, scaleFactor);
       return {
