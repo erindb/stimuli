@@ -674,9 +674,9 @@ var Stimuli = {
   Microbe: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+40];
     var baseColor = Stimuli.colorScheme.get();
-    //var baseAccentColor = Stimuli.colorScheme.get();
+    var baseAccentColor = Stimuli.colorScheme.get();
     this.baseColor = baseColor;
-    //this.baseAccentColor = baseAccentColor;
+    this.baseAccentColor = baseAccentColor;
     var baseXRadius = Math.random();
     this.baseXRadius = baseXRadius;
     var baseYRadius = Math.random();
@@ -685,7 +685,7 @@ var Stimuli = {
     function draw(label, spikes, bumps, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var color = Stimuli.myColor(baseColor);
-      //var accentColor = Stimuli.myColor(baseAccentColor);
+      var accentColor = Stimuli.myColor(baseAccentColor);
       var xRadius = ErinTools.uniformAroundMean(baseXRadius, 0.1);
       var yRadius = ErinTools.uniformAroundMean(baseYRadius, 0.1);
       var xRad = getRadius(xRadius);
@@ -705,7 +705,7 @@ var Stimuli = {
         microbe.attr("stroke", color);
       }
       function drawSpikes() {
-        var numSpikes = 6;
+        var numSpikes = 10;
         var path = " c -7.37145,8.60285 -4.92803,15.10123 -3.4763,20.33065 1.74961,-5.96315 15.17277,-6.52157 35.23965,-6.63636 -19.99246,-3.3422 -30.94628,-9.42435 -31.76335,-13.69429 z";
         for (var i=0; i<numSpikes; i++) {
           var angle = (360/numSpikes*i);
@@ -768,14 +768,14 @@ var Stimuli = {
           Stimuli.stroke(flagellum);
         }
       }
-      if (spikes) {drawSpikes()};
       drawFlagella();
+      if (spikes) {drawSpikes()};
       drawMicrobe();
       if (bumps) {drawBumps()};
       Stimuli.viewBox(label, scaleFactor);
       return {
         color: color,
-        //accentColor: accentColor,
+        accentColor: accentColor,
         xRadius: xRadius, //a number from 0 to 1
         yRadius: yRadius, //0 means min, 1 means max
         label: label,
