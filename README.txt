@@ -113,34 +113,50 @@ Bird.draw(label, crest, tail, scaleFactor)
   crest - boolean that says whether this bird has a plumed crest
   tail - boolean that says whether this bird has a long tail
 
+********************************************************************************
+
 --------MicrobeToken-------
-MicrobeToken.color
-  rgb hex code for color of microbe (some systematic variation
-  around this color for different parts of the microbe)
-MicrobeToken.xRadius
-  0 is min radius (not actually 0), 1 is max (not actually 1)
-MicrobeToken.yRadius
-  0 is min radius (not actually 0), 1 is max (not actually 1)
-MicrobeToken.label
-  string that matches the id for an svg tag in the html
-MicrobeToken.spikes
-  boolean that says whether this bird has spikes
-MicrobeToken.bumps
-  boolean that says whether this bird has bumps
+MicrobeToken.color - rgb hex code for color of microbe body
+MicrobeToken.spikesColor - rgb hex code for color of microbe's spikes
+MicrobeToken.bumpsColor - rgb hex code for color of microbe's bumps
+MicrobeToken.xRadius - 0 is min horizontal radius, 1 is max horizonal radius
+MicrobeToken.yRadius - 0 is min vertical radius, 1 is max vertical radius
+MicrobeToken.label - string that matches the id for an svg tag in the html
+MicrobeToken.spikes - boolean that says whether this microbe has spikes
+MicrobeToken.bumps - boolean that says whether this microbe has bumps
 
 --------Microbe-------
-Microbe.baseColor
-  latent mean color of microbes of that category
-Microbe.xRadius
-  latent mean horizontal radius. 0 is min radius (not actually 0, the real min
-  radius is specified in the code), 1 is max (not actually 1)
-Bug.yRadius
-  latent mean vertical radius. 0 is min radius (not actually 0, the read min
-  radius is specified in the code), 1 is max (not actually 1)
+Microbe.baseColor - latent mean color for monsters of that category
+Microbe.baseSpikesColor - latent mean spikesColor for microbes of that category
+Microbe.baseBumpsColor - latent mean bumpsColor for microbes of that category
+Microbe.xRadius - latent mean "xRadius" for monsters of that category
+Microbe.yRadius - latent mean "yRadius" for monsters of that category
 Microbe.draw(label, spikes, bumps, scaleFactor)
   a function that draws a token microbe and returns a MicrobeToken object with
   information about the microbe that was drawn.
-  parameters:
-  label - string that matches the id for an svg tag in the html
-  spikes - boolean that says whether this bird has spikes
-  bumps - boolean that says whether this bird has bumps
+  parameters: label - string that matches the id for an svg tag in the html
+              spikes - boolean that says whether this monster has spikes
+              bumps - boolean that says whether this monster has bumps
+
+********************************************************************************
+
+--------MonsterToken-------
+MonsterToken.color - rgb hex code for color of monster's body
+MonsterToken.accentColor - rgb hex code for color of monter's feet and horns
+MonsterToken.fatness - 0 is thinnes, 1 is fattest
+MonsterToken.tallness - 0 is shortest, 1 is tallest
+MonsterToken.label - string that matches the id for an svg tag in the html
+MonsterToken.horns - boolean that says whether this monster has horns
+MonsterToken.teeth - boolean that says whether this monster has teeth
+
+--------Monster-------
+Monster.baseColor - latent mean color for monsters of that category
+Monster.baseAccentColor - latent mean accentColor for monsters of that category
+Monster.fatness - latent mean fatness for monsters of that category
+Monster.tallness - latent mean tallness for monsters of that category
+Monster.draw(label, horns, teeth, scaleFactor)
+  a function that draws a token monster and returns a MonsterToken object with
+  information about the monster that was drawn.
+  parameters: label - string that matches the id for an svg tag in the html
+              horns - boolean that says whether this monster has horns
+              teeth - boolean that says whether this monster has teeth
