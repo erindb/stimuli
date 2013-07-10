@@ -1,4 +1,13 @@
 RANDOMIZATION:
+Base color randomization:
+  Base colors for ALL categories in the experiment have saturation 0.99, value
+  0.1, and hue drawn from a hue bank which is created in the following manner:
+    1. at the beginning of the experiment, a randomly ordered bank of hues is
+       created where each of the hues is seperated from the other by exactly
+       1/10 and offset from 0 by a random number between 0 and 0.1.
+    2. hues are taken away from the bank everytime a base color is generated
+    3. when the hue bank is empty, it is created again in the same way, this
+       time with a different offset between 0 and 0.1.
 
 
 IN THE HTML:
@@ -90,6 +99,8 @@ Bug.draw(label, wings, stripes, scale)
   label - string that matches the id for an svg tag in the html
   scale - a number that scales the whole image
 
+********************************************************************************
+
 --------BirdToken-------
 BirdToken.color - rgb hex code for color of bird
 BirdToken.headStretch - 0 is min stretch, 1 is max
@@ -98,13 +109,10 @@ BirdToken.label - string that matches the id for an svg tag in the html
 BirdToken.crest - boolean that says whether this bird has a plumed crest
 BirdToken.tail - boolean that says whether this bird has a long tail
 
---------Bird-------
-Bird.baseColor
-  latent mean color of birds of that category
-Bird.headStretch
-  latent mean horizontal stretch of head for birds of that category
-Bird.bodyStretch
-  latent mean vertical stretch of body for birds of that category
+--------Stimuli.Bird-------
+Bird.baseColor - latent mean color of birds of that category
+Bird.headStretch - latent mean horizontal stretch of head for birds of that category
+Bird.bodyStretch - latent mean vertical stretch of body for birds of that category
 Bird.draw(label, crest, tail, scaleFactor)
   a function that draws a token bird and returns a BirdToken object with
   information about the bird that was drawn.
@@ -125,7 +133,7 @@ MicrobeToken.label - string that matches the id for an svg tag in the html
 MicrobeToken.spikes - boolean that says whether this microbe has spikes
 MicrobeToken.bumps - boolean that says whether this microbe has bumps
 
---------Microbe-------
+--------Stimuli.Microbe-------
 Microbe.baseColor - latent mean color for monsters of that category
 Microbe.baseSpikesColor - latent mean spikesColor for microbes of that category
 Microbe.baseBumpsColor - latent mean bumpsColor for microbes of that category
@@ -149,7 +157,7 @@ MonsterToken.label - string that matches the id for an svg tag in the html
 MonsterToken.horns - boolean that says whether this monster has horns
 MonsterToken.teeth - boolean that says whether this monster has teeth
 
---------Monster-------
+--------Stimuli.Monster-------
 Monster.baseColor - latent mean color for monsters of that category
 Monster.baseAccentColor - latent mean accentColor for monsters of that category
 Monster.fatness - latent mean fatness for monsters of that category
@@ -160,3 +168,14 @@ Monster.draw(label, horns, teeth, scaleFactor)
   parameters: label - string that matches the id for an svg tag in the html
               horns - boolean that says whether this monster has horns
               teeth - boolean that says whether this monster has teeth
+
+********************************************************************************
+    
+--------ErinTools.ColorRandomizer(nSteps)-------
+Produces a randomly ordered bank of hues each of which is seperated from the
+other by 1/nSteps (nSteps is by default 10) and offset from 0 by a random number
+between 0 and 1/nSteps.
+ColorRandomizer.get()
+  A function that returns an rgb hex color using the next value in the hue bank,
+  full saturation, and close to full brightness. When the hue bank becomes
+  empty, this function updates the hue bank with the same nSteps but a new offset.
