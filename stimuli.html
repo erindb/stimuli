@@ -6,13 +6,26 @@
 
 <body>
 
-<svg id="tree"></svg>
-<svg id="bug"></svg>
-<svg id="bird"></svg>
-<svg id="microbe"></svg>
-<svg id="monster"></svg>
-<svg id="fish"></svg>
-<svg id="flower"></svg>
+Feps
+<br/>
+<svg id="treeFep"></svg>
+<svg id="bugFep"></svg>
+<svg id="birdFep"></svg>
+<svg id="microbeFep"></svg>
+<svg id="monsterFep"></svg>
+<svg id="fishFep"></svg>
+<svg id="fishFep2"></svg>
+<br/>
+<br/>
+Wugs
+<br/>
+<svg id="treeWug"></svg>
+<svg id="bugWug"></svg>
+<svg id="birdWug"></svg>
+<svg id="microbeWug"></svg>
+<svg id="monsterWug"></svg>
+<svg id="fishWug"></svg>
+<svg id="fishFep3"></svg>
 
 <!-- Scripts -->
 <script src="./stimuli_files/jquery-2.0.3.min.js" type="text/javascript"></script>
@@ -22,23 +35,43 @@
 
 <script>
 var scale = 0.5;
-var tree = new Stimuli.Tree();
-tree.draw("tree", true, true, scale);
+var treeFep = new Stimuli.Tree();
+treeFep.draw("treeFep", true, true, scale);
 //
-var bug = new Stimuli.Bug();
-bug.draw("bug", true, true, scale);
+var bugFep = new Stimuli.Bug();
+bugFep.draw("bugFep", false, true, scale);
 //
-var bird = new Stimuli.Bird();
-bird.draw("bird", true, true, scale);
+var birdFep = new Stimuli.Bird();
+birdFep.draw("birdFep", true, true, scale);
 //
-var microbe = new Stimuli.Microbe();
-microbe.draw("microbe", true, true, scale);
+var microbeFep = new Stimuli.Microbe();
+microbeFep.draw("microbeFep", true, true, scale);
 //
-var monster = new Stimuli.Monster();
-monster.draw("monster", true, true, scale);
+var monsterFep = new Stimuli.Monster();
+monsterFep.draw("monsterFep", true, true, scale);
 //
-var fish = new Stimuli.Fish();
-fish.draw("fish", true, true, scale);
+var fishFep = new Stimuli.Fish();
+fishFep.draw("fishFep", true, false, scale);
+fishFep.draw("fishFep2", true, true, scale);
+//
+var treeWug = new Stimuli.Tree();
+treeWug.draw("treeWug", true, true, scale);
+//
+var bugWug = new Stimuli.Bug();
+bugWug.draw("bugWug", true, true, scale);
+//
+var birdWug = new Stimuli.Bird();
+birdWug.draw("birdWug", true, true, scale);
+//
+var microbeWug = new Stimuli.Microbe();
+microbeWug.draw("microbeWug", true, true, scale);
+//
+var monsterWug = new Stimuli.Monster();
+monsterWug.draw("monsterWug", true, true, scale);
+//
+var fishWug = new Stimuli.Fish();
+fishWug.draw("fishWug", false, true, scale);
+fishWug.draw("fishFep3", false, false, scale);
 </script>
 
 
