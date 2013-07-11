@@ -865,7 +865,7 @@ var Stimuli = {
     }
     function draw(label, horns, teeth, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var tallness = ErinTools.uniformAroundMean(this.baseFatness);
+      var tallness = ErinTools.uniformAroundMean(this.baseTallness);
       var fatness = ErinTools.uniformAroundMean(this.baseFatness);
       var color = Stimuli.myColor(this.baseColor);
       var accentColor = Stimuli.myColor(this.baseAccentColor);
@@ -935,6 +935,89 @@ var Stimuli = {
         teeth: teeth,
         horns: horns
       };
+    }
+  },
+
+  Flower: function() {
+    this.draw = draw;
+    this.baseBodyTallness = Math.random();
+    this.baseBellyFatness = Math.random();
+    this.baseColor = Stimuli.colorScheme.get();
+    
+    var data = $.csv.toObjects(Stimuli.images.fish);
+
+    var endpoints = { shortNobelly: data[0],
+                      shortBelly: data[1],
+                      tallNobelly: data[2],
+                      tallBelly: data[3] };
+                      
+    var pieces = ["body", "eye", "pupil", "lower fin", "upper fin"];
+    var fangPieces = ["fang"];
+    var whiskersPieces = ["whisker1", "whisker2", "whisker3" ];
+    
+    function getPathString(p, tallness, fatness) {
+      var sn = endpoints.shortNobelly[p];
+      var sb = endpoints.shortBelly[p];
+      var shortFatEnough = ErinTools.intermediate(sn, sb, fatness);
+      var tn = endpoints.tallNobelly[p];
+      var tb = endpoints.tallBelly[p];
+      var tallFatEnough = ErinTools.intermediate(tn, tb, fatness);
+      return ErinTools.intermediate(shortFatEnough, tallFatEnough, tallness);
+    }
+    
+    function draw(label, fangs, whiskers, scaleFactor) {
+      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
+      var bodyTallness = ErinTools.uniformAroundMean(this.baseBodyTallness);
+      var bellyFatness = ErinTools.uniformAroundMean(this.baseBellyFatness);
+      var color = Stimuli.myColor(this.baseColor);
+      var colors = {"eye": "#ffffff",
+                    "pupil": "#000000",
+                    "body": color,
+                    "lower fin": color,
+                    "upper fin": color,
+                    "fang": accentColor,
+                    "whisker1": "",
+                    "whisker2": "",
+                    "whisker3": "" };
+      var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
+/*      for (var i = 0; i < pieces.length; i++) {
+        var piece = pieces[i];
+        var pathString = getPathString(piece, tallness, fatness);
+        var drawnPath = paper.path(pathString);
+        drawnPath.attr("fill", colors[piece]);
+        Stimuli.stroke(drawnPath);
+        drawnPath.transform("s0.8,"+paperCenter[0]+","+paperCenter[1]);
+      }
+      if (teeth) {
+        for (var i = 0; i < teethPieces.length; i++) {
+          var piece = teethPieces[i];
+          var pathString = getPathString(piece, tallness, fatness);
+          var drawnPath = paper.path(pathString);
+          drawnPath.attr("fill", colors[piece]);
+          Stimuli.stroke(drawnPath);
+          drawnPath.transform("s0.8,"+paperCenter[0]+","+paperCenter[1]);
+        }
+      }
+      if (horns) {
+        for (var i = 0; i < hornsPieces.length; i++) {
+          var piece = hornsPieces[i];
+          var pathString = getPathString(piece, tallness, fatness);
+          var drawnPath = paper.path(pathString);
+          drawnPath.attr("fill", colors[piece]);
+          Stimuli.stroke(drawnPath);
+          drawnPath.transform("s0.8,"+paperCenter[0]+","+paperCenter[1]);
+        }
+      }
+      Stimuli.viewBox(label, scaleFactor);
+      return {
+        color: color,
+        accentColor: accentColor,
+        tallness: tallness, //a number from 0 to 1
+        fatness: fatness, //0 means min, 1 means max
+        label: label,
+        teeth: teeth,
+        horns: horns
+      }; */
     }
   },
   
