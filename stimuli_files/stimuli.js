@@ -1010,7 +1010,46 @@ var Stimuli = {
     this.baseCenterColor = Stimuli.colorScheme.get();
     this.baseSpotsColor = Stimuli.colorScheme.get();
     this.baseThornsColor = Stimuli.colorScheme.get();
-    function draw(label, spots, thorns, scaleFactor) {
+    this.baseCenterSize = Math.random();
+    this.basePetalWidth = Math.random();
+    
+    var data = $.csv.toObjects(Stimuli.images.flower);
+
+    var endpoints = { smallThin: data[0],
+                      smallWide: data[1],
+                      bigThin: data[2],
+                      bigWide: data[3] };
+    
+    function draw(label, spots, thorns, scaleFactor) {         
+      var getPathString = function(p) {
+        var st = endpoints.smallShort[p];
+        var sw = endpoints.smallTall[p];
+        var smallWideEnough = ErinTools.intermediate(st, sw, petalWidth);
+        var bt = endpoints.bigShort[p];
+        var bw = endpoints.bigTall[p];
+        var bigWideEnough = ErinTools.intermediate(bt, bw, tallness);
+        return ErinTools.intermediate(smallWideEnough, bigWideEnough, centerCize);
+      }
+      var petalColor = Stimuli.myColor(this.basePetalColor);
+      var centerColor = Stimuli.myColor(this.baseCenterColor);
+      var spotsColor = Stimuli.myColor(this.baseSpotsColor);
+      var thornsColor = Stimuli.myColor(this.baseThornsColor);
+      var centerSize = ErinTools.uniformAroundMean(this.baseCenterSize);
+      var petalWidth = ErinTools.uniformAroundMean(this.basePetalWidth);
+      var colors = {};
+                        
+      var pieces = [];
+      var spotsPieces = [];
+      var thornsPieces = [];
+      
+      Stimuli.drawPaths(paper, pieces, colors, getPathString);
+      if (fangs) {
+        Stimuli.drawPaths(paper, fangsPieces, colors, getPathString);
+      }
+      if (whiskers) {
+        Stimuli.drawPaths(paper, whiskersPieces, colors, getPathString);
+      }
+      
       Stimuli.viewBox(label, scaleFactor);
       return {
         petalColor: petalColor,
