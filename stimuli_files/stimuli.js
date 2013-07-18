@@ -771,11 +771,11 @@ var Stimuli = {
         return (r*(maxRad-minRad))+minRad;
       }
       function drawMicrobe() {
-        var microbe = paper.ellipse(paperCenter[0], paperCenter[1], xRad, yRad);
-        Stimuli.stroke(microbe, Stimuli.lighten(color));
-        var microbe = paper.ellipse(paperCenter[0], paperCenter[1],
+        var outerMicrobe = paper.ellipse(paperCenter[0], paperCenter[1], xRad, yRad);
+        Stimuli.stroke(outerMicrobe, Stimuli.lighten(color));
+        var innerMicrobe = paper.ellipse(paperCenter[0], paperCenter[1],
                                     xRad-10, yRad-10);
-        microbe.attr("stroke", Stimuli.makeGradient("r",color));
+        Stimuli.stroke(innerMicrobe, Stimuli.makeGradient("r",color));
       }
       function drawSpikes() {
         var numSpikes = 10;
