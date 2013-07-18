@@ -472,6 +472,10 @@ var Stimuli = {
     }
   },
 
+  /** Represents a bug category. Has 3 mean colors (baseBodyColor,
+      baseWingsColor, baseAntennaeColor), mean baseBodyFatness, and mean
+      baseHeadFatness.
+      @constructor*/
   Bug: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
     var baseBodyColor = Stimuli.colorScheme.get(true, .5, .99);
@@ -643,6 +647,10 @@ var Stimuli = {
     }
   },
   
+  /** Represents a bird category. Has 3 mean colors (baseColor for most of the
+      bird, baseCrestColor, and baseTailColor), mean horizontal baseHeadStretch,
+      and mean vertical baseBodyStretch.
+      @constructor*/
   Bird: function() {
     var paperCenter = [(Stimuli.containerWidth/2), ((Stimuli.containerHeight/2)-25)];
     var baseColor = Stimuli.colorScheme.get();
@@ -732,6 +740,10 @@ var Stimuli = {
     }
   },
   
+  /** Represents a microbe category. Has 3 mean colors (baseColor for most of the
+      microbe, baseSpikesColor, and baseBumpsColor), mean horizontal radius
+      baseXRadius, and mean vertical radius baseYRadius.
+      @constructor*/
   Microbe: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+30];
     var baseColor = Stimuli.colorScheme.get();
@@ -844,6 +856,11 @@ var Stimuli = {
     }
   },
   
+  /** Represents a monster category. Has 2 mean colors (baseColor for most of 
+      the monster and baseAccentColor for the horns and feet -- n.b. a lightened
+      version of the accentColor is used for the pads of the feets and toes),
+      mean horizontal radius baseXRadius, and mean vertical radius baseYRadius.
+      @constructor*/
   Monster: function() {
     this.baseTallness = Math.random();
     this.baseFatness = Math.random();
