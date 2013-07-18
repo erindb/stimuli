@@ -593,7 +593,8 @@
             transform: "",
             width: 0,
             x: 0,
-            y: 0
+            y: 0,
+            opacityStops:"1"
         },
         availableAnimAttrs = R._availableAnimAttrs = {
             blur: nu,
@@ -6192,6 +6193,18 @@
                     case "stroke-dasharray":
                         addDashes(o, value, params);
                         break;
+                    case "opacityStops":
+                            if (attrs.gradient) {
+                                var gradient = R._g.doc.getElementById(node.getAttribute("fill").replace(/^url\(#|\)$/g, E));
+                                if (gradient) {
+                                    var stops = gradient.getElementsByTagName("stop");
+                                    var opacs=value.split("-");
+                                    for(var ii=0;ii<stops.length;ii++){
+                                        stops[ii][setAttribute]("stop-opacity", opacs[ii]||"1");
+                                    }
+                                }
+                                break;
+                            }
                     case "fill":
                         var isURL = Str(value).match(R._ISURL);
                         if (isURL) {

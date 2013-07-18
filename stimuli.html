@@ -15,6 +15,9 @@ Feps
 <svg id="monsterFep"></svg>
 <svg id="fishFep"></svg>
 <svg id="flowerFep"></svg>
+<svg id="crystalFep"></svg>
+<svg id="islandFep"></svg>
+<svg id="planetFep"></svg>
 <br/>
 <br/>
 Wugs
@@ -26,6 +29,9 @@ Wugs
 <svg id="monsterWug"></svg>
 <svg id="fishWug"></svg>
 <svg id="flowerWug"></svg>
+<svg id="crystalWug"></svg>
+<svg id="islandWug"></svg>
+<svg id="planetWug"></svg>
 
 <!-- Scripts -->
 <script src="./stimuli_files/jquery-2.0.3.min.js" type="text/javascript"></script>
@@ -36,19 +42,19 @@ Wugs
 <script>
 var scale = 0.5;
 var treeFep = new Stimuli.Tree();
-treeFep.draw("treeFep", true, true, scale);
+treeFep.draw("treeFep", true, false, scale);
 //
 var bugFep = new Stimuli.Bug();
-bugFep.draw("bugFep", false, true, scale);
+bugFep.draw("bugFep", true, false, scale);
 //
 var birdFep = new Stimuli.Bird();
-birdFep.draw("birdFep", true, true, scale);
+birdFep.draw("birdFep", true, false, scale);
 //
 var microbeFep = new Stimuli.Microbe();
-microbeFep.draw("microbeFep", true, true, scale);
+microbeFep.draw("microbeFep", true, false, scale);
 //
 var monsterFep = new Stimuli.Monster();
-monsterFep.draw("monsterFep", true, true, scale);
+monsterFep.draw("monsterFep", true, false, scale);
 //
 var fishFep = new Stimuli.Fish();
 fishFep.draw("fishFep", true, false, scale);
@@ -56,26 +62,44 @@ fishFep.draw("fishFep", true, false, scale);
 var flowerFep = new Stimuli.Flower();
 flowerFep.draw("flowerFep", true, false, scale);
 //
+var crystalFep = new Stimuli.Crystal();
+crystalFep.draw("crystalFep", true, false, scale);
+//
+var islandFep = new Stimuli.Island();
+islandFep.draw("islandFep", true, false, scale);
+//
+var planetFep = new Stimuli.Planet();
+planetFep.draw("planetFep", true, false, scale);
+//////////////////
 var treeWug = new Stimuli.Tree();
-treeWug.draw("treeWug", true, true, scale);
+treeWug.draw("treeWug", false, true, scale);
 //
 var bugWug = new Stimuli.Bug();
-bugWug.draw("bugWug", true, true, scale);
+bugWug.draw("bugWug", false, true, scale);
 //
 var birdWug = new Stimuli.Bird();
-birdWug.draw("birdWug", true, true, scale);
+birdWug.draw("birdWug", false, true, scale);
 //
 var microbeWug = new Stimuli.Microbe();
-microbeWug.draw("microbeWug", true, true, scale);
+microbeWug.draw("microbeWug", false, true, scale);
 //
 var monsterWug = new Stimuli.Monster();
-monsterWug.draw("monsterWug", true, true, scale);
+monsterWug.draw("monsterWug", false, true, scale);
 //
 var fishWug = new Stimuli.Fish();
 fishWug.draw("fishWug", false, true, scale);
 //
 var flowerWug = new Stimuli.Flower();
 flowerWug.draw("flowerWug", false, true, scale);
+//
+var crystalWug = new Stimuli.Crystal();
+crystalWug.draw("crystalWug", false, true, scale);
+//
+var islandWug = new Stimuli.Island();
+islandWug.draw("islandWug", false, true, scale);
+//
+var planetWug = new Stimuli.Planet();
+planetWug.draw("planetWug", false, true, scale);
 </script>
 
 
