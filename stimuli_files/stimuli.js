@@ -196,14 +196,22 @@ var Stimuli = {
    * In the javascript:
    | var fepTree = new Stimuli.Tree(); //create a kind of tree called "feps"
    | var wugTree = new Stimuli.Tree(); //create a kind of tree called "wugs"
+   |
    | //draw some feps
    | var fepTree1 = fepTree.draw("fepTree1", true, false, 0.7); //berries
    | var fepTree2 = fepTree.draw("fepTree2", true, true, 0.7); //berries & leaves
    | var fepTree3 = fepTree.draw("fepTree3", false, false, 0.7); //no berries or leaves
+   |
    | //draw a wug
-   | var wugTree1 = fepTree.draw("wugTree1", false, true, 0.7); //leaves
-   | var slightlyDifferentColors = [fepTree1.trunkColor, fepTree2.trunkColor];
-   | var veryDifferentColors = [fepTree.trunkColor, wugTree.trunkColor];
+   | var wugTree1 = wugTree.draw("wugTree1", false, true, 0.7); //leaves
+   |
+   | //slightly different colors because they're the trunk colors for two
+   | //different trees from the same category
+   | console.log(fepTree1.trunkColor + " " + fepTree2.trunkColor);
+   |
+   | //very different colors because they're the latent mean trunk colors for
+   | //the two different categories
+   | console.log(fepTree.trunkColor + " " + wugTree.trunkColor);
   \*/
   Tree: function() {
     /*\
@@ -562,14 +570,22 @@ var Stimuli = {
    * In the javascript:
    | var fepBug = new Stimuli.Bug(); //create a kind of bug called "feps"
    | var wugBug = new Stimuli.Bug(); //create a kind of bug called "wugs"
+   |
    | //draw some feps
    | var fepBug1 = fepBug.draw("fepBug1", true, false, 0.7); //wings
    | var fepBug2 = fepBug.draw("fepBug2", true, true, 0.7); //wings & antennae
    | var fepBug3 = fepBug.draw("fepBug3", false, false, 0.7); //no wings or antennae
+   |
    | //draw a wug
-   | var wugBug1 = fepTree.draw("wugTree1", false, true, 0.7); //antennae
-   | var slightlyDifferentColors = [fepBug1.bodyColor, fepBug2.bodyColor];
-   | var veryDifferentColors = [fepBug.bodyColor, wugBug.bodyColor];
+   | var wugBug1 = wugBug.draw("wugBug1", false, true, 0.7); //antennae
+   |
+   | //slightly different colors because they're the trunk colors for two
+   | //different trees from the same category
+   | console.log(fepBug1.bodyColor + " " + fepBug2.bodyColor);
+   |
+   | //very different colors because they're the latent mean trunk colors for
+   | //the two different categories
+   | console.log(fepBug.bodyColor + " " + wugBug.bodyColor);
   \*/
   Bug: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
@@ -640,9 +656,9 @@ var Stimuli = {
     this.draw = function(label, wings, antennae, scaleFactor) {
       var bodyFatness = StimuliTools.uniformAroundMean(this.bodyFatness);
       var headFatness = StimuliTools.uniformAroundMean(this.headFatness);
-      var headYRadius = (headFatness)*30 + 20;
+      var headYRadius = (headFatness)*60 + 15;
       var headXRadius = 25;
-      var bodyYRadius = (bodyFatness)*30 + 20;
+      var bodyYRadius = (bodyFatness)*60 + 10;
       var bodyXRadius = 50;
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var bodyColor = Stimuli.myColor(this.bodyColor);
@@ -785,6 +801,31 @@ var Stimuli = {
    * Stimuli.Bird
    [ class ]
    * Represents a bird category.
+   > Here's how to draw some birds:
+   * In the html:
+   | <svg id="fepBird1"></svg>
+   | <svg id="fepBird2"></svg>
+   | <svg id="fepBird3"></svg>
+   | <svg id="wugBird1"></svg>
+   * In the javascript:
+   | var fepBird = new Stimuli.Bird(); //create a kind of bird called "feps"
+   | var wugBird = new Stimuli.Bird(); //create a kind of bird called "wugs"
+   |
+   | //draw some feps
+   | var fepBird1 = fepBird.draw("fepBird1", true, false, 0.7); //crest
+   | var fepBird2 = fepBird.draw("fepBird2", true, true, 0.7); //crest & tail
+   | var fepBird3 = fepBird.draw("fepBird3", false, false, 0.7); //no crest or tail
+   |
+   | //draw a wug
+   | var wugBird1 = wugBird.draw("wugBird1", false, true, 0.7); //tail
+   |
+   | //slightly different colors because they're the colors for two
+   | //different birds from the same category
+   | console.log(fepBird1.color + " " + fepBird2.color);
+   |
+   | //very different colors because they're the latent mean colors for
+   | //the two different categories
+   | console.log(fepBird.color + " " + wugBird.color);
   \*/
   Bird: function() {
     var paperCenter = [(Stimuli.containerWidth/2), ((Stimuli.containerHeight/2)-25)];
@@ -936,6 +977,31 @@ var Stimuli = {
    * Stimuli.Microbe
    [ class ]
    * Represents a microbe category.
+   > Here's how to draw some microbes:
+   * In the html:
+   | <svg id="fepMicrobe1"></svg>
+   | <svg id="fepMicrobe2"></svg>
+   | <svg id="fepMicrobe3"></svg>
+   | <svg id="wugMicrobe1"></svg>
+   * In the javascript:
+   | var fepMicrobe = new Stimuli.Microbe(); //create a kind of microbe called "feps"
+   | var wugMicrobe = new Stimuli.Microbe(); //create a kind of microbe called "wugs"
+   |
+   | //draw some feps
+   | var fepMicrobe1 = fepMicrobe.draw("fepMicrobe1", true, false, 0.7); //spikes
+   | var fepMicrobe2 = fepMicrobe.draw("fepMicrobe2", true, true, 0.7); //spikes & bumps
+   | var fepMicrobe3 = fepMicrobe.draw("fepMicrobe3", false, false, 0.7); //no spikes or bumps
+   |
+   | //draw a wug
+   | var wugMicrobe1 = wugMicrobe.draw("wugMicrobe1", false, true, 0.7); //bumps
+   |
+   | //slightly different colors because they're the colors for two
+   | //different microbes from the same category
+   | console.log(fepMicrobe1.color + " " + fepMicrobe2.color);
+   |
+   | //very different colors because they're the latent mean colors for
+   | //the two different categories
+   | console.log(fepMicrobe.color + " " + wugMicrobe.color);
   \*/
   Microbe: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+30];
@@ -1106,6 +1172,31 @@ var Stimuli = {
    * Stimuli.Monster
    [ class ]
    * Represents a monster category.
+   > Here's how to draw some monsters:
+   * In the html:
+   | <svg id="fepMonster1"></svg>
+   | <svg id="fepMonster2"></svg>
+   | <svg id="fepMonster3"></svg>
+   | <svg id="wugMonster1"></svg>
+   * In the javascript:
+   | var fepMonster = new Stimuli.Monster(); //create a kind of monster called "feps"
+   | var wugMonster = new Stimuli.Monster(); //create a kind of monster called "wugs"
+   |
+   | //draw some feps
+   | var fepMonster1 = fepMonster.draw("fepMonster1", true, false, 0.7); //horns
+   | var fepMonster2 = fepMonster.draw("fepMonster2", true, true, 0.7); //horns & teeth
+   | var fepMonster3 = fepMonster.draw("fepMonster3", false, false, 0.7); //no horns or teeth
+   |
+   | //draw a wug
+   | var wugMonster1 = wugMonster.draw("wugMonster1", false, true, 0.7); //teeth
+   |
+   | //slightly different colors because they're the colors for two
+   | //different monsters from the same category
+   | console.log(fepMonster1.color + " " + fepMonster2.color);
+   |
+   | //very different colors because they're the latent mean colors for
+   | //the two different categories
+   | console.log(fepMonster.color + " " + wugMonster.color);
   \*/
   Monster: function() {
     /*\
@@ -1263,6 +1354,31 @@ var Stimuli = {
    * Stimuli.Fish
    [ class ]
    * Represents a fish category.
+   > Here's how to draw some fish:
+   * In the html:
+   | <svg id="fepFish1"></svg>
+   | <svg id="fepFish2"></svg>
+   | <svg id="fepFish3"></svg>
+   | <svg id="wugFish1"></svg>
+   * In the javascript:
+   | var fepFish = new Stimuli.Fish(); //create a kind of fish called "feps"
+   | var wugFish = new Stimuli.Fish(); //create a kind of fish called "wugs"
+   |
+   | //draw some feps
+   | var fepFish1 = fepFish.draw("fepFish1", true, false, 0.7); //fangs
+   | var fepFish2 = fepFish.draw("fepFish2", true, true, 0.7); //fangs & whiskers
+   | var fepFish3 = fepFish.draw("fepFish3", false, false, 0.7); //no fangs or whiskers
+   |
+   | //draw a wug
+   | var wugFish1 = wugFish.draw("wugFish1", false, true, 0.7); //whiskers
+   |
+   | //slightly different colors because they're the colors for two
+   | //different fish from the same category
+   | console.log(fepFish1.color + " " + fepFish2.color);
+   |
+   | //very different colors because they're the latent mean colors for
+   | //the two different categories
+   | console.log(fepFish.color + " " + wugFish.color);
   \*/
   Fish: function() {
     /*\
@@ -1383,6 +1499,31 @@ var Stimuli = {
    * Stimuli.Flower
    [ class ]
    * Represents a flower category.
+   > Here's how to draw some flowers:
+   * In the html:
+   | <svg id="fepFlower1"></svg>
+   | <svg id="fepFlower2"></svg>
+   | <svg id="fepFlower3"></svg>
+   | <svg id="wugFlower1"></svg>
+   * In the javascript:
+   | var fepFlower = new Stimuli.Flower(); //create a kind of flower called "feps"
+   | var wugFlower = new Stimuli.Flower(); //create a kind of flower called "wugs"
+   |
+   | //draw some feps
+   | var fepFlower1 = fepFlower.draw("fepFlower1", true, false, 0.7); //spots
+   | var fepFlower2 = fepFlower.draw("fepFlower2", true, true, 0.7); //spots & thorns
+   | var fepFlower3 = fepFlower.draw("fepFlower3", false, false, 0.7); //no spots or thorns
+   |
+   | //draw a wug
+   | var wugFlower1 = wugFlower.draw("wugFlower1", false, true, 0.7); //thorns
+   |
+   | //slightly different colors because they're the colors for two
+   | //different flowers from the same category
+   | console.log(fepFlower1.petalColor + " " + fepFlower2.petalColor);
+   |
+   | //very different colors because they're the latent mean colors for
+   | //the two different categories
+   | console.log(fepFlower.petalColor + " " + wugFlower.petalColor);
   \*/
   Flower: function() {
     /*\
@@ -1550,6 +1691,31 @@ var Stimuli = {
    * Stimuli.Crystal
    [ class ]
    * Represents a crystal category.
+   > Here's how to draw some crystals:
+   * In the html:
+   | <svg id="fepCrystal1"></svg>
+   | <svg id="fepCrystal2"></svg>
+   | <svg id="fepCrystal3"></svg>
+   | <svg id="wugCrystal1"></svg>
+   * In the javascript:
+   | var fepCrystal = new Stimuli.Crystal(); //create a kind of crystal called "feps"
+   | var wugCrystal = new Stimuli.Crystal(); //create a kind of crystal called "wugs"
+   |
+   | //draw some feps
+   | var fepCrystal1 = fepCrystal.draw("fepCrystal1", true, false, 0.7); //spots
+   | var fepCrystal2 = fepCrystal.draw("fepCrystal2", true, true, 0.7); //spots & thorns
+   | var fepCrystal3 = fepCrystal.draw("fepCrystal3", false, false, 0.7); //no spots or thorns
+   |
+   | //draw a wug
+   | var wugCrystal1 = wugCrystal.draw("wugCrystal1", false, true, 0.7); //thorns
+   |
+   | //slightly different colors because they're the colors for two
+   | //different crystals from the same category
+   | console.log(fepCrystal1.petalColor + " " + fepCrystal2.petalColor);
+   |
+   | //very different colors because they're the latent mean colors for
+   | //the two different categories
+   | console.log(fepCrystal.petalColor + " " + wugCrystal.petalColor);
   \*/
   Crystal: function() {
     var data = $.csv.toObjects(Stimuli.images.crystal);
