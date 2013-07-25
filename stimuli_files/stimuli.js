@@ -520,11 +520,6 @@ var Stimuli = {
   \*/
   Bug: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
-    var baseBodyColor = Stimuli.colorScheme.get(true);
-    var baseWingsColor = Stimuli.colorScheme.get(true);
-    var baseAntennaeColor = Stimuli.colorScheme.get(true);
-    var baseBodyFatness = Math.random();
-    var baseHeadFatness = Math.random();
     /*\
      * Stimuli.Bug.baseBodyColor
      [ property ]
@@ -532,7 +527,7 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseBodyColor = baseBodyColor;
+    this.bodyColor = Stimuli.colorScheme.get(true);
     /*\
      * Stimuli.Bug.baseWingsColor
      [ property ]
@@ -540,7 +535,7 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseWingsColor = baseWingsColor;
+    this.wingsColor = Stimuli.colorScheme.get(true);
     /*\
      * Stimuli.Bug.baseAntennaeColor
      [ property ]
@@ -548,7 +543,7 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseAntennaeColor = baseAntennaeColor;
+    this.antennaeColor = Stimuli.colorScheme.get(true);
     /*\
      * Stimuli.Bug.baseBodyFatness
      [ property ]
@@ -557,7 +552,7 @@ var Stimuli = {
      * uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.baseBodyFatness = baseBodyFatness;
+    this.bodyFatness = Math.random();
     /*\
      * Stimuli.Bug.baseHeadFatness
      [ property ]
@@ -566,125 +561,7 @@ var Stimuli = {
      * Sampled from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.baseHeadFatness = baseHeadFatness;
-    
-    //eyes
-    function drawEyes(paper, bodyXRadius, headYRadius) {
-      var eyeRadius = 10;
-      var eyeOffset = [15, 10];
-      var leftEye = paper.circle(paperCenter[0]-bodyXRadius-eyeOffset[0],
-                             paperCenter[1]-headYRadius+eyeOffset[1],
-                             eyeRadius);
-      leftEye.attr("fill", "#000000");
-      var rightEye = paper.circle(paperCenter[0]-bodyXRadius-eyeOffset[0],
-                              paperCenter[1]+headYRadius-eyeOffset[1],
-                              eyeRadius);
-      rightEye.attr("fill", "#000000");
-    }
-    
-    function drawLegs(paper, bodyYRadius) {
-      //legs (lower left ordering)
-      var offsets = [[43, -14], [50, -4], [57, 6],
-                 [30, -10], [32, 0], [34, 10], [36, 20],
-                 [15, -3], [15, 7], [15, 17] ];
-      var legSets = [ ["back","left"], ["front","left"], ["back","right"], ["front","right"] ];
-      var legPieceRadius = 8;
-      for (var j=0; j<legSets.length; j++) {
-        legSet = legSets[j];
-        for (var i=0; i< offsets.length; i++) {
-          if (legSet[0] == "back") {
-            var x = paperCenter[0] + offsets[i][0];
-          } else {
-            var x = paperCenter[0] - offsets[i][0];
-          }
-          if (legSet[1] == "left") {
-            var y = paperCenter[1] + bodyYRadius + offsets[i][1];
-          } else {
-            var y = paperCenter[1] - bodyYRadius - offsets[i][1];
-          }
-          var legPiece = paper.circle(x, y, legPieceRadius);
-          legPiece.attr("fill", "#666666");
-          legPiece.attr("stroke-width", "0");
-          legPiece.attr("stroke", "#666666");
-        }
-      }
-    }
-    
-    function drawAntennae(paper, bodyXRadius, headXRadius, headYRadius) {
-      //antennae
-      //antennaeXPos = paperCenter[0]-bodyXRadius-headXRadius+(eyeRadius/3);
-      var antennaeColor = Stimuli.myColor(baseAntennaeColor);
-      var antennaeXPos = paperCenter[0]-bodyXRadius-headXRadius+(10/3);
-      var leftAntennaYPos = paperCenter[1] + (headYRadius/3);
-      var rightAntennaYPos = paperCenter[1] - (headYRadius/3);
-      var leftAntennaStroke = paper.path("M " + antennaeXPos.toString() + "," + 
-                                   leftAntennaYPos.toString() +
-                                   "c -23,-7 -22,12 -42,9");
-      leftAntennaStroke.attr("stroke-width", 8);
-      leftAntennaStroke.attr("stroke", Stimuli.strokeColor);
-      var leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
-                                   leftAntennaYPos.toString() +
-                                   "c -23,-7 -22,12 -41,9");
-      leftAntenna.attr("stroke-width", 6);
-      leftAntenna.attr("stroke", antennaeColor);
-      var rightAntennaStroke = paper.path("M " + antennaeXPos.toString() + "," + 
-                                    rightAntennaYPos.toString() + " c -6,2" +
-                                    " -12,2 -17,0 -10,-5 -13,-10 -25,-9");
-      rightAntennaStroke.attr("stroke-width", 8);
-      rightAntennaStroke.attr("stroke", Stimuli.strokeColor);
-      var rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
-                                    rightAntennaYPos.toString() + " c -6,2" +
-                                    " -12,2 -17,0 -10,-5 -13,-10 -24,-9");
-      rightAntenna.attr("stroke-width", 6);
-      rightAntenna.attr("stroke", antennaeColor);
-      return antennaeColor;
-    }
-    
-    function drawWings(paper, bodyYRadius, wings) {
-      //wings
-      var wingsColor = Stimuli.myColor(baseWingsColor);
-      if (wings) {
-        var frontLeftWing = paper.path("M " + paperCenter[0].toString() + "," + 
-                                    (paperCenter[1]+(bodyYRadius/2)).toString() +
-                                    "c -16,9 -28,42 -33,58 -9,37 3,63 45,8 " +
-                                    "14,-18 11,-41 11,-61 z");
-        Stimuli.stroke(frontLeftWing, Stimuli.makeGradient("0-",wingsColor));
-        var frontRightWing = paper.path("M " + paperCenter[0].toString() + "," + 
-                                    (paperCenter[1]-(bodyYRadius/2)).toString() +
-                                    "c -16,-9 -28,-42 -33,-58 -9,-37 3,-63 45,-8 " +
-                                    "14,18 11,41 11,61 z");
-        Stimuli.stroke(frontRightWing, Stimuli.makeGradient("0-",wingsColor));
-        var backLeftWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
-                                    (paperCenter[1]+(bodyYRadius/2)).toString() +
-                                    "c 11,8 20,34 23,47 6,30 -2,50 -31,6 -10,-15" +
-                                    " -8,-33 -8,-49 z");
-        Stimuli.stroke(backLeftWing, Stimuli.makeGradient("180-",wingsColor));
-        var backRightWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
-                                    (paperCenter[1]-(bodyYRadius/2)).toString() +
-                                    "c 11,-8 20,-34 23,-47 6,-30 -2,-50 -31,-6 -10,15" +
-                                    " -8,33 -8,49 z");
-        Stimuli.stroke(backRightWing, Stimuli.makeGradient("180-",wingsColor));
-      }
-      return wingsColor;
-    }
-    
-    function drawBody(paper, bodyXRadius, bodyYRadius) {
-      //body
-      var bodyColor = Stimuli.myColor(baseBodyColor);
-      var body = paper.ellipse(paperCenter[0], paperCenter[1], bodyXRadius, bodyYRadius);
-      Stimuli.stroke(body, Stimuli.makeGradient("r",bodyColor));
-      return bodyColor;
-    }
-    
-    function drawHead(paper, bodyXRadius, headXRadius, headYRadius) {
-      //head
-      var headXPos = paperCenter[0]-bodyXRadius;
-      var headYPos = paperCenter[1];
-      var head = paper.ellipse(headXPos, headYPos,
-                           headXRadius, headYRadius);
-      Stimuli.stroke(head, "r#777777-#555555");
-      drawEyes(paper, bodyXRadius, headYRadius);
-    }
+    this.headFatness = Math.random();
     
     /*\
      * Stimuli.Bug.draw
@@ -708,27 +585,131 @@ var Stimuli = {
      o }
     \*/
     this.draw = function(label, wings, antennae, scaleFactor) {
-      var bodyFatness = ErinTools.uniformAroundMean(baseBodyFatness);
-      var headFatness = ErinTools.uniformAroundMean(baseHeadFatness);
+      var bodyFatness = ErinTools.uniformAroundMean(this.bodyFatness);
+      var headFatness = ErinTools.uniformAroundMean(this.headFatness);
       var headYRadius = (headFatness)*30 + 20;
       var headXRadius = 25;
       var bodyYRadius = (bodyFatness)*30 + 20;
       var bodyXRadius = 50;
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      drawLegs(paper, bodyYRadius);
-      if (antennae) {
-        var antennaeColor = drawAntennae(paper, bodyXRadius, headXRadius, headYRadius);
-      } else {
-        var antennaeColor = null;
+      var bodyColor = Stimuli.myColor(this.bodyColor);
+      var wingsColor = Stimuli.myColor(this.wingsColor);
+      var antennaeColor = Stimuli.myColor(this.antennaeColor);
+
+      function drawEyes() {
+        var eyeRadius = 10;
+        var eyeOffset = [15, 10];
+        var leftEye = paper.circle(paperCenter[0]-bodyXRadius-eyeOffset[0],
+                               paperCenter[1]-headYRadius+eyeOffset[1],
+                               eyeRadius);
+        leftEye.attr("fill", "#000000");
+        var rightEye = paper.circle(paperCenter[0]-bodyXRadius-eyeOffset[0],
+                                paperCenter[1]+headYRadius-eyeOffset[1],
+                                eyeRadius);
+        rightEye.attr("fill", "#000000");
       }
-      var wingsColor = drawWings(paper, bodyYRadius, wings);
-      var bodyColor = drawBody(paper, bodyXRadius, bodyYRadius);
-      drawHead(paper, bodyXRadius, headXRadius, headYRadius);
+      function drawLegs() {
+        //legs (lower left ordering)
+        var offsets = [[43, -14], [50, -4], [57, 6],
+                   [30, -10], [32, 0], [34, 10], [36, 20],
+                   [15, -3], [15, 7], [15, 17] ];
+        var legSets = [ ["back","left"], ["front","left"], ["back","right"], ["front","right"] ];
+        var legPieceRadius = 8;
+        for (var j=0; j<legSets.length; j++) {
+          legSet = legSets[j];
+          for (var i=0; i< offsets.length; i++) {
+            if (legSet[0] == "back") {
+              var x = paperCenter[0] + offsets[i][0];
+            } else {
+              var x = paperCenter[0] - offsets[i][0];
+            }
+            if (legSet[1] == "left") {
+              var y = paperCenter[1] + bodyYRadius + offsets[i][1];
+            } else {
+              var y = paperCenter[1] - bodyYRadius - offsets[i][1];
+            }
+            var legPiece = paper.circle(x, y, legPieceRadius);
+            legPiece.attr("fill", "#666666");
+            legPiece.attr("stroke-width", "0");
+            legPiece.attr("stroke", "#666666");
+          }
+        }
+      }
+      function drawAntennae() {
+        var antennaeXPos = paperCenter[0]-bodyXRadius-headXRadius+(10/3);
+        var leftAntennaYPos = paperCenter[1] + (headYRadius/3);
+        var rightAntennaYPos = paperCenter[1] - (headYRadius/3);
+        var leftAntennaStroke = paper.path("M " + antennaeXPos.toString() + "," + 
+                                     leftAntennaYPos.toString() +
+                                     "c -23,-7 -22,12 -42,9");
+        leftAntennaStroke.attr("stroke-width", 8);
+        leftAntennaStroke.attr("stroke", Stimuli.strokeColor);
+        var leftAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+                                     leftAntennaYPos.toString() +
+                                     "c -23,-7 -22,12 -41,9");
+        leftAntenna.attr("stroke-width", 6);
+        leftAntenna.attr("stroke", antennaeColor);
+        var rightAntennaStroke = paper.path("M " + antennaeXPos.toString() + "," + 
+                                      rightAntennaYPos.toString() + " c -6,2" +
+                                      " -12,2 -17,0 -10,-5 -13,-10 -25,-9");
+        rightAntennaStroke.attr("stroke-width", 8);
+        rightAntennaStroke.attr("stroke", Stimuli.strokeColor);
+        var rightAntenna = paper.path("M " + antennaeXPos.toString() + "," + 
+                                      rightAntennaYPos.toString() + " c -6,2" +
+                                      " -12,2 -17,0 -10,-5 -13,-10 -24,-9");
+        rightAntenna.attr("stroke-width", 6);
+        rightAntenna.attr("stroke", antennaeColor);
+        return antennaeColor;
+      }
+      function drawWings() {
+        if (wings) {
+          var frontLeftWing = paper.path("M " + paperCenter[0].toString() + "," + 
+                                      (paperCenter[1]+(bodyYRadius/2)).toString() +
+                                      "c -16,9 -28,42 -33,58 -9,37 3,63 45,8 " +
+                                      "14,-18 11,-41 11,-61 z");
+          Stimuli.stroke(frontLeftWing, Stimuli.makeGradient("0-",wingsColor));
+          var frontRightWing = paper.path("M " + paperCenter[0].toString() + "," + 
+                                      (paperCenter[1]-(bodyYRadius/2)).toString() +
+                                      "c -16,-9 -28,-42 -33,-58 -9,-37 3,-63 45,-8 " +
+                                      "14,18 11,41 11,61 z");
+          Stimuli.stroke(frontRightWing, Stimuli.makeGradient("0-",wingsColor));
+          var backLeftWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
+                                      (paperCenter[1]+(bodyYRadius/2)).toString() +
+                                      "c 11,8 20,34 23,47 6,30 -2,50 -31,6 -10,-15" +
+                                      " -8,-33 -8,-49 z");
+          Stimuli.stroke(backLeftWing, Stimuli.makeGradient("180-",wingsColor));
+          var backRightWing = paper.path("M " + (paperCenter[0]+35).toString() + "," + 
+                                      (paperCenter[1]-(bodyYRadius/2)).toString() +
+                                      "c 11,-8 20,-34 23,-47 6,-30 -2,-50 -31,-6 -10,15" +
+                                      " -8,33 -8,49 z");
+          Stimuli.stroke(backRightWing, Stimuli.makeGradient("180-",wingsColor));
+        }
+        return wingsColor;
+      }
+      function drawBody() {
+        var body = paper.ellipse(paperCenter[0], paperCenter[1], bodyXRadius, bodyYRadius);
+        Stimuli.stroke(body, Stimuli.makeGradient("r",bodyColor));
+        return bodyColor;
+      }
+      function drawHead() {
+        var headXPos = paperCenter[0]-bodyXRadius;
+        var headYPos = paperCenter[1];
+        var head = paper.ellipse(headXPos, headYPos, headXRadius, headYRadius);
+        Stimuli.stroke(head, "r#777777-#555555");
+        drawEyes(paper, bodyXRadius, headYRadius);
+      }
+      
+      drawLegs();
+      if (antennae) { drawAntennae(); }
+      drawWings();
+      drawBody();
+      drawHead();
       //rotate
       var angle = 120;
       paper.forEach(function (el) {
-                      el.transform("r"+angle+","+paperCenter[0].toString()+","+paperCenter[1].toString());
-                    });
+        el.transform("r" + angle + "," + paperCenter[0].toString() + "," +
+                     paperCenter[1].toString());
+      });
       //resize
       var svgContainer = document.getElementById(label);
       svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
@@ -755,29 +736,29 @@ var Stimuli = {
   Bird: function() {
     var paperCenter = [(Stimuli.containerWidth/2), ((Stimuli.containerHeight/2)-25)];
     /*\
-     * Stimuli.Bird.baseColor
+     * Stimuli.Bird.color
      [ property ]
      * A string. The hex code for the latent mean color of most of the bird,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    var baseColor = Stimuli.colorScheme.get();
+    this.color = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Bird.baseCrestColor
+     * Stimuli.Bird.crestColor
      [ property ]
      * A string. The hex code for the latent mean color of the crest,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseCrestColor = Stimuli.colorScheme.get();
+    this.crestColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Bird.baseTailColor
+     * Stimuli.Bird.tailColor
      [ property ]
      * A string. The hex code for the latent mean color of the tail,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseTailColor = Stimuli.colorScheme.get();
+    this.tailColor = Stimuli.colorScheme.get();
     /** A number sampled from uniform which represents the latent mean value of
         how fat the bird's head is. 0 represents the fattest head and 1
         represents the thinnest.
@@ -788,65 +769,8 @@ var Stimuli = {
         represents the shortest.
         E.g. 0.13984732927294. */
     var baseBodyStretch = Math.random();
-    this.baseColor = baseColor;
     this.baseHeadStretch = baseHeadStretch;
     this.baseBodyStretch = baseBodyStretch;
-    function drawHead(paper, color, crest, gradColor, crestColor) {
-      var headCenter = [paperCenter[0], paperCenter[1]-35];
-      var headStretch = ErinTools.uniformAroundMean(baseHeadStretch) * 2 + .7;
-      var head = paper.ellipse(headCenter[0], headCenter[1], 25*headStretch, 25);
-      Stimuli.stroke(head, gradColor);
-      if (crest) {
-        var crest = paper.path("M "+headCenter[0].toString()+","+(headCenter[1]-16).toString()+" c -3,-13 -3,-27 -2,-41 0,-5 0,-10 2,-15 2,1 2,6 2,9 1,14 2,29 2,44 1,-14 1,-29 5,-43 0,-2 3,-7 4,-2 1,10 0,20 -1,30 -1,5 -1,10 -2,14 3,-11 5,-23 8,-33 1,-3 2,-2 2,1 0,12 -2,24 -4,36 0,1 1,-3 1,-5 2,-9 4,-18 7,-27 3,-4 2,4 2,6 -1,10 -4,20 -7,30 2,-9 5,-18 9,-26 1,-3 4,-2 3,1 -1,10 -5,19 -9,28 -1,2 -1,2 0,0 2,-5 5,-11 9,-15 3,-1 0,5 0,7 -2,5 -5,10 -8,15 3,-4 6,-8 10,-10 3,1 -1,6 -2,7 -1,2 -5,6 -5,6 4,0 8,-2 12,-1 0,3 -5,4 -7,5 -2,1 -6,3 -7,2 4,1 9,2 12,5 -1,3 -6,1 -8,1 -2,0 -5,-1 -5,-2 3,2 7,3 9,7 -2,2 -7,0 -10,0 -2,-1 -5,-1 -2,-3 3,-4 4,-9 4,-14 -1,-7 -5,-14 -11,-18 -4,-3 -9,-1 -12,2 -2,1 -3,6 -4,5 -5,-10 -8,-21 -8,-32 -1,-3 2,-6 4,-2 4,8 5,17 7,26 0,1 0,3 1,4 z");
-        crest.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
-        Stimuli.stroke(crest, crestColor);
-      }
-      var leftEyePatch = paper.path("M "+(headCenter[0]-20).toString() +","+(headCenter[1]+5).toString() +" c 2,1 12,0 12,0 4,0 1,-8 -2,-12 -9,-10 -15,8 -11,12 z");
-      leftEyePatch.attr("fill", "#000000");
-      leftEyePatch.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
-      var rightEyePatch = paper.path("M "+(headCenter[0]+9).toString() +","+(headCenter[1]+7).toString() +" c -2,1 -4,0 -5,0 -1,0 -2,0 -3,-1 -1,-1 -1,-3 0,-4 1,-2 2,-5 3,-7 1,-1 3,-2 5,-2 3,0 6,0 9,1 2,1 3,3 3,5 0,2 -2,4 -4,5 -2,1 -5,2 -7,3 z");
-      var leftEyeDot = paper.circle(headCenter[0]-(13*headStretch), headCenter[1], 4);
-      leftEyeDot.attr("fill","#ffffff");
-      rightEyePatch.attr("fill", "#000000");
-      rightEyePatch.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
-      var rightEyeDot = paper.circle(headCenter[0]+(8*headStretch), (headCenter[1]+1), 4);
-      rightEyeDot.attr("fill","#ffffff");
-      var beak = paper.path("M "+(headCenter[0]-(6*headStretch)).toString()+","+(headCenter[1]+5).toString()+" c 0.0805,5.09883 -0.02228,10.30964 4,13 5.55789,-1.10878 6.47702,-6.85631 9,-11 -2.24042,-1.18583 -4.85841,-1.61651 -6.5,-4 -3.148068,2.13877 -4.594123,1.72452 -6.5,2 z");
-      Stimuli.stroke(beak, "#ffff00");
-      return headStretch;
-    }
-    function drawBody(paper, color, tail, gradColor, tailColor) {
-      var bodyStretch = ErinTools.uniformAroundMean(baseBodyStretch) * 1 + 0.5;
-      if (tail) {
-        //var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c  93.041702,66.6439 62.708612,55.1315 0.566359,6.6972 24.219543,16.1729 127.541683,98.4836 -2.315079,6.5466 70.203552,48.3289 71.370392,57.77 -4.801623,3.2366 31.342565,20.6587 80.305665,60.7674 -7.288272,-0.073 60.818577,41.2828 21.46453,21.8232 -8.136197,-2.2717 z");
-        var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c 137.26897,150.89247 82.32553,110.54987 0.30161,10.02344 46.18326,48.1754 176.28904,249.77883 -3.11677,7.44872 92.78521,131.08631 86.30285,142.69291 -5.89011,0.6876 37.68329,59.04719 107.18694,190.15081 -8.66356,-6.07301 65.48223,117.84362 17.00792,63.34319 -9.54987,-9.90587");
-        Stimuli.stroke(tail, tailColor);
-      }
-      var feetPositions = [[paperCenter[0]-6, paperCenter[1]+(47*bodyStretch)],
-                           [paperCenter[0]+9, paperCenter[1]+(52*bodyStretch)]];
-      function drawFeet(footPos) {
-        var foot = paper.path("M "+footPos[0].toString()+","+footPos[1].toString()+" c   -4.399089,0.11316 -7.038982,4.87269 -10.212137,8.224 4.826226,-2.61036 8.926115,-5.61798 10.461214,-3.94752 -1.485313,6.67276 -0.358531,8.74561 0,12.17151 l 3.487071,-12.17151 c 5.224559,2.71563 6.202493,7.26752 9.215831,10.52671 -1.077715,-3.29906 -2.116802,-8.64624 -4.711083,-10.91146 0.779699,-1.28702 4.098125,-1.19294 4.581633,-1.11636 -0.273048,-0.92977 -5.365348,-1.37347 -6.844693,-1.78849 z");
-        Stimuli.stroke(foot, "#999999");
-      }
-      feetPositions.map(drawFeet);
-      
-      var leftLeg = paper.path("M "+(paperCenter[0]-14).toString()+","+(paperCenter[1]+20).toString()+" c   0,2.96064 7.472295,25.98784 7.472295,25.98784 l 5.977836,1.31584 c 2.371438,-4.19555 4.387931,-8.67243 3.487072,-15.46112 z");
-      Stimuli.stroke(leftLeg, color);
-      leftLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
-      
-      var rightLeg = paper.path("M "+(paperCenter[0]).toString()+","+(paperCenter[1]+25).toString()+" c 0,2.96064 7.472295,25.98785 7.472295,25.98785 l 5.977836,1.31584 c 2.371438,-4.19569 4.387931,-8.67258 3.487071,-15.46113 z");
-      rightLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
-      Stimuli.stroke(rightLeg, color);
-      
-      var body = paper.path("m "+(paperCenter[0]+30).toString()+","+(paperCenter[1]+5).toString()+" c 2,8 6,15 6,24 0,4 -3,8 -7,9 -7,2 -15,0 -22,-2 -9,-2 -17,-7 -23,-14 -4,-6 -8,-12 -10,-19 -2,-7 1,-14 6,-18 7,-6 16,-8 25,-7 8,1 15,7 18,14 3,5 5,10 6,15 z");
-      //body.attr("fill", color);
-      Stimuli.stroke(body, Stimuli.makeGradient("r",color));
-      body.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
-      var wing = paper.path("m "+(paperCenter[0]).toString()+","+(paperCenter[1]-15).toString()+" c -4,13 -7,28 -3,42 22,24 45,48 67,72 -8,-23 -11,-48 -18,-72 -4,-14 -8,-28 -17,-40 -4,-6 -12,-10 -20,-7 -3,1 -6,3 -9,5 z");
-      Stimuli.stroke(wing, Stimuli.makeGradient("0-", color));
-      wing.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
-      return bodyStretch;
-    }
     /*\
      * Stimuli.Bird.draw
      [ method ]
@@ -870,12 +794,68 @@ var Stimuli = {
     \*/
     this.draw = function(label, crest, tail, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var color = Stimuli.myColor(baseColor);
-      var crestColor = Stimuli.myColor(this.baseCrestColor);
-      var tailColor = Stimuli.myColor(this.baseTailColor);
+      var color = Stimuli.myColor(this.color);
+      var crestColor = Stimuli.myColor(this.crestColor);
+      var tailColor = Stimuli.myColor(this.tailColor);
       var gradColor = Stimuli.makeGradient("r",color);
-      var bodyStretch = drawBody(paper, color, tail, gradColor, tailColor);
-      var headStretch = drawHead(paper, color, crest, gradColor, crestColor);
+      function drawHead() {
+        var headCenter = [paperCenter[0], paperCenter[1]-35];
+        var headStretch = ErinTools.uniformAroundMean(baseHeadStretch) * 2 + .7;
+        var head = paper.ellipse(headCenter[0], headCenter[1], 25*headStretch, 25);
+        Stimuli.stroke(head, gradColor);
+        if (crest) {
+          var crest = paper.path("M "+headCenter[0].toString()+","+(headCenter[1]-16).toString()+" c -3,-13 -3,-27 -2,-41 0,-5 0,-10 2,-15 2,1 2,6 2,9 1,14 2,29 2,44 1,-14 1,-29 5,-43 0,-2 3,-7 4,-2 1,10 0,20 -1,30 -1,5 -1,10 -2,14 3,-11 5,-23 8,-33 1,-3 2,-2 2,1 0,12 -2,24 -4,36 0,1 1,-3 1,-5 2,-9 4,-18 7,-27 3,-4 2,4 2,6 -1,10 -4,20 -7,30 2,-9 5,-18 9,-26 1,-3 4,-2 3,1 -1,10 -5,19 -9,28 -1,2 -1,2 0,0 2,-5 5,-11 9,-15 3,-1 0,5 0,7 -2,5 -5,10 -8,15 3,-4 6,-8 10,-10 3,1 -1,6 -2,7 -1,2 -5,6 -5,6 4,0 8,-2 12,-1 0,3 -5,4 -7,5 -2,1 -6,3 -7,2 4,1 9,2 12,5 -1,3 -6,1 -8,1 -2,0 -5,-1 -5,-2 3,2 7,3 9,7 -2,2 -7,0 -10,0 -2,-1 -5,-1 -2,-3 3,-4 4,-9 4,-14 -1,-7 -5,-14 -11,-18 -4,-3 -9,-1 -12,2 -2,1 -3,6 -4,5 -5,-10 -8,-21 -8,-32 -1,-3 2,-6 4,-2 4,8 5,17 7,26 0,1 0,3 1,4 z");
+          crest.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
+          Stimuli.stroke(crest, crestColor);
+        }
+        var leftEyePatch = paper.path("M "+(headCenter[0]-20).toString() +","+(headCenter[1]+5).toString() +" c 2,1 12,0 12,0 4,0 1,-8 -2,-12 -9,-10 -15,8 -11,12 z");
+        leftEyePatch.attr("fill", "#000000");
+        leftEyePatch.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
+        var rightEyePatch = paper.path("M "+(headCenter[0]+9).toString() +","+(headCenter[1]+7).toString() +" c -2,1 -4,0 -5,0 -1,0 -2,0 -3,-1 -1,-1 -1,-3 0,-4 1,-2 2,-5 3,-7 1,-1 3,-2 5,-2 3,0 6,0 9,1 2,1 3,3 3,5 0,2 -2,4 -4,5 -2,1 -5,2 -7,3 z");
+        var leftEyeDot = paper.circle(headCenter[0]-(13*headStretch), headCenter[1], 4);
+        leftEyeDot.attr("fill","#ffffff");
+        rightEyePatch.attr("fill", "#000000");
+        rightEyePatch.transform("s"+headStretch.toString()+",1,"+headCenter[0].toString()+","+headCenter[1].toString());
+        var rightEyeDot = paper.circle(headCenter[0]+(8*headStretch), (headCenter[1]+1), 4);
+        rightEyeDot.attr("fill","#ffffff");
+        var beak = paper.path("M "+(headCenter[0]-(6*headStretch)).toString()+","+(headCenter[1]+5).toString()+" c 0.0805,5.09883 -0.02228,10.30964 4,13 5.55789,-1.10878 6.47702,-6.85631 9,-11 -2.24042,-1.18583 -4.85841,-1.61651 -6.5,-4 -3.148068,2.13877 -4.594123,1.72452 -6.5,2 z");
+        Stimuli.stroke(beak, "#ffff00");
+        return headStretch;
+      }
+      function drawBody() {
+        var bodyStretch = ErinTools.uniformAroundMean(baseBodyStretch) * 1 + 0.5;
+        if (tail) {
+          //var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c  93.041702,66.6439 62.708612,55.1315 0.566359,6.6972 24.219543,16.1729 127.541683,98.4836 -2.315079,6.5466 70.203552,48.3289 71.370392,57.77 -4.801623,3.2366 31.342565,20.6587 80.305665,60.7674 -7.288272,-0.073 60.818577,41.2828 21.46453,21.8232 -8.136197,-2.2717 z");
+          var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c 137.26897,150.89247 82.32553,110.54987 0.30161,10.02344 46.18326,48.1754 176.28904,249.77883 -3.11677,7.44872 92.78521,131.08631 86.30285,142.69291 -5.89011,0.6876 37.68329,59.04719 107.18694,190.15081 -8.66356,-6.07301 65.48223,117.84362 17.00792,63.34319 -9.54987,-9.90587");
+          Stimuli.stroke(tail, tailColor);
+        }
+        var feetPositions = [[paperCenter[0]-6, paperCenter[1]+(47*bodyStretch)],
+                             [paperCenter[0]+9, paperCenter[1]+(52*bodyStretch)]];
+        function drawFeet(footPos) {
+          var foot = paper.path("M "+footPos[0].toString()+","+footPos[1].toString()+" c   -4.399089,0.11316 -7.038982,4.87269 -10.212137,8.224 4.826226,-2.61036 8.926115,-5.61798 10.461214,-3.94752 -1.485313,6.67276 -0.358531,8.74561 0,12.17151 l 3.487071,-12.17151 c 5.224559,2.71563 6.202493,7.26752 9.215831,10.52671 -1.077715,-3.29906 -2.116802,-8.64624 -4.711083,-10.91146 0.779699,-1.28702 4.098125,-1.19294 4.581633,-1.11636 -0.273048,-0.92977 -5.365348,-1.37347 -6.844693,-1.78849 z");
+          Stimuli.stroke(foot, "#999999");
+        }
+        feetPositions.map(drawFeet);
+        
+        var leftLeg = paper.path("M "+(paperCenter[0]-14).toString()+","+(paperCenter[1]+20).toString()+" c   0,2.96064 7.472295,25.98784 7.472295,25.98784 l 5.977836,1.31584 c 2.371438,-4.19555 4.387931,-8.67243 3.487072,-15.46112 z");
+        Stimuli.stroke(leftLeg, color);
+        leftLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+        
+        var rightLeg = paper.path("M "+(paperCenter[0]).toString()+","+(paperCenter[1]+25).toString()+" c 0,2.96064 7.472295,25.98785 7.472295,25.98785 l 5.977836,1.31584 c 2.371438,-4.19569 4.387931,-8.67258 3.487071,-15.46113 z");
+        rightLeg.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+        Stimuli.stroke(rightLeg, color);
+        
+        var body = paper.path("m "+(paperCenter[0]+30).toString()+","+(paperCenter[1]+5).toString()+" c 2,8 6,15 6,24 0,4 -3,8 -7,9 -7,2 -15,0 -22,-2 -9,-2 -17,-7 -23,-14 -4,-6 -8,-12 -10,-19 -2,-7 1,-14 6,-18 7,-6 16,-8 25,-7 8,1 15,7 18,14 3,5 5,10 6,15 z");
+        //body.attr("fill", color);
+        Stimuli.stroke(body, Stimuli.makeGradient("r",color));
+        body.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+        var wing = paper.path("m "+(paperCenter[0]).toString()+","+(paperCenter[1]-15).toString()+" c -4,13 -7,28 -3,42 22,24 45,48 67,72 -8,-23 -11,-48 -18,-72 -4,-14 -8,-28 -17,-40 -4,-6 -12,-10 -20,-7 -3,1 -6,3 -9,5 z");
+        Stimuli.stroke(wing, Stimuli.makeGradient("0-", color));
+        wing.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
+        return bodyStretch;
+      }
+      var bodyStretch = drawBody();
+      var headStretch = drawHead();
       var svgContainer = document.getElementById(label);
       svgContainer.setAttribute("width", (scaleFactor*Stimuli.containerWidth).toString() + "px");
       svgContainer.setAttribute("height", (scaleFactor*Stimuli.containerHeight).toString() + "px");
@@ -901,29 +881,29 @@ var Stimuli = {
   Microbe: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+30];
     /*\
-     * Stimuli.Microbe.baseColor
+     * Stimuli.Microbe.color
      [ property ]
      * A string. The hex code for the latent mean color of most of the microbe,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseColor = Stimuli.colorScheme.get();
+    this.color = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Microbe.baseBumpsColor
+     * Stimuli.Microbe.bumpsColor
      [ property ]
      * A string. The hex code for the latent mean color of the bumps,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseBumpsColor = Stimuli.colorScheme.get();
+    this.bumpsColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Microbe.baseSpikesColor
+     * Stimuli.Microbe.spikesColor
      [ property ]
      * A string. The hex code for the latent mean color of the spikes,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseSpikesColor = Stimuli.colorScheme.get();
+    this.spikesColor = Stimuli.colorScheme.get();
     var baseXRadius = Math.random();
     this.baseXRadius = baseXRadius;
     var baseYRadius = Math.random();
@@ -951,9 +931,9 @@ var Stimuli = {
     \*/
     this.draw = function(label, spikes, bumps, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var color = Stimuli.myColor(this.baseColor);
-      var bumpsColor = Stimuli.myColor(this.baseBumpsColor);
-      var spikesColor = Stimuli.myColor(this.baseSpikesColor);
+      var color = Stimuli.myColor(this.color);
+      var bumpsColor = Stimuli.myColor(this.bumpsColor);
+      var spikesColor = Stimuli.myColor(this.spikesColor);
       var xRadius = ErinTools.uniformAroundMean(baseXRadius);
       var yRadius = ErinTools.uniformAroundMean(baseYRadius);
       var xRad = getRadius(xRadius);
@@ -1058,21 +1038,21 @@ var Stimuli = {
     this.baseTallness = Math.random();
     this.baseFatness = Math.random();
     /*\
-     * Stimuli.Monster.baseColor
+     * Stimuli.Monster.color
      [ property ]
      * A string. The hex code for the latent mean color of the body of the
      * monster, sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseColor = Stimuli.colorScheme.get();
+    this.color = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Monster.baseAccentColor
+     * Stimuli.Monster.accentColor
      [ property ]
      * A string. The hex code for the latent mean color of the feet and horns,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseAccentColor = Stimuli.colorScheme.get();
+    this.accentColor = Stimuli.colorScheme.get();
     
     var data = $.csv.toObjects(Stimuli.images.monster);
 
@@ -1122,8 +1102,8 @@ var Stimuli = {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var tallness = ErinTools.uniformAroundMean(this.baseTallness);
       var fatness = ErinTools.uniformAroundMean(this.baseFatness);
-      var color = Stimuli.myColor(this.baseColor);
-      var accentColor = Stimuli.myColor(this.baseAccentColor);
+      var color = Stimuli.myColor(this.color);
+      var accentColor = Stimuli.myColor(this.accentColor);
       var lightAccent = Stimuli.lighten(accentColor, true);
       var colors = {"left eye": "#ffffff",
                     "left pupil": "#000000",
@@ -1199,21 +1179,21 @@ var Stimuli = {
     this.baseTailSize = Math.random();
     this.baseTallness = Math.random();
     /*\
-     * Stimuli.Fish.baseColor
+     * Stimuli.Fish.color
      [ property ]
      * A string. The hex code for the latent mean color of the fish body,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseColor = Stimuli.colorScheme.get();
+    this.color = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Fish.baseFinColor
+     * Stimuli.Fish.finColor
      [ property ]
      * A string. The hex code for the latent mean color of the fins,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseFinColor = Stimuli.colorScheme.get();
+    this.finColor = Stimuli.colorScheme.get();
     
     var data = $.csv.toObjects(Stimuli.images.fish);
 
@@ -1250,8 +1230,8 @@ var Stimuli = {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var tailSize = ErinTools.uniformAroundMean(this.baseTailSize);
       var tallness = ErinTools.uniformAroundMean(this.baseTallness);
-      var color = Stimuli.myColor(this.baseColor);
-      var finColor = Stimuli.myColor(this.baseFinColor);
+      var color = Stimuli.myColor(this.color);
+      var finColor = Stimuli.myColor(this.finColor);
       var gradColor = Stimuli.makeGradient("r", color);
       var colors = {"eye": "#ffffff",
                     "pupil": "#000000",
@@ -1307,29 +1287,29 @@ var Stimuli = {
     \*/
     this.petalColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Flower.baseCenterColor
+     * Stimuli.Flower.centerColor
      [ property ]
      * A string. The hex code for the latent mean color of the center,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseCenterColor = Stimuli.colorScheme.get();
+    this.centerColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Flower.baseSpotsColor
+     * Stimuli.Flower.spotsColor
      [ property ]
      * A string. The hex code for the latent mean color of the spots on the
      * petals, sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseSpotsColor = Stimuli.colorScheme.get();
+    this.spotsColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Flower.baseStemColor
+     * Stimuli.Flower.stemColor
      [ property ]
      * A string. The hex code for the latent mean color of the stem (and
      * consequently thorns, if there are any), sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseStemColor = Stimuli.colorScheme.get();
+    this.stemColor = Stimuli.colorScheme.get();
     this.baseCenterSize = Math.random();
     this.basePetalLength = Math.random();
     
@@ -1366,9 +1346,9 @@ var Stimuli = {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       
       var petalColor = Stimuli.myColor(this.petalColor);
-      var centerColor = Stimuli.myColor(this.baseCenterColor);
-      var spotsColor = Stimuli.myColor(this.baseSpotsColor);
-      var stemColor = Stimuli.myColor(this.baseStemColor);
+      var centerColor = Stimuli.myColor(this.centerColor);
+      var spotsColor = Stimuli.myColor(this.spotsColor);
+      var stemColor = Stimuli.myColor(this.stemColor);
       var centerSize = ErinTools.uniformAroundMean(this.baseCenterSize);
       var petalLength = ErinTools.uniformAroundMean(this.basePetalLength);
       
