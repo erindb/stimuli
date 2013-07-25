@@ -1,8 +1,16 @@
 //documentation with Dr.js -- https://github.com/dciccale/dr.js 
 
-var ErinTools = {
+var StimuliTools = {
   shuffle: function(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;}, // non-destructive.
 
+/*\
+ * StimuliTools.ColorRandomizer
+ [ class ]
+ * Produces a randomly ordered bank of hues each of which is seperated from the
+ * other by 1/nSteps (nSteps is by default 10) and offset from 0 by a random number
+ * between 0 and 1/nSteps.
+ - nSteps (number) by default 10, maximum number of hues to hold in the hue bank at a time
+\*/
   ColorRandomizer: function(nSteps) {
     var nSteps = nSteps || 10;
     function hues(n) {
@@ -11,18 +19,24 @@ var ErinTools = {
       for (var i=0;i<n-1;i++) {
         h.push((i/n)+offset);
       }
-      return ErinTools.shuffle(h);
+      return StimuliTools.shuffle(h);
     }
     var myHues = hues(nSteps);
-    
+    /*\
+    * StimuliTools.ColorRandomizer.get
+    [ method ]
+    * Gets the next random color. When the hue bank becomes empty, this method
+    * updates the hue bank with the same nSteps but a new offset.
+    = randomColor (string) rgb hex color using the next value in the hue bank, full saturation, and close to full brightness.
+    \*/
     this.get = get;
     function get(something, saturation, value) {
       if (myHues.length < 1) {
         myHues = hues(nSteps);
       }
       var h = myHues.shift();
-      var s = ErinTools.uniformAroundMean(.99, .1);
-      var v = ErinTools.uniformAroundMean(.99, .1);
+      var s = StimuliTools.uniformAroundMean(.99, .1);
+      var v = StimuliTools.uniformAroundMean(.99, .1);
       return Raphael.hsb2rgb(h, s, v).hex;
     }
   },
@@ -89,7 +103,14 @@ var Stimuli = {
   strokeWidth: 2,
   containerWidth: 250,
   containerHeight: 270,
-  colorScheme: new ErinTools.ColorRandomizer(),
+  /*\
+  * Stimuli.colorSceme
+  [ property ]
+  * an instance of StimuliTools.ColorRandomizer() so that all colors in the stimuli
+  * are different from each other and the set of colors is
+  * different each time the file stimuli.js is run.
+  \*/
+  colorScheme: new StimuliTools.ColorRandomizer(),
   
   viewBox: function(label, scaleFactor) {
     var svgContainer = document.getElementById(label);
@@ -155,9 +176,9 @@ var Stimuli = {
     var sVar = sVar || 0.1;
     var vVar = vVar || 0.1;
     var c = Raphael.color(meanColor);
-    var hue = ErinTools.uniformAroundMean(c.h, hVar);
-    var saturation = ErinTools.uniformAroundMean(c.s, sVar);
-    var value = ErinTools.uniformAroundMean(c.v, vVar);
+    var hue = StimuliTools.uniformAroundMean(c.h, hVar);
+    var saturation = StimuliTools.uniformAroundMean(c.s, sVar);
+    var value = StimuliTools.uniformAroundMean(c.v, vVar);
     var newColor = Raphael.hsb2rgb(hue, saturation, value);
     return newColor.hex;
   },
@@ -166,37 +187,49 @@ var Stimuli = {
    * Stimuli.Tree
    [ class ]
    * Represents a tree category.
+   > Here's how to draw some trees:
+   * In the html:
+   | <svg id="fepTree1"></svg>
+   | <svg id="fepTree2"></svg>
+   | <svg id="fepTree3"></svg>
+   | <svg id="wugTree1"></svg>
+   * In the javascript:
+   | var fepTree = new Stimuli.Tree(); //create a kind of tree called "feps"
+   | var wugTree = new Stimuli.Tree(); //create a kind of tree called "wugs"
+   | //draw some feps
+   | var fepTree1 = fepTree.draw("fepTree1", true, false, 0.7); //berries
+   | var fepTree2 = fepTree.draw("fepTree2", true, true, 0.7); //berries & leaves
+   | var fepTree3 = fepTree.draw("fepTree3", false, false, 0.7); //no berries or leaves
+   | //draw a wug
+   | var wugTree1 = fepTree.draw("wugTree1", false, true, 0.7); //leaves
+   | var slightlyDifferentColors = [fepTree1.trunkColor, fepTree2.trunkColor];
+   | var veryDifferentColors = [fepTree.trunkColor, wugTree.trunkColor];
   \*/
   Tree: function() {
-    var baseLeafColor = Stimuli.colorScheme.get();
-    var baseTrunkColor = Stimuli.colorScheme.get();
-    var baseWidth = Math.random();
-    var baseHeight = Math.random();
-    var baseBerryColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Tree.baseBerryColor
+     * Stimuli.Tree.berryColor
      [ property ]
      * A string. The hex code for the latent mean color of the berries,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseBerryColor = baseBerryColor;
+    this.berryColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Tree.baseLeafColor
+     * Stimuli.Tree.leafColor
      [ property ]
      * A string. The hex code for the latent mean color of the leaves,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseLeafColor = baseLeafColor;
+    this.leafColor = Stimuli.colorScheme.get();
     /*\
-     * Stimuli.Tree.baseTrunkColor
+     * Stimuli.Tree.trunkColor
      [ property ]
      * A string. The hex code for the latent mean color of the trunk,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.baseTrunkColor = baseTrunkColor;
+    this.trunkColor = Stimuli.colorScheme.get();
     /*\
      * Stimuli.Tree.baseWidth
      [ property ]
@@ -205,7 +238,7 @@ var Stimuli = {
      * and 1 represents the maximum width, sampled from uniform.
      * E.g. 0.13984732927294.".
     \*/
-    this.baseWidth = baseWidth;
+    this.width = Math.random();
     /*\
      * Stimuli.Tree.baseHeight
      [ property ]
@@ -214,7 +247,7 @@ var Stimuli = {
      * and 1 represents the maximum height, sampled from uniform.
      * E.g. 0.13984732927294.".
     \*/
-    this.baseHeight = baseHeight;
+    this.height = Math.random();
 
     //-----------HEIGHT AND WIDTH OF TREE----------//
     //for x values, distance from 101.5 should multiply by 1+ uniform(0,1)
@@ -233,218 +266,6 @@ var Stimuli = {
     var xCenter = (origTrunkX[locs["bottom left"]] +
                    origTrunkX[locs["bottom right"]])/2;
 
-    //-----------TRUNK--------------//
-    function drawTrunk(paper, trunkX, trunkY) {
-      var trunkColor = Stimuli.myColor(baseTrunkColor);
-      var trunkGradient = Stimuli.makeGradient("0-", trunkColor);
-      var trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
-      for (var i=1; i < trunkX.length; i++) {
-        trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
-      }
-      trunkPath += " z";
-      var trunk = paper.path(trunkPath);
-      Stimuli.stroke(trunk, trunkGradient);
-      return trunkColor;
-    }
-
-    //-----------BRANCHES-----------//
-    function drawBranches(paper, trunkX, trunkY) {
-      var branchPathStrings = [
-                           "M " + trunkX[locs["small lower"]] + "," + 
-                           trunkY[locs["small lower"]] + " c 0,-3 0,-6 -1,-9 " +
-                           "-1,-5 -4,-9 -8,-12 -4,-2 -9,-2 -12,1 -3,2 -4,7 " +
-                           "-2,10 1,3 4,4 7,3 3,-1 5,-5 3,-7 -1,-2 -3,-2 -5,-1" +
-                           " -1,1 -1,3 1,4 1,1 2,-3 0,-2", //small lower branch
-
-                           "M "+trunkX[locs["lower left"]] + "," +
-                           trunkY[locs["lower left"]] + " c -9,-12 -32,-13 " +
-                           "-44,-6 -4,3 -11,0 -16,-2 -3,-2 -6,-5 -7,-9 0,-4 " +
-                           "2,-8 6,-9 2,-1 5,0 7,2 2,2 2,6 0,8 -1,2 -4,2 -6,0" +
-                           " -1,-1 -1,-4 0,-5 1,-1 3,0 3,1 1,1 " + 
-                           "-2,2 -1,1", //upper tendril off of lower left branch
-
-                           "M " + trunkX[locs["lower left"]] + "," +
-                           trunkY[locs["lower left"]] + " c -11,-12 -27,-14 " +
-                           "-40,-8 -5,2 -10,6 -13,11 -7,11 -9,24 -8,37 1,9 " +
-                           "8,17 17,17 8,0 16,-7 16,-15 1,-7 -5,-15 -13,-15 " +
-                           "-7,0 -12,6 -11,13 1,5 6,9 11,8 4,-1 7,-7 4,-11 " +
-                           "-2,-4 -9,-2 -8,2 " +
-                           "0,3 6,3 4,0", //main part of lower left branch
-
-                           "M " + trunkX[locs["lower left"]] + "," +
-                           trunkY[locs["lower left"]]+" c -3,-3 -6,-7 -10,-8 " +
-                           "-8,-3 -17,0 -22,6 -4,6 -5,15 0,21 3,3 8,5 12,4 " +
-                           "4,-1 7,-6 6,-10 0,-3 -3,-6 -6,-5 -2,0 -4,3 -3,5 " +
-                           "0,1 3,2 3,0", //lower tendril off of lower left branch
-
-                           "M " + trunkX[locs["upper left"]] + "," +
-                           trunkY[locs["upper left"]]+" c 0,-2 -1,-5 -2,-7 " +
-                           "-4,-8 -10,-15 -18,-17 -6,-2 -13,-1 -18,2 -4,2 -8,7" +
-                           " -8,12 0,5 5,10 10,9 4,0 8,-5 7,-9 0,-4 -5,-7 " +
-                           "-9,-5 -3,1 -4,5 -2,8 2,2 5,2 6,-1 1,-2 -1,-4 -3,-4" +
-                           " -2,0 -2,4 0,3", //tendril #1 of upper left branch
-
-                           "M " + trunkX[locs["upper left"]] + "," +
-                           trunkY[locs["upper left"]] + " c 1,-12 -2,-24 " +
-                           "-10,-33 -9,-9 -23,-12 -35,-9 -5,1 -10,4 -15,7 -3,4" +
-                           " -4,10 0,14 5,5 15,3 18,-4 1,-3 -1,-7 -5,-8 -3,0 " +
-                           "-7,2 -6,6 0,4 7,2 5,-1 0,-1 " +
-                           "-3,0 -1,1", //tendril #2 of upper left branch
-
-                           "M " + trunkX[locs["upper left"]] + "," +
-                           trunkY[locs["upper left"]] + " c 2,-24 -15,-45 " +
-                           "-10,-53 1,-2 4,-3 8,-3 4,0 7,5 6,9 -1,3 -4,5 -7,4" +
-                           " -2,-1 -4,-3 -3,-5 0,-2 2,-3 4,-2 1,0 2,2 1,3 0,1" +
-                           " -1,1 -2,1 0,0 -1,-1 0,-1 " +
-                           "0,0 0,0 1,0", //tendril #3 of upper left branch
-
-                           "M " + trunkX[locs["upper left"]] + "," +
-                           trunkY[locs["upper left"]] + " c -1,-15 1,-35 13,-44" +
-                           " 4,-3 11,-6 17,-5 8,2 15,8 13,17 -1,7 -8,12 " +
-                           "-15,11 -5,-1 -9,-6 -8,-11 1,-4 5,-7 9,-6 3,1 5,3 " +
-                           "4,6 -1,2 -2,3 -4,3 -1,0 -2,-2 -1,-3 0,-1 " +
-                           "1,-1 2,-1", //tendril #4 of upper left branch
-
-                           "M " + trunkX[locs["upper right"]] + "," +
-                           trunkY[locs["upper right"]] + " c 5,-8 13,-16 " +
-                           "23,-19 17,-6 37,2 44,18 4,8 3,19 -2,26 -3,5 -10,7" +
-                           " -16,4 -6,-2 -11,-9 -9,-15 1,-5 8,-9 13,-6 4,2 " +
-                           "7,8 3,11 -3,3 -8,1 -8,-3 -1,-4 " +
-                           "6,-3 4,0", //upper tendril of upper right branch
-
-                           "M " + trunkX[locs["upper right"]] + "," +
-                           trunkY[locs["upper right"]] + " c 2,-5 6,-8 10,-11 " +
-                           "6,-4 12,-8 20,-10 2,0 4,1 6,1 6,1 11,5 13,10 1,4 " +
-                           "0,10 -4,12 -3,2 -8,0 -9,-3 -1,-3 0,-7 3,-8 3,-1 " +
-                           "5,2 4,4 0,2 -5,2 -4,0 " +
-                           "0,-1 2,-1 1,0", //lower tendril of upper right branch
-
-                           "M " + trunkX[locs["lower right"]] + "," +
-                           trunkY[locs["lower right"]]+" c 22,-19 40,-3 40,20" +
-                           " -2,11 -11,20 -22,18 -8,-1 -15,-10 -13,-19 1,-7 " +
-                           "8,-13 14,-11 5,1 9,6 8,12 -1,4 -5,7 -8,6 -2,-1 " +
-                           "-4,-3 -3,-6 1,-1 2,-3 4,-2" //lower right branch
-                          ];
-      for (var i=0; i<branchPathStrings.length; i++) {
-        var pathString = branchPathStrings[i];
-        var myPath = paper.path(pathString);
-        Stimuli.stroke(myPath, ""); 
-      }
-    }
-
-    //------------LEAVES------------//
-    function drawLeaves(paper, trunkX, trunkY) {
-      /*xposition and yposition of where stem attaches to tree, direction leaves
-      curve toward: either clockwise or counterclockwise, and then what branch the
-      berry is on, and then the angle of rotation.*/
-      var leafYs = [152, 148, 154, 158, 152, 116, 106, 96, 98, 75, 65, 82, 65].map(function(x) {return Stimuli.containerHeight - x;});
-      var leafPositions = [ [75, leafYs[0], "clock", "upper left", -20],
-                            [95, leafYs[1], "clock", "upper left", 0],
-                            [128, leafYs[2], "counter", "upper left", 0],
-                            [145, leafYs[3], "counter", "upper left", 10],
-                            [155, leafYs[4], "counter", "upper left", 60],
-                            [180, leafYs[5], "counter", "upper right", 0],
-                            [192, leafYs[6], "counter", "upper right", 25],
-                            [195, leafYs[7], "counter", "upper right", 60],
-                            [97, leafYs[8], "clock", "lower left", 20],
-                            [49, leafYs[9], "clock", "lower left", -40],
-                            [46, leafYs[10], "clock", "lower left", -100],
-                            [145, leafYs[11], "counter", "lower right", -5],
-                            [170, leafYs[12], "counter", "lower right", 80] ];
-      var leafColor = Stimuli.myColor(baseLeafColor);
-      function drawLeaf(pos) {
-        var direction = pos[2];
-        var branch = pos[3];
-        var angle = pos[4];
-        var index = locs[branch];
-        var changeX = trunkX[index] - origTrunkX[index];
-        var changeY = trunkY[index] - origTrunkY[index];
-        var xpos = pos[0] + changeX;
-        var ypos = pos[1] + changeY;
-        if (direction == "clock") {
-          var stemPath = "M " + xpos.toString() + "," + ypos.toString() +
-                     "c -4.66532,-5.31951 -8.13198,-12.67083 -8.09411,-19.20008";
-          var leafPath = "M " + (xpos - 9).toString() + "," + (ypos-29).toString() +
-                     " c 7.88487,4.26057 10.52989,11.20663 10.52989,11.20663 0.32771,12.87926 -8.71699,17.94538 -15.71952,8.05647 -0.86462,-4.4842 0.51588,-14.34595 5.18963,-19.2631 z";
-        } else {
-          var stemPath = "M " + xpos.toString() + "," + ypos.toString() +
-                     "c 4.46508,-4.3145 8.59388,-12.94298 8.52128,-19.01436";
-          var leafPath = "M " + (xpos+10).toString() + "," + (ypos-29).toString() +
-                     " c -7.97815,4.08324 -10.77777,10.96844 -10.77777,10.96844 0.44351,4.6407 0.50774,7.66519 4.207,11.9888 3.95476,2.09474 8.30737,0.62026 11.3285,-3.58295 0.96464,-4.46375 -0.19507,-14.3539 -4.75773,-19.37429 z";
-        }
-        var leaf = paper.path(leafPath);
-        Stimuli.stroke(leaf, leafColor);
-        leaf.rotate(angle, xpos, ypos);
-
-        var stem = paper.path(stemPath);
-        Stimuli.stroke(stem, "");
-        stem.rotate(angle, xpos, ypos);
-        //stem.transorm("r" + angle.toString + "," + xpos.toString() + "," +
-        //              ypos.toString());
-      }
-      leafPositions.map(drawLeaf);
-      return leafColor;
-    }
-
-    //------------BERRIES------------//
-    function drawBerries(paper, trunkX, trunkY) {
-      /*xposition and yposition of upper left-hand corner, direction berries "fall":
-      either out to the left or out to the right, and then what branch the berry
-      is on.*/
-      var berriesYs = [140, 153, 166, 136, 149, 119, 101, 83, 83, 55, 57].map(function(x) {return Stimuli.containerHeight - x;});
-      var berryPositions = [ [51, berriesYs[0], "left", "upper left"],
-                             [83, berriesYs[1], "left", "upper left"],
-                             [115, berriesYs[2], "right", "upper left"],
-                             [116, berriesYs[3], "right", "upper left"],
-                             [157, berriesYs[4], "right", "upper left"],
-                             [182, berriesYs[5], "right", "upper right"],
-                             [70, berriesYs[6], "left", "lower left"],
-                             [90, berriesYs[7], "right", "lower left"],
-                             [143, berriesYs[8], "right", "lower right"],
-                             [54, berriesYs[9], "left", "lower left"],
-                             [172, berriesYs[10], "right", "lower right"] ];
-      var berryColor = Stimuli.myColor(baseBerryColor);
-      function drawBerryClumps(positions) {
-        var berryRadius = 4.5;
-        /* drawBerryClump takes in the position where the stem connects to the
-        branch and draws two joined berries there */
-        function drawBerryClump(pos) {
-          // drawBerry draws one berry as a circle with paperCenter at x,y
-          function drawBerry(p) {
-            var berry = paper.circle(p[0], p[1], berryRadius);
-            Stimuli.stroke(berry, berryColor);  
-          }
-          var branch = pos[3];
-          var index = locs[branch];
-          var changeX = trunkX[index] - origTrunkX[index];
-          var changeY = trunkY[index] - origTrunkY[index];
-          var xpos = pos[0] + changeX;
-          var ypos = pos[1] + changeY;
-          var direction = pos[2];
-          if (direction == "right") {
-            var rightBerryPos = [xpos+13, ypos+14];
-            var leftBerryPos = [xpos+1, ypos+19];
-            var stemXPos = (xpos+12).toString();
-            var stemYPos = (ypos+10).toString();
-            var stem = paper.path("M" + stemXPos + " " + stemYPos +
-                                  "c -0.3 -7 -6 -7 -11 -8, 2 4 4 8 -1 13");
-          } else {
-            var rightBerryPos = [xpos-13, ypos+14];
-            var leftBerryPos = [xpos-1, ypos+19];
-            var stemXPos = (xpos-12).toString();
-            var stemYPos = (ypos+10).toString();
-            var stem = paper.path("M" + stemXPos + " " + stemYPos +
-                                  "c 0.3 -7 6 -7 11 -8, -2 4 -4 8 1 13");
-          }
-          Stimuli.stroke(stem, "");
-          drawBerry(rightBerryPos);
-          drawBerry(leftBerryPos);
-        }
-        positions.map(drawBerryClump);
-      }
-      drawBerryClumps(berryPositions);
-      return berryColor;
-    }
 
     //-------DRAW TREE------//
     /*\
@@ -461,29 +282,244 @@ var Stimuli = {
      o     berryColor (string) hex color of berries,
      o     leafColor (string) hex color of leaves,
      o     trunkColor (string) hex color of trunk -- the trunk is actually colored with a linear gradient from lighter to darker whose middle value is this color,
-     o     width (number) 1 is max width of trunk and 0 is min,
-     o     height (number) 1 is max height of trunk and 0 is min,
+     o     width (number) 1 is max width of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     height (number) 1 is max height of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     berries (string) same as input parameter,
      o     leaves (string) same as input parameter,
      o }
     \*/
     this.draw = function(label, berries, leaves, scaleFactor) {
-      var w = ErinTools.uniformAroundMean(baseWidth);
-      var h = ErinTools.uniformAroundMean(baseHeight);
+      var w = StimuliTools.uniformAroundMean(this.width);
+      var h = StimuliTools.uniformAroundMean(this.height);
+      var trunkColor = Stimuli.myColor(this.trunkColor);
+      var leafColor = Stimuli.myColor(this.leafColor);
+      var berryColor = Stimuli.myColor(this.berryColor);
       var widthFactor = w * 1.5 + 0.7;
       var heightFactor = h + 0.7;
+      //this is badly names, this is actually a deterministic function of w, which was randomly generated
       function randWidth(x) {
         return (xCenter + (x-xCenter)*widthFactor).toString();
       }
+      //this is badly names, this is actually a deterministic function of h, which was randomly generated
       function randHeight(y) {
         var lowest = origTrunkY[locs["bottom left"]];
         return lowest + heightFactor * (y - lowest);
       }
       var trunkX = origTrunkX.map(randWidth);
       var trunkY = origTrunkY.map(randHeight);
+      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
 
-      var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight); //apparently can't put var here
+      //-----------TRUNK--------------//
+      function drawTrunk(paper, trunkX, trunkY) {
+        var trunkGradient = Stimuli.makeGradient("0-", trunkColor);
+        var trunkPath = "M " + trunkX[0] + "," + trunkY[0] + " C";
+        for (var i=1; i < trunkX.length; i++) {
+          trunkPath += (" " + trunkX[i] + "," + trunkY[i]);
+        }
+        trunkPath += " z";
+        var trunk = paper.path(trunkPath);
+        Stimuli.stroke(trunk, trunkGradient);
+        return trunkColor;
+      }
+
+      //-----------BRANCHES-----------//
+      function drawBranches(paper, trunkX, trunkY) {
+        var branchPathStrings = [
+                             "M " + trunkX[locs["small lower"]] + "," + 
+                             trunkY[locs["small lower"]] + " c 0,-3 0,-6 -1,-9 " +
+                             "-1,-5 -4,-9 -8,-12 -4,-2 -9,-2 -12,1 -3,2 -4,7 " +
+                             "-2,10 1,3 4,4 7,3 3,-1 5,-5 3,-7 -1,-2 -3,-2 -5,-1" +
+                             " -1,1 -1,3 1,4 1,1 2,-3 0,-2", //small lower branch
+
+                             "M "+trunkX[locs["lower left"]] + "," +
+                             trunkY[locs["lower left"]] + " c -9,-12 -32,-13 " +
+                             "-44,-6 -4,3 -11,0 -16,-2 -3,-2 -6,-5 -7,-9 0,-4 " +
+                             "2,-8 6,-9 2,-1 5,0 7,2 2,2 2,6 0,8 -1,2 -4,2 -6,0" +
+                             " -1,-1 -1,-4 0,-5 1,-1 3,0 3,1 1,1 " + 
+                             "-2,2 -1,1", //upper tendril off of lower left branch
+
+                             "M " + trunkX[locs["lower left"]] + "," +
+                             trunkY[locs["lower left"]] + " c -11,-12 -27,-14 " +
+                             "-40,-8 -5,2 -10,6 -13,11 -7,11 -9,24 -8,37 1,9 " +
+                             "8,17 17,17 8,0 16,-7 16,-15 1,-7 -5,-15 -13,-15 " +
+                             "-7,0 -12,6 -11,13 1,5 6,9 11,8 4,-1 7,-7 4,-11 " +
+                             "-2,-4 -9,-2 -8,2 " +
+                             "0,3 6,3 4,0", //main part of lower left branch
+
+                             "M " + trunkX[locs["lower left"]] + "," +
+                             trunkY[locs["lower left"]]+" c -3,-3 -6,-7 -10,-8 " +
+                             "-8,-3 -17,0 -22,6 -4,6 -5,15 0,21 3,3 8,5 12,4 " +
+                             "4,-1 7,-6 6,-10 0,-3 -3,-6 -6,-5 -2,0 -4,3 -3,5 " +
+                             "0,1 3,2 3,0", //lower tendril off of lower left branch
+
+                             "M " + trunkX[locs["upper left"]] + "," +
+                             trunkY[locs["upper left"]]+" c 0,-2 -1,-5 -2,-7 " +
+                             "-4,-8 -10,-15 -18,-17 -6,-2 -13,-1 -18,2 -4,2 -8,7" +
+                             " -8,12 0,5 5,10 10,9 4,0 8,-5 7,-9 0,-4 -5,-7 " +
+                             "-9,-5 -3,1 -4,5 -2,8 2,2 5,2 6,-1 1,-2 -1,-4 -3,-4" +
+                             " -2,0 -2,4 0,3", //tendril #1 of upper left branch
+
+                             "M " + trunkX[locs["upper left"]] + "," +
+                             trunkY[locs["upper left"]] + " c 1,-12 -2,-24 " +
+                             "-10,-33 -9,-9 -23,-12 -35,-9 -5,1 -10,4 -15,7 -3,4" +
+                             " -4,10 0,14 5,5 15,3 18,-4 1,-3 -1,-7 -5,-8 -3,0 " +
+                             "-7,2 -6,6 0,4 7,2 5,-1 0,-1 " +
+                             "-3,0 -1,1", //tendril #2 of upper left branch
+
+                             "M " + trunkX[locs["upper left"]] + "," +
+                             trunkY[locs["upper left"]] + " c 2,-24 -15,-45 " +
+                             "-10,-53 1,-2 4,-3 8,-3 4,0 7,5 6,9 -1,3 -4,5 -7,4" +
+                             " -2,-1 -4,-3 -3,-5 0,-2 2,-3 4,-2 1,0 2,2 1,3 0,1" +
+                             " -1,1 -2,1 0,0 -1,-1 0,-1 " +
+                             "0,0 0,0 1,0", //tendril #3 of upper left branch
+
+                             "M " + trunkX[locs["upper left"]] + "," +
+                             trunkY[locs["upper left"]] + " c -1,-15 1,-35 13,-44" +
+                             " 4,-3 11,-6 17,-5 8,2 15,8 13,17 -1,7 -8,12 " +
+                             "-15,11 -5,-1 -9,-6 -8,-11 1,-4 5,-7 9,-6 3,1 5,3 " +
+                             "4,6 -1,2 -2,3 -4,3 -1,0 -2,-2 -1,-3 0,-1 " +
+                             "1,-1 2,-1", //tendril #4 of upper left branch
+
+                             "M " + trunkX[locs["upper right"]] + "," +
+                             trunkY[locs["upper right"]] + " c 5,-8 13,-16 " +
+                             "23,-19 17,-6 37,2 44,18 4,8 3,19 -2,26 -3,5 -10,7" +
+                             " -16,4 -6,-2 -11,-9 -9,-15 1,-5 8,-9 13,-6 4,2 " +
+                             "7,8 3,11 -3,3 -8,1 -8,-3 -1,-4 " +
+                             "6,-3 4,0", //upper tendril of upper right branch
+
+                             "M " + trunkX[locs["upper right"]] + "," +
+                             trunkY[locs["upper right"]] + " c 2,-5 6,-8 10,-11 " +
+                             "6,-4 12,-8 20,-10 2,0 4,1 6,1 6,1 11,5 13,10 1,4 " +
+                             "0,10 -4,12 -3,2 -8,0 -9,-3 -1,-3 0,-7 3,-8 3,-1 " +
+                             "5,2 4,4 0,2 -5,2 -4,0 " +
+                             "0,-1 2,-1 1,0", //lower tendril of upper right branch
+
+                             "M " + trunkX[locs["lower right"]] + "," +
+                             trunkY[locs["lower right"]]+" c 22,-19 40,-3 40,20" +
+                             " -2,11 -11,20 -22,18 -8,-1 -15,-10 -13,-19 1,-7 " +
+                             "8,-13 14,-11 5,1 9,6 8,12 -1,4 -5,7 -8,6 -2,-1 " +
+                             "-4,-3 -3,-6 1,-1 2,-3 4,-2" //lower right branch
+                            ];
+        for (var i=0; i<branchPathStrings.length; i++) {
+          var pathString = branchPathStrings[i];
+          var myPath = paper.path(pathString);
+          Stimuli.stroke(myPath, ""); 
+        }
+      }
+
+      //------------LEAVES------------//
+      function drawLeaves(paper, trunkX, trunkY) {
+        /*xposition and yposition of where stem attaches to tree, direction leaves
+        curve toward: either clockwise or counterclockwise, and then what branch the
+        berry is on, and then the angle of rotation.*/
+        var leafYs = [152, 148, 154, 158, 152, 116, 106, 96, 98, 75, 65, 82, 65].map(function(x) {return Stimuli.containerHeight - x;});
+        var leafPositions = [ [75, leafYs[0], "clock", "upper left", -20],
+                              [95, leafYs[1], "clock", "upper left", 0],
+                              [128, leafYs[2], "counter", "upper left", 0],
+                              [145, leafYs[3], "counter", "upper left", 10],
+                              [155, leafYs[4], "counter", "upper left", 60],
+                              [180, leafYs[5], "counter", "upper right", 0],
+                              [192, leafYs[6], "counter", "upper right", 25],
+                              [195, leafYs[7], "counter", "upper right", 60],
+                              [97, leafYs[8], "clock", "lower left", 20],
+                              [49, leafYs[9], "clock", "lower left", -40],
+                              [46, leafYs[10], "clock", "lower left", -100],
+                              [145, leafYs[11], "counter", "lower right", -5],
+                              [170, leafYs[12], "counter", "lower right", 80] ];
+        function drawLeaf(pos) {
+          var direction = pos[2];
+          var branch = pos[3];
+          var angle = pos[4];
+          var index = locs[branch];
+          var changeX = trunkX[index] - origTrunkX[index];
+          var changeY = trunkY[index] - origTrunkY[index];
+          var xpos = pos[0] + changeX;
+          var ypos = pos[1] + changeY;
+          if (direction == "clock") {
+            var stemPath = "M " + xpos.toString() + "," + ypos.toString() +
+                       "c -4.66532,-5.31951 -8.13198,-12.67083 -8.09411,-19.20008";
+            var leafPath = "M " + (xpos - 9).toString() + "," + (ypos-29).toString() +
+                       " c 7.88487,4.26057 10.52989,11.20663 10.52989,11.20663 0.32771,12.87926 -8.71699,17.94538 -15.71952,8.05647 -0.86462,-4.4842 0.51588,-14.34595 5.18963,-19.2631 z";
+          } else {
+            var stemPath = "M " + xpos.toString() + "," + ypos.toString() +
+                       "c 4.46508,-4.3145 8.59388,-12.94298 8.52128,-19.01436";
+            var leafPath = "M " + (xpos+10).toString() + "," + (ypos-29).toString() +
+                       " c -7.97815,4.08324 -10.77777,10.96844 -10.77777,10.96844 0.44351,4.6407 0.50774,7.66519 4.207,11.9888 3.95476,2.09474 8.30737,0.62026 11.3285,-3.58295 0.96464,-4.46375 -0.19507,-14.3539 -4.75773,-19.37429 z";
+          }
+          var leaf = paper.path(leafPath);
+          Stimuli.stroke(leaf, leafColor);
+          leaf.rotate(angle, xpos, ypos);
+
+          var stem = paper.path(stemPath);
+          Stimuli.stroke(stem, "");
+          stem.rotate(angle, xpos, ypos);
+          //stem.transorm("r" + angle.toString + "," + xpos.toString() + "," +
+          //              ypos.toString());
+        }
+        leafPositions.map(drawLeaf);
+        return leafColor;
+      }
+
+      //------------BERRIES------------//
+      function drawBerries(paper, trunkX, trunkY) {
+        /*xposition and yposition of upper left-hand corner, direction berries "fall":
+        either out to the left or out to the right, and then what branch the berry
+        is on.*/
+        var berriesYs = [140, 153, 166, 136, 149, 119, 101, 83, 83, 55, 57].map(function(x) {return Stimuli.containerHeight - x;});
+        var berryPositions = [ [51, berriesYs[0], "left", "upper left"],
+                               [83, berriesYs[1], "left", "upper left"],
+                               [115, berriesYs[2], "right", "upper left"],
+                               [116, berriesYs[3], "right", "upper left"],
+                               [157, berriesYs[4], "right", "upper left"],
+                               [182, berriesYs[5], "right", "upper right"],
+                               [70, berriesYs[6], "left", "lower left"],
+                               [90, berriesYs[7], "right", "lower left"],
+                               [143, berriesYs[8], "right", "lower right"],
+                               [54, berriesYs[9], "left", "lower left"],
+                               [172, berriesYs[10], "right", "lower right"] ];
+        function drawBerryClumps(positions) {
+          var berryRadius = 4.5;
+          /* drawBerryClump takes in the position where the stem connects to the
+          branch and draws two joined berries there */
+          function drawBerryClump(pos) {
+            // drawBerry draws one berry as a circle with paperCenter at x,y
+            function drawBerry(p) {
+              var berry = paper.circle(p[0], p[1], berryRadius);
+              Stimuli.stroke(berry, berryColor);  
+            }
+            var branch = pos[3];
+            var index = locs[branch];
+            var changeX = trunkX[index] - origTrunkX[index];
+            var changeY = trunkY[index] - origTrunkY[index];
+            var xpos = pos[0] + changeX;
+            var ypos = pos[1] + changeY;
+            var direction = pos[2];
+            if (direction == "right") {
+              var rightBerryPos = [xpos+13, ypos+14];
+              var leftBerryPos = [xpos+1, ypos+19];
+              var stemXPos = (xpos+12).toString();
+              var stemYPos = (ypos+10).toString();
+              var stem = paper.path("M" + stemXPos + " " + stemYPos +
+                                    "c -0.3 -7 -6 -7 -11 -8, 2 4 4 8 -1 13");
+            } else {
+              var rightBerryPos = [xpos-13, ypos+14];
+              var leftBerryPos = [xpos-1, ypos+19];
+              var stemXPos = (xpos-12).toString();
+              var stemYPos = (ypos+10).toString();
+              var stem = paper.path("M" + stemXPos + " " + stemYPos +
+                                    "c 0.3 -7 6 -7 11 -8, -2 4 -4 8 1 13");
+            }
+            Stimuli.stroke(stem, "");
+            drawBerry(rightBerryPos);
+            drawBerry(leftBerryPos);
+          }
+          positions.map(drawBerryClump);
+        }
+        drawBerryClumps(berryPositions);
+        return berryColor;
+      }
+      
       var trunkColor = drawTrunk(paper, trunkX, trunkY);
       drawBranches(paper, trunkX, trunkY);
       if (leaves) {
@@ -517,11 +553,28 @@ var Stimuli = {
    * Stimuli.Bug
    [ class ]
    * Represents a bug category.
+   > Here's how to draw some bugs:
+   * In the html:
+   | <svg id="fepBug1"></svg>
+   | <svg id="fepBug2"></svg>
+   | <svg id="fepBug3"></svg>
+   | <svg id="wugBug1"></svg>
+   * In the javascript:
+   | var fepBug = new Stimuli.Bug(); //create a kind of bug called "feps"
+   | var wugBug = new Stimuli.Bug(); //create a kind of bug called "wugs"
+   | //draw some feps
+   | var fepBug1 = fepBug.draw("fepBug1", true, false, 0.7); //wings
+   | var fepBug2 = fepBug.draw("fepBug2", true, true, 0.7); //wings & antennae
+   | var fepBug3 = fepBug.draw("fepBug3", false, false, 0.7); //no wings or antennae
+   | //draw a wug
+   | var wugBug1 = fepTree.draw("wugTree1", false, true, 0.7); //antennae
+   | var slightlyDifferentColors = [fepBug1.bodyColor, fepBug2.bodyColor];
+   | var veryDifferentColors = [fepBug.bodyColor, wugBug.bodyColor];
   \*/
   Bug: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
     /*\
-     * Stimuli.Bug.baseBodyColor
+     * Stimuli.Bug.bodyColor
      [ property ]
      * A string. The hex code for the latent mean color of the body,
      * sampled from Stimuli.colorScheme.
@@ -529,7 +582,7 @@ var Stimuli = {
     \*/
     this.bodyColor = Stimuli.colorScheme.get(true);
     /*\
-     * Stimuli.Bug.baseWingsColor
+     * Stimuli.Bug.wingsColor
      [ property ]
      * A string. The hex code for the latent mean color of the wings,
      * sampled from Stimuli.colorScheme.
@@ -537,7 +590,7 @@ var Stimuli = {
     \*/
     this.wingsColor = Stimuli.colorScheme.get(true);
     /*\
-     * Stimuli.Bug.baseAntennaeColor
+     * Stimuli.Bug.antennaeColor
      [ property ]
      * A string. The hex code for the latent mean color of the antennae,
      * sampled from Stimuli.colorScheme.
@@ -545,7 +598,7 @@ var Stimuli = {
     \*/
     this.antennaeColor = Stimuli.colorScheme.get(true);
     /*\
-     * Stimuli.Bug.baseBodyFatness
+     * Stimuli.Bug.bodyFatness
      [ property ]
      * A number. Latent mean body fatness - a number between 0 and 1 where 0
      * represents the thinnest bug and 1 represents the fattest. Sampled from
@@ -554,10 +607,10 @@ var Stimuli = {
     \*/
     this.bodyFatness = Math.random();
     /*\
-     * Stimuli.Bug.baseHeadFatness
+     * Stimuli.Bug.headFatness
      [ property ]
-     * A number. Latent mean head fatness - a number between 0 and 1 where 0
-     * represents the bug with the fattest head and 1 represents the thinnest.
+     * A number. Latent mean head fatness - a number between 0 and 1 where 1
+     * represents the bug with the fattest head and 0 represents the thinnest.
      * Sampled from uniform.
      * E.g. 0.13984732927294..
     \*/
@@ -577,16 +630,16 @@ var Stimuli = {
      o     bodyColor (string) hex color of body -- the body is actually colored with a radial gradient from lighter to darker whose middle value is this color,
      o     wingsColor (string) hex color of wings -- the wings are actually colored with linear gradients from lighter to darker whose middle value is this color,
      o     antennaeColor (string) hex color of antennae,
-     o     bodyFatness (number) 1 is max body fatness and 0 is min,
-     o     headFatness (number) 1 is max head fatness and 0 is min,
+     o     bodyFatness (number) 1 is max body fatness and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     headFatness (number) 1 is max head fatness and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     wings (string) same as input parameter,
      o     antennae (string) same as input parameter,
      o }
     \*/
     this.draw = function(label, wings, antennae, scaleFactor) {
-      var bodyFatness = ErinTools.uniformAroundMean(this.bodyFatness);
-      var headFatness = ErinTools.uniformAroundMean(this.headFatness);
+      var bodyFatness = StimuliTools.uniformAroundMean(this.bodyFatness);
+      var headFatness = StimuliTools.uniformAroundMean(this.headFatness);
       var headYRadius = (headFatness)*30 + 20;
       var headXRadius = 25;
       var bodyYRadius = (bodyFatness)*30 + 20;
@@ -759,18 +812,24 @@ var Stimuli = {
      * E.g. "#FF0000".
     \*/
     this.tailColor = Stimuli.colorScheme.get();
-    /** A number sampled from uniform which represents the latent mean value of
-        how fat the bird's head is. 0 represents the fattest head and 1
-        represents the thinnest.
-        E.g. 0.13984732927294. */
-    var baseHeadStretch = Math.random();
-    /** A number sampled from uniform which represents the latent mean value of
-        how tall the bird's body is. 0 represents the tallest body and 1
-        represents the shortest.
-        E.g. 0.13984732927294. */
-    var baseBodyStretch = Math.random();
-    this.baseHeadStretch = baseHeadStretch;
-    this.baseBodyStretch = baseBodyStretch;
+    /*\
+     * Stimuli.Bird.headStretch
+     [ property ]
+     * A number sampled from uniform which represents the latent mean value of
+     * how fat the bird's head is. 1 represents the fattest head and 0
+     * represents the thinnest.
+     * E.g. 0.13984732927294.
+    \*/
+    this.headStretch = Math.random();
+    /*\
+     * Stimuli.Bird.bodyStretch
+     [ property ]
+     * A number sampled from uniform which represents the latent mean value of
+     * how tall the bird's body is. 1 represents the tallest body and 0
+     * represents the shortest.
+     * E.g. 0.13984732927294.
+    \*/
+    this.bodyStretch = Math.random();
     /*\
      * Stimuli.Bird.draw
      [ method ]
@@ -785,8 +844,8 @@ var Stimuli = {
      o     color (string) hex color of most of the bird -- the body and head are actually colored with a radial gradient from lighter to darker whose middle value is this color and the wings with a linear gradient of the same kind,
      o     crestColor (string) hex color of bird's crest,
      o     tailColor (string) hex color of bird's tail,
-     o     headStretch (number) 1 is fattest head and 0 is thinnest,
-     o     bodyStretch (number) 1 is tallest body and 0 is shortest,
+     o     headStretch (number) 1 is fattest head and 0 is thinnest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     bodyStretch (number) 1 is tallest body and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     crest (string) same as input parameter,
      o     tail (string) same as input parameter,
@@ -798,9 +857,10 @@ var Stimuli = {
       var crestColor = Stimuli.myColor(this.crestColor);
       var tailColor = Stimuli.myColor(this.tailColor);
       var gradColor = Stimuli.makeGradient("r",color);
+      var bodyStretch = StimuliTools.uniformAroundMean(this.bodyStretch) * 1 + 0.5;
+      var headStretch = StimuliTools.uniformAroundMean(this.headStretch) * 2 + .7;
       function drawHead() {
         var headCenter = [paperCenter[0], paperCenter[1]-35];
-        var headStretch = ErinTools.uniformAroundMean(baseHeadStretch) * 2 + .7;
         var head = paper.ellipse(headCenter[0], headCenter[1], 25*headStretch, 25);
         Stimuli.stroke(head, gradColor);
         if (crest) {
@@ -823,7 +883,6 @@ var Stimuli = {
         return headStretch;
       }
       function drawBody() {
-        var bodyStretch = ErinTools.uniformAroundMean(baseBodyStretch) * 1 + 0.5;
         if (tail) {
           //var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c  93.041702,66.6439 62.708612,55.1315 0.566359,6.6972 24.219543,16.1729 127.541683,98.4836 -2.315079,6.5466 70.203552,48.3289 71.370392,57.77 -4.801623,3.2366 31.342565,20.6587 80.305665,60.7674 -7.288272,-0.073 60.818577,41.2828 21.46453,21.8232 -8.136197,-2.2717 z");
           var tail = paper.path("m "+(paperCenter[0]+40).toString()+","+(paperCenter[1]+30*(bodyStretch)).toString()+" c 137.26897,150.89247 82.32553,110.54987 0.30161,10.02344 46.18326,48.1754 176.28904,249.77883 -3.11677,7.44872 92.78521,131.08631 86.30285,142.69291 -5.89011,0.6876 37.68329,59.04719 107.18694,190.15081 -8.66356,-6.07301 65.48223,117.84362 17.00792,63.34319 -9.54987,-9.90587");
@@ -904,10 +963,24 @@ var Stimuli = {
      * E.g. "#FF0000".
     \*/
     this.spikesColor = Stimuli.colorScheme.get();
-    var baseXRadius = Math.random();
-    this.baseXRadius = baseXRadius;
-    var baseYRadius = Math.random();
-    this.baseYRadis = baseYRadius;
+    /*\
+     * Stimuli.Microbe.xRadius
+     [ property ]
+     * A number sampled from uniform which represents the latent mean value of
+     * how the "xRadius". 0 represents the smallest horizontal radius and 1
+     * represents the largest.
+     * E.g. 0.13984732927294.
+    \*/
+    this.xRadius = Math.random();
+    /*\
+     * Stimuli.Microbe.yRadius
+     [ property ]
+     * A number sampled from uniform which represents the latent mean value of
+     * how the "yRadius". 0 represents the smallest vertical radius and 1
+     * represents the largest.
+     * E.g. 0.13984732927294.
+    \*/
+    this.yRadius = Math.random();
     /*\
      * Stimuli.Microbe.draw
      [ method ]
@@ -922,8 +995,8 @@ var Stimuli = {
      o     color (string) hex color of most of the microbe -- the flagella of this microbe are a darker version of this color, the cell wall a lighter version of this color, and the microbe itself is colored with a radial gradient from lighter to darker whose middle value is this color,
      o     bumpsColor (string) hex color of the bumps on the microbe,
      o     spikesColor (string) hex color of the spikes on the microbe,
-     o     xRadius (number) 1 is fattest microbe and 0 is thinnest,
-     o     yRadius (number) 1 is tallest microbe and 0 is shortest,
+     o     xRadius (number) 1 is fattest microbe and 0 is thinnest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     yRadius (number) 1 is tallest microbe and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     spikes (string) same as input parameter,
      o     bumps (string) same as input parameter,
@@ -934,8 +1007,8 @@ var Stimuli = {
       var color = Stimuli.myColor(this.color);
       var bumpsColor = Stimuli.myColor(this.bumpsColor);
       var spikesColor = Stimuli.myColor(this.spikesColor);
-      var xRadius = ErinTools.uniformAroundMean(baseXRadius);
-      var yRadius = ErinTools.uniformAroundMean(baseYRadius);
+      var xRadius = StimuliTools.uniformAroundMean(this.xRadius);
+      var yRadius = StimuliTools.uniformAroundMean(this.yRadius);
       var xRad = getRadius(xRadius);
       var yRad = getRadius(yRadius);
       function getRadius(r) {
@@ -1035,8 +1108,24 @@ var Stimuli = {
    * Represents a monster category.
   \*/
   Monster: function() {
-    this.baseTallness = Math.random();
-    this.baseFatness = Math.random();
+    /*\
+     * Stimuli.Monster.tallness
+     [ property ]
+     * A number. Latent mean body tallness - a number between 0 and 1 where 0
+     * represents the shortest monster and 1 represents the tallest. Sampled
+     * from uniform.
+     * E.g. 0.13984732927294..
+    \*/
+    this.tallness = Math.random();
+    /*\
+     * Stimuli.Monster.fatness
+     [ property ]
+     * A number. Latent mean body fatness - a number between 0 and 1 where 0
+     * represents the thinnest monster and 1 represents the fattest. Sampled
+     * from uniform.
+     * E.g. 0.13984732927294..
+    \*/
+    this.fatness = Math.random();
     /*\
      * Stimuli.Monster.color
      [ property ]
@@ -1072,11 +1161,11 @@ var Stimuli = {
     function getPathString(p, tallness, fatness) {
       var ss = endpoints.shortSkinny[p];
       var sf = endpoints.shortFat[p];
-      var shortFatEnough = ErinTools.intermediate(ss, sf, fatness);
+      var shortFatEnough = StimuliTools.intermediate(ss, sf, fatness);
       var ts = endpoints.tallSkinny[p];
       var tf = endpoints.tallFat[p];
-      var tallFatEnough = ErinTools.intermediate(ts, tf, fatness);
-      return ErinTools.intermediate(shortFatEnough, tallFatEnough, tallness);
+      var tallFatEnough = StimuliTools.intermediate(ts, tf, fatness);
+      return StimuliTools.intermediate(shortFatEnough, tallFatEnough, tallness);
     }
     /*\
      * Stimuli.Monster.draw
@@ -1091,8 +1180,8 @@ var Stimuli = {
      o {
      o     color (string) hex color of monster body -- the body is actually a gradient version of this color,
      o     accentColor (string) hex color of horns and feet -- the feet are actually this color, but the pads of the feet and toes are a lighter less saturated version of this color,
-     o     tallness (number) 1 is max tallness of body and 0 is min,
-     o     fatness (number) 1 is max fatness of body and 0 is min,
+     o     tallness (number) 1 is max tallness of body and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     fatness (number) 1 is max fatness of body and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     horns (string) same as input parameter,
      o     teeth (string) same as input parameter,
@@ -1100,8 +1189,8 @@ var Stimuli = {
     \*/
     this.draw = function(label, horns, teeth, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var tallness = ErinTools.uniformAroundMean(this.baseTallness);
-      var fatness = ErinTools.uniformAroundMean(this.baseFatness);
+      var tallness = StimuliTools.uniformAroundMean(this.tallness);
+      var fatness = StimuliTools.uniformAroundMean(this.fatness);
       var color = Stimuli.myColor(this.color);
       var accentColor = Stimuli.myColor(this.accentColor);
       var lightAccent = Stimuli.lighten(accentColor, true);
@@ -1176,8 +1265,26 @@ var Stimuli = {
    * Represents a fish category.
   \*/
   Fish: function() {
-    this.baseTailSize = Math.random();
-    this.baseTallness = Math.random();
+    /*\
+     * Stimuli.Fish.tailSize
+     [ property ]
+     * A number. Latent mean body tail size - a number between 0 and 1 where 0
+     * represents the smallest tails and 1 represents the biggest. Sampled
+     * from uniform.
+     * E.g. 0.13984732927294..
+    \*/
+    this.tailSize = Math.random();
+    /*\
+     * Stimuli.Fish.tallness
+     [ property ]
+     * A number. Latent mean body tallness - a number between 0 and 1 where 0
+     * represents the tallest fish and 1 represents the shortest (maybe the 
+     * "tall" fish is actually fat... anyway, the bigger body is the 1 and
+     * the thinner body is the 0). Sampled
+     * from uniform.
+     * E.g. 0.13984732927294..
+    \*/
+    this.tallness = Math.random();
     /*\
      * Stimuli.Fish.color
      [ property ]
@@ -1219,8 +1326,8 @@ var Stimuli = {
      o {
      o     color (string) hex color of fish -- actually a radial gradient from a lighter version of this color to a darker version,
      o     finColor (string) hex color of fins of fish,
-     o     tailSize (number) 1 is longest tails and 0 is shortest,
-     o     tallness (number) 1 is largest tallest fish and 0 is shortest,
+     o     tailSize (number) 1 is longest tails and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     tallness (number) 1 is largest tallest fish and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     fangs (string) same as input parameter,
      o     whiskers (string) same as input parameter,
@@ -1228,8 +1335,8 @@ var Stimuli = {
     \*/
     this.draw = function(label, fangs, whiskers, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var tailSize = ErinTools.uniformAroundMean(this.baseTailSize);
-      var tallness = ErinTools.uniformAroundMean(this.baseTallness);
+      var tailSize = StimuliTools.uniformAroundMean(this.tailSize);
+      var tallness = StimuliTools.uniformAroundMean(this.tallness);
       var color = Stimuli.myColor(this.color);
       var finColor = Stimuli.myColor(this.finColor);
       var gradColor = Stimuli.makeGradient("r", color);
@@ -1245,11 +1352,11 @@ var Stimuli = {
       var getPathString = function(p) {
         var ss = endpoints.smallShort[p];
         var st = endpoints.smallTall[p];
-        var smallTallEnough = ErinTools.intermediate(ss, st, tallness);
+        var smallTallEnough = StimuliTools.intermediate(ss, st, tallness);
         var bs = endpoints.bigShort[p];
         var bt = endpoints.bigTall[p];
-        var bigTallEnough = ErinTools.intermediate(bs, bt, tallness);
-        return ErinTools.intermediate(smallTallEnough, bigTallEnough, tailSize);
+        var bigTallEnough = StimuliTools.intermediate(bs, bt, tallness);
+        return StimuliTools.intermediate(smallTallEnough, bigTallEnough, tailSize);
       }
       var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
       Stimuli.drawPaths(paper, pieces, colors, getPathString);
@@ -1310,8 +1417,24 @@ var Stimuli = {
      * E.g. "#FF0000".
     \*/
     this.stemColor = Stimuli.colorScheme.get();
-    this.baseCenterSize = Math.random();
-    this.basePetalLength = Math.random();
+    /*\
+     * Stimuli.Flower.centerSize
+     [ property ]
+     * A number. Latent mean size of the center of the flower - a number
+     * between 0 and 1 where 0 represents the smallest center and 1 represents
+     * the biggest. Sampled from uniform.
+     * E.g. 0.13984732927294..
+    \*/
+    this.centerSize = Math.random();
+    /*\
+     * Stimuli.Flower.petalLength
+     [ property ]
+     * A number. Latent mean petal length - a number between 0 and 1 where 0
+     * represents the shortest petals and 1 represents the longest. Sampled
+     * from uniform.
+     * E.g. 0.13984732927294..
+    \*/
+    this.petalLength = Math.random();
     
     var data = $.csv.toObjects(Stimuli.images.flower);
 
@@ -1335,8 +1458,8 @@ var Stimuli = {
      o     centerColor (string) hex color of center of flower -- this is actually a radial gradient from a lighter version of the color to a darker version of the color,
      o     spotsColor (string) hex color of spots on petals,
      o     stemColor (string) hex color of stem (and consequently thorns, if there are thorns),
-     o     petalLength (number) 1 is longest petals and 0 is min,
-     o     centerSize (number) 1 is largest center and 0 is min,
+     o     petalLength (number) 1 is longest petals and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     centerSize (number) 1 is largest center and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     spots (string) same as input parameter,
      o     thorns (string) same as input parameter,
@@ -1349,8 +1472,8 @@ var Stimuli = {
       var centerColor = Stimuli.myColor(this.centerColor);
       var spotsColor = Stimuli.myColor(this.spotsColor);
       var stemColor = Stimuli.myColor(this.stemColor);
-      var centerSize = ErinTools.uniformAroundMean(this.baseCenterSize);
-      var petalLength = ErinTools.uniformAroundMean(this.basePetalLength);
+      var centerSize = StimuliTools.uniformAroundMean(this.centerSize);
+      var petalLength = StimuliTools.uniformAroundMean(this.petalLength);
       
       var colors = {"stem":stemColor,
                     "thorny stem":stemColor,
@@ -1382,11 +1505,11 @@ var Stimuli = {
       var getPathString = function(p) {
         var ss = endpoints.smallShort[p];
         var sl = endpoints.smallLong[p];
-        var smallLongEnough = ErinTools.intermediate(ss, sl, petalLength);
+        var smallLongEnough = StimuliTools.intermediate(ss, sl, petalLength);
         var bs = endpoints.bigShort[p];
         var bl = endpoints.bigLong[p];
-        var bigLongEnough = ErinTools.intermediate(bs, bl, petalLength);
-        return ErinTools.intermediate(smallLongEnough, bigLongEnough, centerSize);
+        var bigLongEnough = StimuliTools.intermediate(bs, bl, petalLength);
+        return StimuliTools.intermediate(smallLongEnough, bigLongEnough, centerSize);
       }
                         
       var pieces = ["dark petals", "light petals", "center"];
@@ -1454,7 +1577,21 @@ var Stimuli = {
      * E.g. "#FF0000".
     \*/
     this.streaksColor = Stimuli.colorScheme.get();
+    /*\
+     * Stimuli.Crystal.outsideSize
+     [ property ]
+     * A number. Latent mean petal length - a number between 0 and 1 where 1
+     * is largest the outer sides of the crytal could be and 0 is min,
+     * E.g. 0.13984732927294..
+    \*/
     this.outsideSize = Math.random();
+    /*\
+     * Stimuli.Crystal.centerSize
+     [ property ]
+     * A number. Latent mean center size - a number between 0 and 1 where 1
+     * is largest the center side of the crytal could be and 0 is min,
+     * E.g. 0.13984732927294..
+    \*/
     this.centerSize = Math.random();
     function reflection(c) {
       return "0-"+c+"-#ffffff-"+c;
@@ -1485,8 +1622,8 @@ var Stimuli = {
      o     color (string) hex color of crystal -- this has a gradient from this color to white and back to this color to show reflections
      o     bubblesColor (string) hex color of bubbles in the crystal,
      o     streaksColor (string) hex color of streaks in the crystal,
-     o     centerSize (number) 1 is largest the center side of the crytal could be and 0 is min,
-     o     outsideSize (number) 1 is largest the outer sides of the crytal could be and 0 is min,
+     o     centerSize (number) 1 is largest the center side of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     outsideSize (number) 1 is largest the outer sides of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
      o     label (string) same as input parameter,
      o     bubbles (string) same as input parameter,
      o     streaks (string) same as input parameter,
@@ -1497,16 +1634,16 @@ var Stimuli = {
       var color = Stimuli.myColor(this.color);
       var bubblesColor = Stimuli.myColor(this.bubblesColor);
       var streaksColor = Stimuli.myColor(this.streaksColor);
-      var centerSize = ErinTools.uniformAroundMean(this.centerSize);
-      var outsideSize = ErinTools.uniformAroundMean(this.outsideSize);
+      var centerSize = StimuliTools.uniformAroundMean(this.centerSize);
+      var outsideSize = StimuliTools.uniformAroundMean(this.outsideSize);
       var getPathString = function(p) {
         var ss = endpoints.smallSmall[p];
         var sb = endpoints.smallBig[p];
-        var smallCenter = ErinTools.intermediate(ss, sb, outsideSize);
+        var smallCenter = StimuliTools.intermediate(ss, sb, outsideSize);
         var bs = endpoints.bigSmall[p];
         var bb = endpoints.bigBig[p];
-        var bigCenter = ErinTools.intermediate(bs, bb, outsideSize);
-        return ErinTools.intermediate(smallCenter, bigCenter, centerSize);
+        var bigCenter = StimuliTools.intermediate(bs, bb, outsideSize);
+        return StimuliTools.intermediate(smallCenter, bigCenter, centerSize);
       }
       grad = reflection(color);
       streaksGrad = reflection(streaksColor);
