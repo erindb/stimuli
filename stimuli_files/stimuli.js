@@ -1,5 +1,4 @@
-//to document: ./jsdoc ~/Code/cocolab/Stimuli/stimuli_files/stimuli.js
-//http://usejsdoc.org/
+//to document: 
 
 var ErinTools = {
   shuffle: function(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;}, // non-destructive.
@@ -72,15 +71,19 @@ var ErinTools = {
   }
 }
 
-/** Contains methods for creating experimental stimuli. These stimuli are 
-dynamic svg images of (10) different domains: trees, birds, bugs, flowers,
-fish, planets, microbes, islands, monsters, and crystals. These domains are
-meant to be naturally occuring kinds of things that might be seen in an alien
-planetary system. For each domain, the user can create arbitrarily many
-categories. Within each category, three non-target continuous properties (e.g.
-size, shape, and color) vary around the category mean. The user can then draw
-arbitrarily many token elements from that category, specifying whether they have
-or do not have each of two binary target properties. */
+/*
+ * Stimuli
+ [ property ]
+ * Contains methods for creating experimental stimuli. These stimuli are 
+ * dynamic svg images of (10) different domains: trees, birds, bugs, flowers,
+ * fish, planets, microbes, islands, monsters, and crystals. These domains are
+ * meant to be naturally occuring kinds of things that might be seen in an alien
+ * planetary system. For each domain, the user can create arbitrarily many
+ * categories. Within each category, three non-target continuous properties (e.g.
+ * size, shape, and color) vary around the category mean. The user can then draw
+ * arbitrarily many token elements from that category, specifying whether they have
+ * or do not have each of two binary target properties.
+*/
 var Stimuli = {
 
   strokeColor: "#000000",
@@ -160,32 +163,59 @@ var Stimuli = {
     return newColor.hex;
   },
 
-  /** Represents a tree category. Has 3 mean colors (baseTrunkColor,
-      baseBerryColor, baseLeafColor), mean baseWidth, and mean baseHeight.
-      @constructor*/
+  /*\
+   * Stimuli.Tree
+   [ class ]
+   * Represents a tree category. Has 3 mean colors (baseTrunkColor,
+   * baseBerryColor, baseLeafColor), mean baseWidth, and mean baseHeight.
+  \*/
   Tree: function() {
-  
-    var baseBerryColor = Stimuli.colorScheme.get(true, .5, .99);
-    var baseLeafColor = Stimuli.colorScheme.get(true, .5, .99);
-    var baseTrunkColor = Stimuli.colorScheme.get(true, .5, .8);
+    var baseLeafColor = Stimuli.colorScheme.get();
+    var baseTrunkColor = Stimuli.colorScheme.get();
     var baseWidth = Math.random();
     var baseHeight = Math.random();
-    /** A string. The hex code for the latent mean color of the berries.
-    E.g. "#FF0000". */
+    var baseBerryColor = Stimuli.colorScheme.get();
+    /*\
+     * Stimuli.Tree.baseBerryColor
+     [ property ]
+     * A string. The hex code for the latent mean color of the berries,
+     * sampled from Stimuli.colorScheme.
+     * E.g. "#FF0000".
+    \*/
     this.baseBerryColor = baseBerryColor;
-    /** A string. The hex code for the latent mean color of the leaves.
-    E.g. "#FF0000". */
+    /*\
+     * Stimuli.Tree.baseLeafColor
+     [ property ]
+     * A string. The hex code for the latent mean color of the leaves,
+     * sampled from Stimuli.colorScheme.
+     * E.g. "#FF0000".
+    \*/
     this.baseLeafColor = baseLeafColor;
-    /** A string. The hex code for the latent mean color of the trunk.
-    E.g. "#FF0000". */
+    /*\
+     * Stimuli.Tree.baseTrunkColor
+     [ property ]
+     * A string. The hex code for the latent mean color of the trunk,
+     * sampled from Stimuli.colorScheme.
+     * E.g. "#FF0000".
+    \*/
     this.baseTrunkColor = baseTrunkColor;
-    /** latent mean "width" of trunk - actually a number between 0 and 1 where
-        0 represents the minimum width and 1 represents the maximum width.
-        E.g. 0.13984732927294. */
+    /*\
+     * Stimuli.Tree.baseWidth
+     [ property ]
+     * A number sampled from uniform. The latent mean "width" of trunk - 
+     * actually a number between 0 and 1 where 0 represents the minimum width
+     * and 1 represents the maximum width, sampled from uniform.
+     * E.g. 0.13984732927294.".
+    \*/
     this.baseWidth = baseWidth;
-    /** latent mean "height" of trunk - actually a number between 0 and 1 where
-        0 represents the minimum height and 1 represents the maximum height.
-        E.g. 0.13984732927294. */
+    /*\
+     * Stimuli.Tree.baseHeight
+     [ property ]
+     * A number sampled from uniform. The latent mean "height" of trunk - 
+     * actually a number between 0 and 1 where 0 represents the minimum height
+     * and 1 represents the maximum height, sampled from uniform.
+     * E.g. 0.13984732927294.".
+    \*/
     this.baseHeight = baseHeight;
 
     //-----------HEIGHT AND WIDTH OF TREE----------//
@@ -419,14 +449,27 @@ var Stimuli = {
     }
 
     //-------DRAW TREE------//
-    /** Draws a tree token from a tree category and returns an object with
-        information about the tree that was drawn.
-    
-        @param {string} label - matches the id for an svg tag in the html
-        @param {boolean} berries - whether this tree token has berries
-        @param {boolean} leaves - whether this tree token has leaves
-        @param {number} scaleFactor - scales the whole image
-        @returns {object} treeProperties - */
+    /*\
+     * Stimuli.Tree.draw
+     [ method ]
+     * Draws a tree token from a tree category and returns an object with
+     * information about the tree that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - berries (boolean) whether this tree token has berries
+     - leaves (boolean) whether this tree token has leaves
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the tree in format:
+     o {
+     o     berryColor (string) hex color of berries,
+     o     leafColor (string) hex color of leaves,
+     o     trunkColor (string) hex color of trunk -- N.B. the trunk is actually colored with a linear gradient from lighter to darker whose middle value is this color,
+     o     width (number) 1 is max width of trunk and 0 is min,
+     o     height (number) 1 is max height of trunk and 0 is min,
+     o     label (string) same as input parameter,
+     o     berries (string) same as input parameter,
+     o     leaves (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, berries, leaves, scaleFactor) {
       var w = ErinTools.uniformAroundMean(baseWidth);
       var h = ErinTools.uniformAroundMean(baseHeight);
@@ -472,21 +515,61 @@ var Stimuli = {
     }
   },
 
-  /** Represents a bug category. Has 3 mean colors (baseBodyColor,
-      baseWingsColor, baseAntennaeColor), mean baseBodyFatness, and mean
-      baseHeadFatness.
-      @constructor*/
+  /*\
+   * Stimuli.Bug
+   [ class ]
+   * Represents a bug category. Has 3 mean colors (baseBodyColor,
+   * baseWingsColor, baseAntennaeColor), mean baseBodyFatness, and mean
+   * baseHeadFatness.
+  \*/
   Bug: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
-    var baseBodyColor = Stimuli.colorScheme.get(true, .5, .99);
-    var baseWingsColor = Stimuli.colorScheme.get(true, .5, .99);
-    var baseAntennaeColor = Stimuli.colorScheme.get(true, .5, .99);
+    var baseBodyColor = Stimuli.colorScheme.get(true);
+    var baseWingsColor = Stimuli.colorScheme.get(true);
+    var baseAntennaeColor = Stimuli.colorScheme.get(true);
     var baseBodyFatness = Math.random();
     var baseHeadFatness = Math.random();
+    /*\
+     * Stimuli.Bug.baseBodyColor
+     [ property ]
+     * A string. The hex code for the latent mean color of the body,
+     * sampled from Stimuli.colorScheme.
+     * E.g. "#FF0000".
+    \*/
     this.baseBodyColor = baseBodyColor;
+    /*\
+     * Stimuli.Bug.baseWingsColor
+     [ property ]
+     * A string. The hex code for the latent mean color of the wings,
+     * sampled from Stimuli.colorScheme.
+     * E.g. "#FF0000".
+    \*/
     this.baseWingsColor = baseWingsColor;
+    /*\
+     * Stimuli.Bug.baseAntennaeColor
+     [ property ]
+     * A string. The hex code for the latent mean color of the antennae,
+     * sampled from Stimuli.colorScheme.
+     * E.g. "#FF0000".
+    \*/
     this.baseAntennaeColor = baseAntennaeColor;
+    /*\
+     * Stimuli.Bug.baseBodyFatness
+     [ property ]
+     * A number. Latent mean body fatness - a number between 0 and 1 where 0
+     * represents the thinnest bug and 1 represents the fattest. Sampled from
+     * uniform.
+     * E.g. 0.13984732927294..
+    \*/
     this.baseBodyFatness = baseBodyFatness;
+    /*\
+     * Stimuli.Bug.baseHeadFatness
+     [ property ]
+     * A number. Latent mean head fatness - a number between 0 and 1 where 0
+     * represents the bug with the fattest head and 1 represents the thinnest.
+     * Sampled from uniform.
+     * E.g. 0.13984732927294..
+    \*/
     this.baseHeadFatness = baseHeadFatness;
     
     //eyes
@@ -607,6 +690,27 @@ var Stimuli = {
       drawEyes(paper, bodyXRadius, headYRadius);
     }
     
+    /*\
+     * Stimuli.Bug.draw
+     [ method ]
+     * Draws a bug token from a bug category and returns an object with
+     * information about the bug that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - berries (boolean) whether this bug token has wings
+     - leaves (boolean) whether this bug token has antennae
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the bug in format:
+     o {
+     o     bodyColor (string) hex color of body -- N.B. the body is actually colored with a radial gradient from lighter to darker whose middle value is this color,
+     o     wingsColor (string) hex color of wings -- N.B. the wings are actually colored with linear gradients from lighter to darker whose middle value is this color,
+     o     antennaeColor (string) hex color of antennae,
+     o     bodyFatness (number) 1 is max body fatness and 0 is min,
+     o     headFatness (number) 1 is max head fatness and 0 is min,
+     o     label (string) same as input parameter,
+     o     wings (string) same as input parameter,
+     o     antennae (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, wings, antennae, scaleFactor) {
       var bodyFatness = ErinTools.uniformAroundMean(baseBodyFatness);
       var headFatness = ErinTools.uniformAroundMean(baseHeadFatness);
@@ -653,10 +757,27 @@ var Stimuli = {
       @constructor*/
   Bird: function() {
     var paperCenter = [(Stimuli.containerWidth/2), ((Stimuli.containerHeight/2)-25)];
+    /** A string. The hex code for the latent mean color of most of the bird,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     var baseColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the crest,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseCrestColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the tail,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseTailColor = Stimuli.colorScheme.get();
+    /** A number sampled from uniform which represents the latent mean value of
+        how fat the bird's head is. 0 represents the fattest head and 1
+        represents the thinnest.
+        E.g. 0.13984732927294. */
     var baseHeadStretch = Math.random();
+    /** A number sampled from uniform which represents the latent mean value of
+        how tall the bird's body is. 0 represents the tallest body and 1
+        represents the shortest.
+        E.g. 0.13984732927294. */
     var baseBodyStretch = Math.random();
     this.baseColor = baseColor;
     this.baseHeadStretch = baseHeadStretch;
@@ -717,6 +838,27 @@ var Stimuli = {
       wing.transform("s1,"+bodyStretch.toString()+","+paperCenter[0].toString()+","+paperCenter[1].toString());
       return bodyStretch;
     }
+    /*\
+     * Stimuli.Bird.draw
+     [ method ]
+     * Draws a bird token from a bird category and returns an object with
+     * information about the bird that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - crest (boolean) whether this bird token has a crest
+     - tail (boolean) whether this bird token has a tail
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the bird in format:
+     o {
+     o     color (string) hex color of most of the bird -- N.B. the body and head are actually colored with a radial gradient from lighter to darker whose middle value is this color and the wings with a linear gradient of the same kind,
+     o     crestColor (string) hex color of bird's crest,
+     o     tailColor (string) hex color of bird's tail,
+     o     headStretch (number) 1 is fattest head and 0 is thinnest,
+     o     bodyStretch (number) 1 is tallest body and 0 is shortest,
+     o     label (string) same as input parameter,
+     o     crest (string) same as input parameter,
+     o     tail (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, crest, tail, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var color = Stimuli.myColor(baseColor);
@@ -731,6 +873,8 @@ var Stimuli = {
       svgContainer.setAttribute("viewBox", "0 0 " + Stimuli.containerWidth.toString() + " " + Stimuli.containerHeight.toString());
       return {
         color: color,
+        crestColor: crestColor,
+        tailColor: tailColor,
         headStretch: headStretch,
         bodyStretch: bodyStretch,
         label: label,
@@ -740,27 +884,54 @@ var Stimuli = {
     }
   },
   
-  /** Represents a microbe category. Has 3 mean colors (baseColor for most of the
-      microbe, baseSpikesColor, and baseBumpsColor), mean horizontal radius
-      baseXRadius, and mean vertical radius baseYRadius.
+  /** Represents a microbe category. Has 3 mean colors (baseColor for most of 
+      the microbe, baseSpikesColor, and baseBumpsColor), mean 
+      horizontal radius baseXRadius, and mean vertical radius baseYRadius.
       @constructor*/
   Microbe: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+30];
-    var baseColor = Stimuli.colorScheme.get();
-    var baseBumpsColor = Stimuli.colorScheme.get();
-    var baseSpikesColor = Stimuli.colorScheme.get();
-    this.baseColor = baseColor;
-    this.baseSpikesColor = baseSpikesColor;
-    this.baseBumpsColor = baseBumpsColor;
+    /** A string. The hex code for the latent mean color of most of the microbe,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
+    this.baseColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the bumps,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
+    this.baseBumpsColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the spikes,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
+    this.baseSpikesColor = Stimuli.colorScheme.get();
     var baseXRadius = Math.random();
     this.baseXRadius = baseXRadius;
     var baseYRadius = Math.random();
     this.baseYRadis = baseYRadius;
+    /*\
+     * Stimuli.Microbe.draw
+     [ method ]
+     * Draws a microbe token from a microbe category and returns an object with
+     * information about the microbe that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - spikes (boolean) whether this microbe token has spikes
+     - bumps (boolean) whether this microbe token has bumps
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the microbe in format:
+     o {
+     o     color (string) hex color of most of the microbe -- N.B. the flagella of this microbe are a darker version of this color, the cell wall a lighter version of this color, and the microbe itself is colored with a radial gradient from lighter to darker whose middle value is this color,
+     o     bumpsColor (string) hex color of the bumps on the microbe,
+     o     spikesColor (string) hex color of the spikes on the microbe,
+     o     xRadius (number) 1 is fattest microbe and 0 is thinnest,
+     o     yRadius (number) 1 is tallest microbe and 0 is shortest,
+     o     label (string) same as input parameter,
+     o     spikes (string) same as input parameter,
+     o     bumps (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, spikes, bumps, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var color = Stimuli.myColor(baseColor);
-      var bumpsColor = Stimuli.myColor(baseBumpsColor);
-      var spikesColor = Stimuli.myColor(baseSpikesColor);
+      var color = Stimuli.myColor(this.baseColor);
+      var bumpsColor = Stimuli.myColor(this.baseBumpsColor);
+      var spikesColor = Stimuli.myColor(this.baseSpikesColor);
       var xRadius = ErinTools.uniformAroundMean(baseXRadius);
       var yRadius = ErinTools.uniformAroundMean(baseYRadius);
       var xRad = getRadius(xRadius);
@@ -857,14 +1028,19 @@ var Stimuli = {
   },
   
   /** Represents a monster category. Has 2 mean colors (baseColor for most of 
-      the monster and baseAccentColor for the horns and feet -- n.b. a lightened
-      version of the accentColor is used for the pads of the feets and toes),
+      the monster and baseAccentColor for the horns and feet),
       mean horizontal radius baseXRadius, and mean vertical radius baseYRadius.
       @constructor*/
   Monster: function() {
     this.baseTallness = Math.random();
     this.baseFatness = Math.random();
+    /** A string. The hex code for the latent mean color of the body of the
+        monster, sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the feet and horns,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseAccentColor = Stimuli.colorScheme.get();
     
     var data = $.csv.toObjects(Stimuli.images.monster);
@@ -963,10 +1139,20 @@ var Stimuli = {
     }
   },
 
+  /** Represents a fish category. Has 2 mean colors (baseColor for most of 
+      the fish and baseFinsColor for the fins), mean baseTallness and mean 
+      baseTailSize.
+      @constructor*/
   Fish: function() {
     this.baseTailSize = Math.random();
     this.baseTallness = Math.random();
+    /** A string. The hex code for the latent mean color of the fish body,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the fins,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseFinColor = Stimuli.colorScheme.get();
     
     var data = $.csv.toObjects(Stimuli.images.fish);
@@ -1026,10 +1212,28 @@ var Stimuli = {
     }
   },
   
+  /** Represents a flower category. Has 4 mean colors (baseCenterColor for the
+      center of the flower, basePetalColor for the petals, baseSpotsColor for
+      the spots, and baseStemColor for the stem), mean baseCenterSize and mean 
+      basePetalLength.
+      @constructor*/
   Flower: function() {
+    /** A string. The hex code for the latent mean color of the petals,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.basePetalColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the center,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseCenterColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the spots on the
+        petals,
+        sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseSpotsColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the stem (and
+        optionally thorns), sampled from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.baseStemColor = Stimuli.colorScheme.get();
     this.baseCenterSize = Math.random();
     this.basePetalLength = Math.random();
@@ -1122,10 +1326,23 @@ var Stimuli = {
     }
   },
   
+  /** Represents a crystal category. Has 3 mean colors (baseColor for most of
+      the crystal, baseBubblesColor for the bubbles, and baseStreaksColor for
+      the streaks), mean baseCenterSize and mean baseOutsideSize.
+      @constructor*/
   Crystal: function() {
     var data = $.csv.toObjects(Stimuli.images.crystal);
+    /** A string. The hex code for the latent mean color of the crystal, sampled
+        from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.color = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the bubbles, sampled
+        from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.bubblesColor = Stimuli.colorScheme.get();
+    /** A string. The hex code for the latent mean color of the streaks, sampled
+        from Stimuli.colorScheme.
+        E.g. "#FF0000". */
     this.streaksColor = Stimuli.colorScheme.get();
     this.outsideSize = Math.random();
     this.centerSize = Math.random();
