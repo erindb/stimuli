@@ -1,4 +1,4 @@
-//to document: 
+//documentation with Dr.js -- https://github.com/dciccale/dr.js 
 
 var ErinTools = {
   shuffle: function(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;}, // non-destructive.
@@ -71,19 +71,18 @@ var ErinTools = {
   }
 }
 
-/*
+/*\
  * Stimuli
- [ property ]
  * Contains methods for creating experimental stimuli. These stimuli are 
- * dynamic svg images of (10) different domains: trees, birds, bugs, flowers,
- * fish, planets, microbes, islands, monsters, and crystals. These domains are
- * meant to be naturally occuring kinds of things that might be seen in an alien
- * planetary system. For each domain, the user can create arbitrarily many
+ * dynamic svg images of 8 different domains: trees, birds, bugs, flowers,
+ * fish, microbes, monsters, and crystals. These domains are
+ * meant to be naturally occuring kinds of things that might be seen on an alien
+ * planet. For each domain, the user can create arbitrarily many
  * categories. Within each category, three non-target continuous properties (e.g.
  * size, shape, and color) vary around the category mean. The user can then draw
  * arbitrarily many token elements from that category, specifying whether they have
  * or do not have each of two binary target properties.
-*/
+\*/
 var Stimuli = {
 
   strokeColor: "#000000",
@@ -166,8 +165,7 @@ var Stimuli = {
   /*\
    * Stimuli.Tree
    [ class ]
-   * Represents a tree category. Has 3 mean colors (baseTrunkColor,
-   * baseBerryColor, baseLeafColor), mean baseWidth, and mean baseHeight.
+   * Represents a tree category.
   \*/
   Tree: function() {
     var baseLeafColor = Stimuli.colorScheme.get();
@@ -462,7 +460,7 @@ var Stimuli = {
      o {
      o     berryColor (string) hex color of berries,
      o     leafColor (string) hex color of leaves,
-     o     trunkColor (string) hex color of trunk -- N.B. the trunk is actually colored with a linear gradient from lighter to darker whose middle value is this color,
+     o     trunkColor (string) hex color of trunk -- the trunk is actually colored with a linear gradient from lighter to darker whose middle value is this color,
      o     width (number) 1 is max width of trunk and 0 is min,
      o     height (number) 1 is max height of trunk and 0 is min,
      o     label (string) same as input parameter,
@@ -518,9 +516,7 @@ var Stimuli = {
   /*\
    * Stimuli.Bug
    [ class ]
-   * Represents a bug category. Has 3 mean colors (baseBodyColor,
-   * baseWingsColor, baseAntennaeColor), mean baseBodyFatness, and mean
-   * baseHeadFatness.
+   * Represents a bug category.
   \*/
   Bug: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
@@ -701,8 +697,8 @@ var Stimuli = {
      - scaleFactor (number) scales the whole image
      = (object) properties of the bug in format:
      o {
-     o     bodyColor (string) hex color of body -- N.B. the body is actually colored with a radial gradient from lighter to darker whose middle value is this color,
-     o     wingsColor (string) hex color of wings -- N.B. the wings are actually colored with linear gradients from lighter to darker whose middle value is this color,
+     o     bodyColor (string) hex color of body -- the body is actually colored with a radial gradient from lighter to darker whose middle value is this color,
+     o     wingsColor (string) hex color of wings -- the wings are actually colored with linear gradients from lighter to darker whose middle value is this color,
      o     antennaeColor (string) hex color of antennae,
      o     bodyFatness (number) 1 is max body fatness and 0 is min,
      o     headFatness (number) 1 is max head fatness and 0 is min,
@@ -751,10 +747,11 @@ var Stimuli = {
     }
   },
   
-  /** Represents a bird category. Has 3 mean colors (baseColor for most of the
-      bird, baseCrestColor, and baseTailColor), mean horizontal baseHeadStretch,
-      and mean vertical baseBodyStretch.
-      @constructor*/
+  /*\
+   * Stimuli.Bird
+   [ class ]
+   * Represents a bird category.
+  \*/
   Bird: function() {
     var paperCenter = [(Stimuli.containerWidth/2), ((Stimuli.containerHeight/2)-25)];
     /** A string. The hex code for the latent mean color of most of the bird,
@@ -849,7 +846,7 @@ var Stimuli = {
      - scaleFactor (number) scales the whole image
      = (object) properties of the bird in format:
      o {
-     o     color (string) hex color of most of the bird -- N.B. the body and head are actually colored with a radial gradient from lighter to darker whose middle value is this color and the wings with a linear gradient of the same kind,
+     o     color (string) hex color of most of the bird -- the body and head are actually colored with a radial gradient from lighter to darker whose middle value is this color and the wings with a linear gradient of the same kind,
      o     crestColor (string) hex color of bird's crest,
      o     tailColor (string) hex color of bird's tail,
      o     headStretch (number) 1 is fattest head and 0 is thinnest,
@@ -884,10 +881,11 @@ var Stimuli = {
     }
   },
   
-  /** Represents a microbe category. Has 3 mean colors (baseColor for most of 
-      the microbe, baseSpikesColor, and baseBumpsColor), mean 
-      horizontal radius baseXRadius, and mean vertical radius baseYRadius.
-      @constructor*/
+  /*\
+   * Stimuli.Microbe
+   [ class ]
+   * Represents a microbe category.
+  \*/
   Microbe: function() {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+30];
     /** A string. The hex code for the latent mean color of most of the microbe,
@@ -917,7 +915,7 @@ var Stimuli = {
      - scaleFactor (number) scales the whole image
      = (object) properties of the microbe in format:
      o {
-     o     color (string) hex color of most of the microbe -- N.B. the flagella of this microbe are a darker version of this color, the cell wall a lighter version of this color, and the microbe itself is colored with a radial gradient from lighter to darker whose middle value is this color,
+     o     color (string) hex color of most of the microbe -- the flagella of this microbe are a darker version of this color, the cell wall a lighter version of this color, and the microbe itself is colored with a radial gradient from lighter to darker whose middle value is this color,
      o     bumpsColor (string) hex color of the bumps on the microbe,
      o     spikesColor (string) hex color of the spikes on the microbe,
      o     xRadius (number) 1 is fattest microbe and 0 is thinnest,
@@ -1027,10 +1025,11 @@ var Stimuli = {
     }
   },
   
-  /** Represents a monster category. Has 2 mean colors (baseColor for most of 
-      the monster and baseAccentColor for the horns and feet),
-      mean horizontal radius baseXRadius, and mean vertical radius baseYRadius.
-      @constructor*/
+  /*\
+   * Stimuli.Monster
+   [ class ]
+   * Represents a monster category.
+  \*/
   Monster: function() {
     this.baseTallness = Math.random();
     this.baseFatness = Math.random();
@@ -1067,6 +1066,26 @@ var Stimuli = {
       var tallFatEnough = ErinTools.intermediate(ts, tf, fatness);
       return ErinTools.intermediate(shortFatEnough, tallFatEnough, tallness);
     }
+    /*\
+     * Stimuli.Monster.draw
+     [ method ]
+     * Draws a monster token from a monster category and returns an object with
+     * information about the monster that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - berries (boolean) whether this monster token has horns
+     - leaves (boolean) whether this monster token has teeth
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the monster in format:
+     o {
+     o     color (string) hex color of monster body -- the body is actually a gradient version of this color,
+     o     accentColor (string) hex color of horns and feet -- the feet are actually this color, but the pads of the feet and toes are a lighter less saturated version of this color,
+     o     tallness (number) 1 is max tallness of body and 0 is min,
+     o     fatness (number) 1 is max fatness of body and 0 is min,
+     o     label (string) same as input parameter,
+     o     horns (string) same as input parameter,
+     o     teeth (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, horns, teeth, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var tallness = ErinTools.uniformAroundMean(this.baseTallness);
@@ -1139,10 +1158,11 @@ var Stimuli = {
     }
   },
 
-  /** Represents a fish category. Has 2 mean colors (baseColor for most of 
-      the fish and baseFinsColor for the fins), mean baseTallness and mean 
-      baseTailSize.
-      @constructor*/
+  /*\
+   * Stimuli.Fish
+   [ class ]
+   * Represents a fish category.
+  \*/
   Fish: function() {
     this.baseTailSize = Math.random();
     this.baseTallness = Math.random();
@@ -1166,6 +1186,26 @@ var Stimuli = {
     var fangsPieces = ["fang"];
     var whiskersPieces = ["whisker1", "whisker2", "whisker3" ];
     
+    /*\
+     * Stimuli.Fish.draw
+     [ method ]
+     * Draws a fish token from a fish category and returns an object with
+     * information about the fish that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - fangs (boolean) whether this fish token has fangs
+     - whiskers (boolean) whether this fish token has whiskers
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the fish in format:
+     o {
+     o     color (string) hex color of fish -- actually a radial gradient from a lighter version of this color to a darker version,
+     o     finColor (string) hex color of fins of fish,
+     o     tailSize (number) 1 is longest tails and 0 is shortest,
+     o     tallness (number) 1 is largest tallest fish and 0 is shortest,
+     o     label (string) same as input parameter,
+     o     fangs (string) same as input parameter,
+     o     whiskers (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, fangs, whiskers, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var tailSize = ErinTools.uniformAroundMean(this.baseTailSize);
@@ -1211,12 +1251,12 @@ var Stimuli = {
       };
     }
   },
-  
-  /** Represents a flower category. Has 4 mean colors (baseCenterColor for the
-      center of the flower, basePetalColor for the petals, baseSpotsColor for
-      the spots, and baseStemColor for the stem), mean baseCenterSize and mean 
-      basePetalLength.
-      @constructor*/
+
+  /*\
+   * Stimuli.Flower
+   [ class ]
+   * Represents a flower category.
+  \*/
   Flower: function() {
     /** A string. The hex code for the latent mean color of the petals,
         sampled from Stimuli.colorScheme.
@@ -1245,6 +1285,28 @@ var Stimuli = {
                       bigShort: data[2],
                       bigLong: data[3] };
     
+    /*\
+     * Stimuli.Flower.draw
+     [ method ]
+     * Draws a flower token from a flower category and returns an object with
+     * information about the flower that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - spots (boolean) whether this flower token has spots
+     - thorns (boolean) whether this flower token has thorns
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the flower in format:
+     o {
+     o     petalColor (string) hex color of petals -- the closer set of petals is actually a radial gradient based on a lighter version of this color and the further away petals are a radial gradient based on a darker version of this color,
+     o     centerColor (string) hex color of center of flower -- this is actually a radial gradient from a lighter version of the color to a darker version of the color,
+     o     spotsColor (string) hex color of spots on petals,
+     o     stemColor (string) hex color of stem (and consequently thorns, if there are thorns),
+     o     petalLength (number) 1 is longest petals and 0 is min,
+     o     centerSize (number) 1 is largest center and 0 is min,
+     o     label (string) same as input parameter,
+     o     spots (string) same as input parameter,
+     o     thorns (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, spots, thorns, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       
@@ -1326,10 +1388,11 @@ var Stimuli = {
     }
   },
   
-  /** Represents a crystal category. Has 3 mean colors (baseColor for most of
-      the crystal, baseBubblesColor for the bubbles, and baseStreaksColor for
-      the streaks), mean baseCenterSize and mean baseOutsideSize.
-      @constructor*/
+  /*\
+   * Stimuli.Crystal
+   [ class ]
+   * Represents a crystal category.
+  \*/
   Crystal: function() {
     var data = $.csv.toObjects(Stimuli.images.crystal);
     /** A string. The hex code for the latent mean color of the crystal, sampled
@@ -1361,6 +1424,27 @@ var Stimuli = {
                       smallBig: data[1],
                       bigSmall: data[2],
                       bigBig: data[3] };
+    /*\
+     * Stimuli.Crystal.draw
+     [ method ]
+     * Draws a crystal token from a crystal category and returns an object with
+     * information about the crystal that was drawn.
+     - label (string) matches the id for an svg tag in the html
+     - bubbles (boolean) whether this flower token has bubbles
+     - streaks (boolean) whether this flower token has streaks
+     - scaleFactor (number) scales the whole image
+     = (object) properties of the crystal in format:
+     o {
+     o     color (string) hex color of crystal -- this has a gradient from this color to white and back to this color to show reflections
+     o     bubblesColor (string) hex color of bubbles in the crystal,
+     o     streaksColor (string) hex color of streaks in the crystal,
+     o     centerSize (number) 1 is largest the center side of the crytal could be and 0 is min,
+     o     outsideSize (number) 1 is largest the outer sides of the crytal could be and 0 is min,
+     o     label (string) same as input parameter,
+     o     bubbles (string) same as input parameter,
+     o     streaks (string) same as input parameter,
+     o }
+    \*/
     this.draw = function(label, bubbles, streaks, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       var color = Stimuli.myColor(this.color);
@@ -1422,6 +1506,11 @@ var Stimuli = {
       Stimuli.drawPaths(paper, pieces, colors, getPathString, "0.01-0.01-0.01");
       Stimuli.viewBox(label, scaleFactor);
       return {
+        color: color,
+        bubblesColor: bubblesColor,
+        streaksColor: streaksColor,
+        centerSize: centerSize,
+        outsideSize: outsideSize,
         label: label,
         bubbles: bubbles,
         streaks: streaks
@@ -1429,6 +1518,7 @@ var Stimuli = {
     }
   },
   
+  /*
   Island: function() {
     var data = $.csv.toObjects(Stimuli.images.crystal);
     //var endpoints = { };
@@ -1456,6 +1546,7 @@ var Stimuli = {
       };
     }
   },
+  */
   
   drawPaths: function(paper, pieces, colors, interpolationFunction, opacity) {
     var opacity = opacity || null;
