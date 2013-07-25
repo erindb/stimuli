@@ -1,0 +1,243 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Stimuli Demo</title>
+<meta name="viewport" content="initial-scale=1.0">
+</head> 
+
+<body>
+<table border="1">
+  <tr>
+    <td>
+      birds<br/>
+      <svg id="fepBird1"></svg>
+      <svg id="fepBird2"></svg>
+      <svg id="fepBird3"></svg>
+      <svg id="wugBird1"></svg>
+    </td>
+    <td>
+      bugs<br/>
+      <svg id="fepBug1"></svg>
+      <svg id="fepBug2"></svg>
+      <svg id="fepBug3"></svg>
+      <svg id="wugBug1"></svg>
+    </td>
+    <td>
+      crystals<br/>
+      <svg id="fepCrystal1"></svg>
+      <svg id="fepCrystal2"></svg>
+      <svg id="fepCrystal3"></svg>
+      <svg id="wugCrystal1"></svg>
+    </td>
+    <td>
+      fish<br/>
+      <svg id="fepFish1"></svg>
+      <svg id="fepFish2"></svg>
+      <svg id="fepFish3"></svg>
+      <svg id="wugFish1"></svg>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      flowers<br/>
+      <svg id="fepFlower1"></svg>
+      <svg id="fepFlower2"></svg>
+      <svg id="fepFlower3"></svg>
+      <svg id="wugFlower1"></svg>
+    </td>
+    <td>
+      microbes<br/>
+      <svg id="fepMicrobe1"></svg>
+      <svg id="fepMicrobe2"></svg>
+      <svg id="fepMicrobe3"></svg>
+      <svg id="wugMicrobe1"></svg>
+    </td>
+    <td>
+      monsters<br/>
+      <svg id="fepMonster1"></svg>
+      <svg id="fepMonster2"></svg>
+      <svg id="fepMonster3"></svg>
+      <svg id="wugMonster1"></svg>
+    </td>
+    <td>
+      trees<br/>
+      <svg id="fepTree1"></svg>
+      <svg id="fepTree2"></svg>
+      <svg id="fepTree3"></svg>
+      <svg id="wugTree1"></svg>
+    </td>
+  </tr>
+</table>
+
+<!-- Scripts -->
+<script src="./stimuli_files/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="./stimuli_files/jquery.csv-0.71.min.js" type="text/javascript"></script>
+<script src="./stimuli_files/raphael.js" type="text/javascript"></script>
+<script src="./stimuli_files/stimuli.js" type="text/javascript"></script>
+
+<script>
+var scale = 0.55;
+
+//**************DRAW SOME BIRDS*******************
+var fepBird = new Stimuli.Bird(); //create a kind of bird called "feps"
+var wugBird = new Stimuli.Bird(); //create a kind of bird called "wugs"
+
+//draw some feps
+var fepBird1 = fepBird.draw("fepBird1", true, false, scale); //crest
+var fepBird2 = fepBird.draw("fepBird2", true, true, scale); //crest & tail
+var fepBird3 = fepBird.draw("fepBird3", false, false, scale); //no crest or tail
+
+//draw a wug
+var wugBird1 = wugBird.draw("wugBird1", false, true, scale); //tail
+
+//slightly different colors because they're the colors for two
+//different birds from the same category
+console.log(fepBird1.color + " " + fepBird2.color);
+
+//very different colors because they're the latent mean colors for
+//the two different categories
+console.log(fepBird.color + " " + wugBird.color);
+
+//**************DRAW SOME BUGS*******************
+var fepBug = new Stimuli.Bug(); //create a kind of bug called "feps"
+var wugBug = new Stimuli.Bug(); //create a kind of bug called "wugs"
+
+//draw some feps
+var fepBug1 = fepBug.draw("fepBug1", true, false, scale); //wings
+var fepBug2 = fepBug.draw("fepBug2", true, true, scale); //wings & antennae
+var fepBug3 = fepBug.draw("fepBug3", false, false, scale); //no wings or antennae
+
+//draw a wug
+var wugBug1 = wugBug.draw("wugBug1", false, true, scale); //antennae
+
+//slightly different colors because they're the trunk colors for two
+//different trees from the same category
+console.log(fepBug1.bodyColor + " " + fepBug2.bodyColor);
+
+//very different colors because they're the latent mean trunk colors for
+//the two different categories
+console.log(fepBug.bodyColor + " " + wugBug.bodyColor);
+
+//**************DRAW SOME CRYSTALS*******************
+var fepCrystal = new Stimuli.Crystal(); //create a kind of crystal called "feps"
+var wugCrystal = new Stimuli.Crystal(); //create a kind of crystal called "wugs"
+
+//draw some feps
+var fepCrystal1 = fepCrystal.draw("fepCrystal1", true, false, scale); //spots
+var fepCrystal2 = fepCrystal.draw("fepCrystal2", true, true, scale); //spots & thorns
+var fepCrystal3 = fepCrystal.draw("fepCrystal3", false, false, scale); //no spots or thorns
+
+//draw a wug
+var wugCrystal1 = wugCrystal.draw("wugCrystal1", false, true, scale); //thorns
+
+//slightly different colors because they're the colors for two
+//different crystals from the same category
+console.log(fepCrystal1.petalColor + " " + fepCrystal2.petalColor);
+
+//very different colors because they're the latent mean colors for
+//the two different categories
+console.log(fepCrystal.petalColor + " " + wugCrystal.petalColor);
+
+//**************DRAW SOME FISH*******************
+
+var fepFish = new Stimuli.Fish(); //create a kind of fish called "feps"
+var wugFish = new Stimuli.Fish(); //create a kind of fish called "wugs"
+
+//draw some feps
+var fepFish1 = fepFish.draw("fepFish1", true, false, scale); //fangs
+var fepFish2 = fepFish.draw("fepFish2", true, true, scale); //fangs & whiskers
+var fepFish3 = fepFish.draw("fepFish3", false, false, scale); //no fangs or whiskers
+
+//draw a wug
+var wugFish1 = wugFish.draw("wugFish1", false, true, scale); //whiskers
+
+//slightly different colors because they're the colors for two
+//different fish from the same category
+console.log(fepFish1.color + " " + fepFish2.color);
+
+//very different colors because they're the latent mean colors for
+//the two different categories
+console.log(fepFish.color + " " + wugFish.color);
+
+//**************DRAW SOME FLOWERS*******************
+var fepFlower = new Stimuli.Flower(); //create a kind of flower called "feps"
+var wugFlower = new Stimuli.Flower(); //create a kind of flower called "wugs"
+
+//draw some feps
+var fepFlower1 = fepFlower.draw("fepFlower1", true, false, scale); //spots
+var fepFlower2 = fepFlower.draw("fepFlower2", true, true, scale); //spots & thorns
+var fepFlower3 = fepFlower.draw("fepFlower3", false, false, scale); //no spots or thorns
+
+//draw a wug
+var wugFlower1 = wugFlower.draw("wugFlower1", false, true, scale); //thorns
+
+//slightly different colors because they're the colors for two
+//different flowers from the same category
+console.log(fepFlower1.petalColor + " " + fepFlower2.petalColor);
+
+//very different colors because they're the latent mean colors for
+//the two different categories
+console.log(fepFlower.petalColor + " " + wugFlower.petalColor);
+
+//**************DRAW SOME MICROBES*******************
+var fepMicrobe = new Stimuli.Microbe(); //create a kind of microbe called "feps"
+var wugMicrobe = new Stimuli.Microbe(); //create a kind of microbe called "wugs"
+
+//draw some feps
+var fepMicrobe1 = fepMicrobe.draw("fepMicrobe1", true, false, scale); //spikes
+var fepMicrobe2 = fepMicrobe.draw("fepMicrobe2", true, true, scale); //spikes & bumps
+var fepMicrobe3 = fepMicrobe.draw("fepMicrobe3", false, false, scale); //no spikes or bumps
+
+//draw a wug
+var wugMicrobe1 = wugMicrobe.draw("wugMicrobe1", false, true, scale); //bumps
+
+//slightly different colors because they're the colors for two
+//different microbes from the same category
+console.log(fepMicrobe1.color + " " + fepMicrobe2.color);
+
+//very different colors because they're the latent mean colors for
+//the two different categories
+console.log(fepMicrobe.color + " " + wugMicrobe.color);
+
+//**************DRAW SOME MONSTERS*******************
+var fepMonster = new Stimuli.Monster(); //create a kind of microbe called "feps"
+var wugMonster = new Stimuli.Monster(); //create a kind of microbe called "wugs"
+
+//draw some feps
+var fepMonster1 = fepMonster.draw("fepMonster1", true, false, scale); //horns
+var fepMonster2 = fepMonster.draw("fepMonster2", true, true, scale); //horns & teeth
+var fepMonster3 = fepMonster.draw("fepMonster3", false, false, scale); //no horns or teeth
+
+//draw a wug
+var wugMonster1 = wugMonster.draw("wugMonster1", false, true, scale); //teeth
+
+//slightly different colors because they're the colors for two
+//different monsters from the same category
+console.log(fepMonster1.color + " " + fepMonster2.color);
+
+//very different colors because they're the latent mean colors for
+//the two different categories
+console.log(fepMonster.color + " " + wugMonster.color);
+
+//**************DRAW SOME TREES*******************
+var fepTree = new Stimuli.Tree(); //create a kind of tree called "feps"
+var wugTree = new Stimuli.Tree(); //create a kind of tree called "wugs"
+
+//draw some feps
+var fepTree1 = fepTree.draw("fepTree1", true, false, scale); //berries
+var fepTree2 = fepTree.draw("fepTree2", true, true, scale); //berries & leaves
+var fepTree3 = fepTree.draw("fepTree3", false, false, scale); //no berries or leaves
+
+//draw a wug
+var wugTree1 = wugTree.draw("wugTree1", false, true, scale); //leaves
+
+//slightly different colors because they're the trunk colors for two
+//different trees from the same category
+console.log(fepTree1.trunkColor + " " + fepTree2.trunkColor);
+
+//very different colors because they're the latent mean trunk colors for
+//the two different categories
+console.log(fepTree.trunkColor + " " + wugTree.trunkColor);
+</script>
+
+
+</body></html>
