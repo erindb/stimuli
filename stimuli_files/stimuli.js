@@ -1,5 +1,8 @@
 //documentation with Dr.js -- https://github.com/dciccale/dr.js 
 
+
+//TODO: add a variable for *variance* for each property in each category
+
 var StimuliTools = {
   shuffle: function(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;}, // non-destructive.
 
@@ -11,7 +14,7 @@ var StimuliTools = {
  * between 0 and 1/nSteps.
  - nSteps (number) by default 10, maximum number of hues to hold in the hue bank at a time
 \*/
-  ColorRandomizer: function(nSteps) {
+  ColorRandomizer: function(nStep) {
     var nSteps = nSteps || 10;
     function hues(n) {
       var h = [];
@@ -35,26 +38,31 @@ var StimuliTools = {
         myHues = hues(nSteps);
       }
       var h = myHues.shift();
-      var s = StimuliTools.uniformAroundMean(.99, .1);
-      var v = StimuliTools.uniformAroundMean(.99, .1);
+      var s = StimuliTools.uniformAroundMean(.99, 1, .1);
+      var v = StimuliTools.uniformAroundMean(.99, 1, .1);
       return Raphael.hsb2rgb(h, s, v).hex;
     }
   },
   
-  uniformAroundMean: function(mean, radius) {
-    var radius = radius || 0.2;
-    if (mean + radius < 1) {
-      var upper = mean + radius;
+  uniformAroundMean: function(mean, varianceScale, radius) {
+    if (varianceScale == 0) {
+      return mean;
     } else {
-      var upper = 1;
+      var radius = radius || 0.2;
+      radius = radius * varianceScale;
+      if (mean + radius < 1) {
+        var upper = mean + radius;
+      } else {
+        var upper = 1;
+      }
+      if (mean - radius > .1) {
+        var lower = mean - radius;
+      } else {
+        var lower = .1;
+      }
+      var interval = upper - lower;
+      return Math.random() * interval + lower;
     }
-    if (mean - radius > .1) {
-      var lower = mean - radius;
-    } else {
-      var lower = .1;
-    }
-    var interval = upper - lower;
-    return Math.random() * interval + lower;
   },
   
   // creates an image partway between two other images, as in the animations
@@ -171,16 +179,37 @@ var Stimuli = {
     return grad;
   },
 
-  myColor: function(meanColor, hVar, sVar, vVar) {
+  myColor: function(meanColor, varianceScale, hVar, sVar, vVar) {
+    var varianceScale = varianceScale || 1;
     var hVar = hVar || 0.01;
     var sVar = sVar || 0.1;
     var vVar = vVar || 0.1;
     var c = Raphael.color(meanColor);
-    var hue = StimuliTools.uniformAroundMean(c.h, hVar);
-    var saturation = StimuliTools.uniformAroundMean(c.s, sVar);
-    var value = StimuliTools.uniformAroundMean(c.v, vVar);
+    var hue = StimuliTools.uniformAroundMean(c.h, varianceScale, hVar);
+    var saturation = StimuliTools.uniformAroundMean(c.s, varianceScale, sVar);
+    var value = StimuliTools.uniformAroundMean(c.v, varianceScale, vVar);
     var newColor = Raphael.hsb2rgb(hue, saturation, value);
     return newColor.hex;
+  },
+
+  keepIfThere: function(meanProperties, variable, type) {
+    var sample = function(type) {
+      if (type == "[0,1]") {
+        return Math.random();
+      } else if (type == "color") {
+        return Stimuli.colorScheme.get(true);
+      } else if (type == "1") {
+        return 1;
+      } else {
+        console.log("error177")
+      }
+    }
+    if (meanProperties != null) {
+      if (meanProperties[variable] != null) {
+        return meanProperties[variable];
+      }
+    }
+    return sample(type);
   },
 
   /*\
@@ -213,7 +242,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepTree.trunkColor + " " + wugTree.trunkColor);
   \*/
-  Tree: function() {
+  Tree: function(meanProperties) {
     /*\
      * Stimuli.Tree.berryColor
      [ property ]
@@ -221,7 +250,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.berryColor = Stimuli.colorScheme.get();
+    this.berryColor = Stimuli.keepIfThere(meanProperties, "berryColor", "color");
+    this.berryColorVar = Stimuli.keepIfThere(meanProperties, "berryColorVar", "1");
     /*\
      * Stimuli.Tree.leafColor
      [ property ]
@@ -229,7 +259,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.leafColor = Stimuli.colorScheme.get();
+    this.leafColor = Stimuli.keepIfThere(meanProperties, "leafColor", "color");
+    this.leafColorVar = Stimuli.keepIfThere(meanProperties, "leafColorVar", "1");
     /*\
      * Stimuli.Tree.trunkColor
      [ property ]
@@ -237,7 +268,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.trunkColor = Stimuli.colorScheme.get();
+    this.trunkColor = Stimuli.keepIfThere(meanProperties, "trunkColor", "color");
+    this.trunkColorVar = Stimuli.keepIfThere(meanProperties, "trunkColorVar", "1");
     /*\
      * Stimuli.Tree.baseWidth
      [ property ]
@@ -246,7 +278,8 @@ var Stimuli = {
      * and 1 represents the maximum width, sampled from uniform.
      * E.g. 0.13984732927294.".
     \*/
-    this.width = Math.random();
+    this.width = Stimuli.keepIfThere(meanProperties, "width", "[0,1]");
+    this.widthVar = Stimuli.keepIfThere(meanProperties, "widthVar", "1");
     /*\
      * Stimuli.Tree.baseHeight
      [ property ]
@@ -255,7 +288,8 @@ var Stimuli = {
      * and 1 represents the maximum height, sampled from uniform.
      * E.g. 0.13984732927294.".
     \*/
-    this.height = Math.random();
+    this.height = Stimuli.keepIfThere(meanProperties, "height", "[0,1]");
+    this.heightVar = Stimuli.keepIfThere(meanProperties, "heightVar", "1");
 
     //-----------HEIGHT AND WIDTH OF TREE----------//
     //for x values, distance from 101.5 should multiply by 1+ uniform(0,1)
@@ -298,11 +332,11 @@ var Stimuli = {
      o }
     \*/
     this.draw = function(label, berries, leaves, scaleFactor) {
-      var w = StimuliTools.uniformAroundMean(this.width);
-      var h = StimuliTools.uniformAroundMean(this.height);
-      var trunkColor = Stimuli.myColor(this.trunkColor);
-      var leafColor = Stimuli.myColor(this.leafColor);
-      var berryColor = Stimuli.myColor(this.berryColor);
+      var w = StimuliTools.uniformAroundMean(this.width, this.widthVar);
+      var h = StimuliTools.uniformAroundMean(this.height, this.heightVar);
+      var trunkColor = Stimuli.myColor(this.trunkColor, this.trunkColorVar);
+      var leafColor = Stimuli.myColor(this.leafColor, this.leafColorVar);
+      var berryColor = Stimuli.myColor(this.berryColor, this.berryColorVar);
       var widthFactor = w * 1.5 + 0.7;
       var heightFactor = h + 0.7;
       //this is badly names, this is actually a deterministic function of w, which was randomly generated
@@ -587,7 +621,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepBug.bodyColor + " " + wugBug.bodyColor);
   \*/
-  Bug: function() {
+  Bug: function(meanProperties) {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)];
     /*\
      * Stimuli.Bug.bodyColor
@@ -596,7 +630,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.bodyColor = Stimuli.colorScheme.get(true);
+    this.bodyColor = Stimuli.keepIfThere(meanProperties, "bodyColor", "color");
+    this.bodyColorVar = Stimuli.keepIfThere(meanProperties, "bodyColorVar", "1");
     /*\
      * Stimuli.Bug.wingsColor
      [ property ]
@@ -604,7 +639,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.wingsColor = Stimuli.colorScheme.get(true);
+    this.wingsColor = Stimuli.keepIfThere(meanProperties, "wingsColor", "color");
+    this.wingsColorVar = Stimuli.keepIfThere(meanProperties, "wingsColorVar", "1");
     /*\
      * Stimuli.Bug.antennaeColor
      [ property ]
@@ -612,7 +648,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.antennaeColor = Stimuli.colorScheme.get(true);
+    this.antennaeColor = Stimuli.keepIfThere(meanProperties, "antennaeColor", "color");
+    this.antennaeColorVar = Stimuli.keepIfThere(meanProperties, "antennaeColorVar", "1");
     /*\
      * Stimuli.Bug.bodyFatness
      [ property ]
@@ -621,7 +658,8 @@ var Stimuli = {
      * uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.bodyFatness = Math.random();
+    this.bodyFatness = Stimuli.keepIfThere(meanProperties, "bodyFatness", "[0,1]");
+    this.bodyFatnessVar = Stimuli.keepIfThere(meanProperties, "bodyFatnessVar", "1");
     /*\
      * Stimuli.Bug.headFatness
      [ property ]
@@ -630,7 +668,8 @@ var Stimuli = {
      * Sampled from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.headFatness = Math.random();
+    this.headFatness = Stimuli.keepIfThere(meanProperties, "headFatness", "[0,1]");
+    this.headFatnessVar = Stimuli.keepIfThere(meanProperties, "headFatnessVar", "1");
     
     /*\
      * Stimuli.Bug.draw
@@ -654,16 +693,16 @@ var Stimuli = {
      o }
     \*/
     this.draw = function(label, wings, antennae, scaleFactor) {
-      var bodyFatness = StimuliTools.uniformAroundMean(this.bodyFatness);
-      var headFatness = StimuliTools.uniformAroundMean(this.headFatness);
+      var bodyFatness = StimuliTools.uniformAroundMean(this.bodyFatness, this.bodyFatnessVar);
+      var headFatness = StimuliTools.uniformAroundMean(this.headFatness, this.headFatnessVar);
       var headYRadius = (headFatness)*60 + 15;
       var headXRadius = 25;
       var bodyYRadius = (bodyFatness)*60 + 10;
       var bodyXRadius = 50;
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var bodyColor = Stimuli.myColor(this.bodyColor);
-      var wingsColor = Stimuli.myColor(this.wingsColor);
-      var antennaeColor = Stimuli.myColor(this.antennaeColor);
+      var bodyColor = Stimuli.myColor(this.bodyColor, this.bodyColorVar);
+      var wingsColor = Stimuli.myColor(this.wingsColor, this.wingsColorVar);
+      var antennaeColor = Stimuli.myColor(this.antennaeColor, this.antennaeColorVar);
 
       function drawEyes() {
         var eyeRadius = 10;
@@ -827,7 +866,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepBird.color + " " + wugBird.color);
   \*/
-  Bird: function() {
+  Bird: function(meanProperties) {
     var paperCenter = [(Stimuli.containerWidth/2), ((Stimuli.containerHeight/2)-25)];
     /*\
      * Stimuli.Bird.color
@@ -836,7 +875,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.color = Stimuli.colorScheme.get();
+    this.color = Stimuli.keepIfThere(meanProperties, "color", "color");
+    this.colorVar = Stimuli.keepIfThere(meanProperties, "colorVar", "1");
     /*\
      * Stimuli.Bird.crestColor
      [ property ]
@@ -844,7 +884,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.crestColor = Stimuli.colorScheme.get();
+    this.crestColor = Stimuli.keepIfThere(meanProperties, "crestColor", "color");
+    this.crestColorVar = Stimuli.keepIfThere(meanProperties, "crestColorVar", "1");
     /*\
      * Stimuli.Bird.tailColor
      [ property ]
@@ -852,7 +893,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.tailColor = Stimuli.colorScheme.get();
+    this.tailColor = Stimuli.keepIfThere(meanProperties, "tailColor", "color");
+    this.tailColorVar = Stimuli.keepIfThere(meanProperties, "tailColorVar", "1");
     /*\
      * Stimuli.Bird.headStretch
      [ property ]
@@ -861,7 +903,8 @@ var Stimuli = {
      * represents the thinnest.
      * E.g. 0.13984732927294.
     \*/
-    this.headStretch = Math.random();
+    this.headStretch = Stimuli.keepIfThere(meanProperties, "headStretch", "[0,1]");
+    this.headStretchVar = Stimuli.keepIfThere(meanProperties, "headStretchVar", "1");
     /*\
      * Stimuli.Bird.bodyStretch
      [ property ]
@@ -870,7 +913,8 @@ var Stimuli = {
      * represents the shortest.
      * E.g. 0.13984732927294.
     \*/
-    this.bodyStretch = Math.random();
+    this.bodyStretch = Stimuli.keepIfThere(meanProperties, "bodyStretch", "[0,1]");
+    this.bodyStretchVar = Stimuli.keepIfThere(meanProperties, "bodyStretchVar", "1");
     /*\
      * Stimuli.Bird.draw
      [ method ]
@@ -894,12 +938,12 @@ var Stimuli = {
     \*/
     this.draw = function(label, crest, tail, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var color = Stimuli.myColor(this.color);
-      var crestColor = Stimuli.myColor(this.crestColor);
-      var tailColor = Stimuli.myColor(this.tailColor);
+      var color = Stimuli.myColor(this.color, this.colorVar);
+      var crestColor = Stimuli.myColor(this.crestColor, this.crestColorVar);
+      var tailColor = Stimuli.myColor(this.tailColor, this.tailColorVar);
       var gradColor = Stimuli.makeGradient("r",color);
-      var bodyStretch = StimuliTools.uniformAroundMean(this.bodyStretch) * 1 + 0.5;
-      var headStretch = StimuliTools.uniformAroundMean(this.headStretch) * 2 + .7;
+      var bodyStretch = StimuliTools.uniformAroundMean(this.bodyStretch, this.bodyStretchVar) * 1 + 0.5;
+      var headStretch = StimuliTools.uniformAroundMean(this.headStretch, this.headStretchVar) * 2 + .7;
       function drawHead() {
         var headCenter = [paperCenter[0], paperCenter[1]-35];
         var head = paper.ellipse(headCenter[0], headCenter[1], 25*headStretch, 25);
@@ -1003,7 +1047,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepMicrobe.color + " " + wugMicrobe.color);
   \*/
-  Microbe: function() {
+  Microbe: function(meanProperties) {
     var paperCenter = [(Stimuli.containerWidth/2), (Stimuli.containerHeight/2)+30];
     /*\
      * Stimuli.Microbe.color
@@ -1012,7 +1056,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.color = Stimuli.colorScheme.get();
+    this.color = Stimuli.keepIfThere(meanProperties, "color", "color");
+    this.colorVar = Stimuli.keepIfThere(meanProperties, "colorVar", "1");
     /*\
      * Stimuli.Microbe.bumpsColor
      [ property ]
@@ -1020,7 +1065,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.bumpsColor = Stimuli.colorScheme.get();
+    this.bumpsColor = Stimuli.keepIfThere(meanProperties, "bumpsColor", "color");
+    this.bumpsColorVar = Stimuli.keepIfThere(meanProperties, "bumpsColorVar", "1");
     /*\
      * Stimuli.Microbe.spikesColor
      [ property ]
@@ -1028,7 +1074,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.spikesColor = Stimuli.colorScheme.get();
+    this.spikesColor = Stimuli.keepIfThere(meanProperties, "spikesColor", "color");
+    this.spikesColorVar = Stimuli.keepIfThere(meanProperties, "spikesColorVar", "1");
     /*\
      * Stimuli.Microbe.xRadius
      [ property ]
@@ -1037,7 +1084,8 @@ var Stimuli = {
      * represents the largest.
      * E.g. 0.13984732927294.
     \*/
-    this.xRadius = Math.random();
+    this.xRadius = Stimuli.keepIfThere(meanProperties, "xRadius", "[0,1]");
+    this.xRadiusVar = Stimuli.keepIfThere(meanProperties, "xRadiusVar", "1");
     /*\
      * Stimuli.Microbe.yRadius
      [ property ]
@@ -1046,7 +1094,8 @@ var Stimuli = {
      * represents the largest.
      * E.g. 0.13984732927294.
     \*/
-    this.yRadius = Math.random();
+    this.yRadius = Stimuli.keepIfThere(meanProperties, "yRadius", "[0,1]");
+    this.yRadiusVar = Stimuli.keepIfThere(meanProperties, "yRadiusVar", "1");
     /*\
      * Stimuli.Microbe.draw
      [ method ]
@@ -1070,11 +1119,11 @@ var Stimuli = {
     \*/
     this.draw = function(label, spikes, bumps, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var color = Stimuli.myColor(this.color);
-      var bumpsColor = Stimuli.myColor(this.bumpsColor);
-      var spikesColor = Stimuli.myColor(this.spikesColor);
-      var xRadius = StimuliTools.uniformAroundMean(this.xRadius);
-      var yRadius = StimuliTools.uniformAroundMean(this.yRadius);
+      var color = Stimuli.myColor(this.color, this.colorVar);
+      var bumpsColor = Stimuli.myColor(this.bumpsColor, this.bumpsColorVar);
+      var spikesColor = Stimuli.myColor(this.spikesColor, this.spikesColorVar);
+      var xRadius = StimuliTools.uniformAroundMean(this.xRadius, this.xRadiusVar);
+      var yRadius = StimuliTools.uniformAroundMean(this.yRadius, this.yRadiusVar);
       var xRad = getRadius(xRadius);
       var yRad = getRadius(yRadius);
       function getRadius(r) {
@@ -1198,7 +1247,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepMonster.color + " " + wugMonster.color);
   \*/
-  Monster: function() {
+  Monster: function(meanProperties) {
     /*\
      * Stimuli.Monster.tallness
      [ property ]
@@ -1207,7 +1256,8 @@ var Stimuli = {
      * from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.tallness = Math.random();
+    this.tallness = Stimuli.keepIfThere(meanProperties, "tallness", "[0,1]");
+    this.tallnessVariance = Stimuli.keepIfThere(meanProperties, "tallnessVar", "1");
     /*\
      * Stimuli.Monster.fatness
      [ property ]
@@ -1216,7 +1266,8 @@ var Stimuli = {
      * from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.fatness = Math.random();
+    this.fatness = Stimuli.keepIfThere(meanProperties, "fatness", "[0,1]");
+    this.fatnessVariance = Stimuli.keepIfThere(meanProperties, "fatnessVar", "1");
     /*\
      * Stimuli.Monster.color
      [ property ]
@@ -1224,7 +1275,8 @@ var Stimuli = {
      * monster, sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.color = Stimuli.colorScheme.get();
+    this.color = Stimuli.keepIfThere(meanProperties, "color", "color");
+    this.colorVariance = Stimuli.keepIfThere(meanProperties, "colorVar", "1");
     /*\
      * Stimuli.Monster.accentColor
      [ property ]
@@ -1232,7 +1284,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.accentColor = Stimuli.colorScheme.get();
+    this.accentColor = Stimuli.keepIfThere(meanProperties, "accentColor", "color");
+    this.accentColorVariance = Stimuli.keepIfThere(meanProperties, "accentColorVar", "1");
     
     var data = $.csv.toObjects(Stimuli.images.monster);
 
@@ -1280,16 +1333,16 @@ var Stimuli = {
     \*/
     this.draw = function(label, horns, teeth, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var tallness = StimuliTools.uniformAroundMean(this.tallness);
-      var fatness = StimuliTools.uniformAroundMean(this.fatness);
-      var color = Stimuli.myColor(this.color);
-      var accentColor = Stimuli.myColor(this.accentColor);
+      var tallness = StimuliTools.uniformAroundMean(this.tallness, this.tallnessVar);
+      var fatness = StimuliTools.uniformAroundMean(this.fatness, this.fatnessVar);
+      var color = Stimuli.myColor(this.color, this.colorVar);
+      var accentColor = Stimuli.myColor(this.accentColor, this.accentColorVar);
       var lightAccent = Stimuli.lighten(accentColor, true);
       var colors = {"left eye": "#ffffff",
                     "left pupil": "#000000",
                     "right eye": "#ffffff",
                     "right pupil": "#000000",
-                    "mouth": color,
+                    "mouth": null,
                     "body": Stimuli.makeGradient("r", color),
                     "left arm": color,
                     "right arm": color,
@@ -1380,7 +1433,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepFish.color + " " + wugFish.color);
   \*/
-  Fish: function() {
+  Fish: function(meanProperties) {
     /*\
      * Stimuli.Fish.tailSize
      [ property ]
@@ -1389,7 +1442,8 @@ var Stimuli = {
      * from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.tailSize = Math.random();
+    this.tailSize = Stimuli.keepIfThere(meanProperties, "tailSize", "[0,1]");
+    this.tailSizeVar = Stimuli.keepIfThere(meanProperties, "tailSizeVar", "1");
     /*\
      * Stimuli.Fish.tallness
      [ property ]
@@ -1400,7 +1454,8 @@ var Stimuli = {
      * from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.tallness = Math.random();
+    this.tallness = Stimuli.keepIfThere(meanProperties, "tallness", "[0,1]");
+    this.tallnessVar = Stimuli.keepIfThere(meanProperties, "tallnessVar", "1");
     /*\
      * Stimuli.Fish.color
      [ property ]
@@ -1408,7 +1463,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.color = Stimuli.colorScheme.get();
+    this.color = Stimuli.keepIfThere(meanProperties, "color", "color");
+    this.colorVar = Stimuli.keepIfThere(meanProperties, "colorVar", "1");
     /*\
      * Stimuli.Fish.finColor
      [ property ]
@@ -1416,7 +1472,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.finColor = Stimuli.colorScheme.get();
+    this.finColor = Stimuli.keepIfThere(meanProperties, "finColor", "color");
+    this.finColorVar = Stimuli.keepIfThere(meanProperties, "finColorVar", "1");
     
     var data = $.csv.toObjects(Stimuli.images.fish);
 
@@ -1451,10 +1508,10 @@ var Stimuli = {
     \*/
     this.draw = function(label, fangs, whiskers, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var tailSize = StimuliTools.uniformAroundMean(this.tailSize);
-      var tallness = StimuliTools.uniformAroundMean(this.tallness);
-      var color = Stimuli.myColor(this.color);
-      var finColor = Stimuli.myColor(this.finColor);
+      var tailSize = StimuliTools.uniformAroundMean(this.tailSize, this.tailSizeVar);
+      var tallness = StimuliTools.uniformAroundMean(this.tallness, this.tallnessVar);
+      var color = Stimuli.myColor(this.color, this.colorVar);
+      var finColor = Stimuli.myColor(this.finColor, this.finColorVar);
       var gradColor = Stimuli.makeGradient("r", color);
       var colors = {"eye": "#ffffff",
                     "pupil": "#000000",
@@ -1525,7 +1582,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepFlower.petalColor + " " + wugFlower.petalColor);
   \*/
-  Flower: function() {
+  Flower: function(meanProperties) {
     /*\
      * Stimuli.Flower.petalColor
      [ property ]
@@ -1533,7 +1590,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.petalColor = Stimuli.colorScheme.get();
+    this.petalColor = Stimuli.keepIfThere(meanProperties, "petalColor", "color");
+    this.petalColorVar = Stimuli.keepIfThere(meanProperties, "petalColorVar", "1");
     /*\
      * Stimuli.Flower.centerColor
      [ property ]
@@ -1541,7 +1599,8 @@ var Stimuli = {
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.centerColor = Stimuli.colorScheme.get();
+    this.centerColor = Stimuli.keepIfThere(meanProperties, "centerColor", "color");
+    this.centerColorVar = Stimuli.keepIfThere(meanProperties, "centerColorVar", "1");
     /*\
      * Stimuli.Flower.spotsColor
      [ property ]
@@ -1549,7 +1608,9 @@ var Stimuli = {
      * petals, sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.spotsColor = Stimuli.colorScheme.get();
+    this.spotsColor = Stimuli.keepIfThere(meanProperties, "spotsColor", "color");
+    this.spotsColorVar = Stimuli.keepIfThere(meanProperties, "spotsColorVar", "1");
+
     /*\
      * Stimuli.Flower.stemColor
      [ property ]
@@ -1557,7 +1618,8 @@ var Stimuli = {
      * consequently thorns, if there are any), sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.stemColor = Stimuli.colorScheme.get();
+    this.stemColor = Stimuli.keepIfThere(meanProperties, "stemColor", "color");
+    this.stemColorVar = Stimuli.keepIfThere(meanProperties, "stemColorVar", "1");
     /*\
      * Stimuli.Flower.centerSize
      [ property ]
@@ -1566,7 +1628,8 @@ var Stimuli = {
      * the biggest. Sampled from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.centerSize = Math.random();
+    this.centerSize = Stimuli.keepIfThere(meanProperties, "centerSize", "[0,1]");
+    this.centerSizeVar = Stimuli.keepIfThere(meanProperties, "centerSizeVar", "1");
     /*\
      * Stimuli.Flower.petalLength
      [ property ]
@@ -1575,7 +1638,8 @@ var Stimuli = {
      * from uniform.
      * E.g. 0.13984732927294..
     \*/
-    this.petalLength = Math.random();
+    this.petalLength = Stimuli.keepIfThere(meanProperties, "petalLength", "[0,1]");
+    this.petalLengthVar = Stimuli.keepIfThere(meanProperties, "petalLengthVar", "1");
     
     var data = $.csv.toObjects(Stimuli.images.flower);
 
@@ -1609,12 +1673,12 @@ var Stimuli = {
     this.draw = function(label, spots, thorns, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
       
-      var petalColor = Stimuli.myColor(this.petalColor);
-      var centerColor = Stimuli.myColor(this.centerColor);
-      var spotsColor = Stimuli.myColor(this.spotsColor);
-      var stemColor = Stimuli.myColor(this.stemColor);
-      var centerSize = StimuliTools.uniformAroundMean(this.centerSize);
-      var petalLength = StimuliTools.uniformAroundMean(this.petalLength);
+      var petalColor = Stimuli.myColor(this.petalColor, this.petalColorVar);
+      var centerColor = Stimuli.myColor(this.centerColor, this.centerColorVar);
+      var spotsColor = Stimuli.myColor(this.spotsColor, this.spotsColorVar);
+      var stemColor = Stimuli.myColor(this.stemColor, this.stemColorVar);
+      var centerSize = StimuliTools.uniformAroundMean(this.centerSize, this.centerSizeVar);
+      var petalLength = StimuliTools.uniformAroundMean(this.petalLength, this.petalLengthVar);
       
       var colors = {"stem":stemColor,
                     "thorny stem":stemColor,
@@ -1717,7 +1781,7 @@ var Stimuli = {
    | //the two different categories
    | console.log(fepCrystal.petalColor + " " + wugCrystal.petalColor);
   \*/
-  Crystal: function() {
+  Crystal: function(meanProperties) {
     var data = $.csv.toObjects(Stimuli.images.crystal);
     /*\
      * Stimuli.Crystal.color
@@ -1726,7 +1790,8 @@ var Stimuli = {
      * from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.color = Stimuli.colorScheme.get();
+    this.color = Stimuli.keepIfThere(meanProperties, "color", "color");
+    this.colorVar = Stimuli.keepIfThere(meanProperties, "colorVar", "1");
     /*\
      * Stimuli.Crystal.bubblesColor
      [ property ]
@@ -1734,7 +1799,8 @@ var Stimuli = {
      * from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.bubblesColor = Stimuli.colorScheme.get();
+    this.bubblesColor = Stimuli.keepIfThere(meanProperties, "bubblesColor", "color");
+    this.bubblesColorVar = Stimuli.keepIfThere(meanProperties, "bubblesColorVar", "1");
     /*\
      * Stimuli.Crystal.streaksColor
      [ property ]
@@ -1742,7 +1808,8 @@ var Stimuli = {
      * from Stimuli.colorScheme.
      * E.g. "#FF0000".
     \*/
-    this.streaksColor = Stimuli.colorScheme.get();
+    this.streaksColor = Stimuli.keepIfThere(meanProperties, "streaksColor", "color");
+    this.streaksColorVar = Stimuli.keepIfThere(meanProperties, "streaksColorVar", "1");
     /*\
      * Stimuli.Crystal.outsideSize
      [ property ]
@@ -1750,7 +1817,8 @@ var Stimuli = {
      * is largest the outer sides of the crytal could be and 0 is min,
      * E.g. 0.13984732927294..
     \*/
-    this.outsideSize = Math.random();
+    this.outsideSize = Stimuli.keepIfThere(meanProperties, "outsideSize", "[0,1]");
+    this.outsideSizeVar = Stimuli.keepIfThere(meanProperties, "outsideSizeVar", "1");
     /*\
      * Stimuli.Crystal.centerSize
      [ property ]
@@ -1758,7 +1826,9 @@ var Stimuli = {
      * is largest the center side of the crytal could be and 0 is min,
      * E.g. 0.13984732927294..
     \*/
-    this.centerSize = Math.random();
+    this.centerSize = Stimuli.keepIfThere(meanProperties, "centerSize", "[0,1]");
+    this.centerSizeVar = Stimuli.keepIfThere(meanProperties, "centerSizeVar", "1");
+
     function reflection(c) {
       return "0-"+c+"-#ffffff-"+c;
     }
@@ -1797,11 +1867,11 @@ var Stimuli = {
     \*/
     this.draw = function(label, bubbles, streaks, scaleFactor) {
       var paper = Raphael(label, Stimuli.containerWidth, Stimuli.containerHeight);
-      var color = Stimuli.myColor(this.color);
-      var bubblesColor = Stimuli.myColor(this.bubblesColor);
-      var streaksColor = Stimuli.myColor(this.streaksColor);
-      var centerSize = StimuliTools.uniformAroundMean(this.centerSize);
-      var outsideSize = StimuliTools.uniformAroundMean(this.outsideSize);
+      var color = Stimuli.myColor(this.color, this.colorVar);
+      var bubblesColor = Stimuli.myColor(this.bubblesColor, this.bubblesColorVar);
+      var streaksColor = Stimuli.myColor(this.streaksColor, this.streaksColorVar);
+      var centerSize = StimuliTools.uniformAroundMean(this.centerSize, this.centerSizeVar);
+      var outsideSize = StimuliTools.uniformAroundMean(this.outsideSize, this.outsideSizeVar);
       var getPathString = function(p) {
         var ss = endpoints.smallSmall[p];
         var sb = endpoints.smallBig[p];

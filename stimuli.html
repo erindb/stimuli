@@ -8,26 +8,16 @@
 
 Feps
 <br/>
-<svg id="treeFep"></svg>
-<svg id="bugFep"></svg>
-<svg id="birdFep"></svg>
-<svg id="microbeFep"></svg>
-<svg id="monsterFep"></svg>
-<svg id="fishFep"></svg>
-<svg id="flowerFep"></svg>
-<svg id="crystalFep"></svg>
+<svg id="fep0"></svg>
+<svg id="fep1"></svg>
+<svg id="fep2"></svg>
 <br/>
 <br/>
 Wugs
 <br/>
-<svg id="treeWug"></svg>
-<svg id="bugWug"></svg>
-<svg id="birdWug"></svg>
-<svg id="microbeWug"></svg>
-<svg id="monsterWug"></svg>
-<svg id="fishWug"></svg>
-<svg id="flowerWug"></svg>
-<svg id="crystalWug"></svg>
+<svg id="wug0"></svg>
+<svg id="wug1"></svg>
+<svg id="wug2"></svg>
 
 <!-- Scripts -->
 <script src="./stimuli_files/jquery-2.0.3.min.js" type="text/javascript"></script>
@@ -37,53 +27,15 @@ Wugs
 
 <script>
 var scale = 0.5;
-var treeFep = new Stimuli.Tree();
-treeFep.draw("treeFep", true, false, scale);
+var fep = new Stimuli.Monster({color:"#00FF00", colorVar:0, accentColor:"#B1FB17"});
+fep.draw("fep0", true, false, scale);
+fep.draw("fep1", true, false, scale);
+fep.draw("fep2", true, false, scale);
 //
-var bugFep = new Stimuli.Bug();
-bugFep.draw("bugFep", true, false, scale);
-//
-var birdFep = new Stimuli.Bird();
-birdFep.draw("birdFep", true, false, scale);
-//
-var microbeFep = new Stimuli.Microbe();
-microbeFep.draw("microbeFep", true, false, scale);
-//
-var monsterFep = new Stimuli.Monster();
-monsterFep.draw("monsterFep", true, false, scale);
-//
-var fishFep = new Stimuli.Fish();
-fishFep.draw("fishFep", true, false, scale);
-//
-var flowerFep = new Stimuli.Flower();
-flowerFep.draw("flowerFep", true, false, scale);
-//
-var crystalFep = new Stimuli.Crystal();
-crystalFep.draw("crystalFep", true, false, scale);
-//////////////////
-var treeWug = new Stimuli.Tree();
-treeWug.draw("treeWug", true, true, scale);
-//
-var bugWug = new Stimuli.Bug();
-bugWug.draw("bugWug", true, true, scale);
-//
-var birdWug = new Stimuli.Bird();
-birdWug.draw("birdWug", true, true, scale);
-//
-var microbeWug = new Stimuli.Microbe();
-microbeWug.draw("microbeWug", true, true, scale);
-//
-var monsterWug = new Stimuli.Monster();
-monsterWug.draw("monsterWug", true, true, scale);
-//
-var fishWug = new Stimuli.Fish();
-fishWug.draw("fishWug", true, true, scale);
-//
-var flowerWug = new Stimuli.Flower();
-flowerWug.draw("flowerWug", true, true, scale);
-//
-var crystalWug = new Stimuli.Crystal();
-crystalWug.draw("crystalWug", true, true, scale);
+var wug = new Stimuli.Monster({color:"#A52A2A", colorVar:3, accentColor:'#E8A317'});
+wug.draw("wug0", true, true, scale);
+wug.draw("wug1", true, true, scale);
+wug.draw("wug2", true, true, scale);
 </script>
 
 
