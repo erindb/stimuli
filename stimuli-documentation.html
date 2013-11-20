@@ -1,0 +1,1736 @@
+<!DOCTYPE html>
+<!-- Generated with Dr.js -->
+<html lang="en"><head><meta charset="utf-8"><title>Dynamic Categories Stimuli Reference</title>
+<style type="text/css" media="screen">
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+#dr-js {
+    background: #999;
+    margin: 0;
+    padding: 0;
+    overflow-y: hidden;
+}
+#src-dr-js {
+    background: #000;
+    margin: 1em;
+    padding: 0;
+}
+.dr-doc {
+    background: #eee;
+    border-right: solid #eee 3px;
+    float: right;
+    font: 300 16px/1.4 "Myriad Pro", "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+    height: 100%;
+    margin: 0;
+    overflow: auto;
+    padding: 0 30px;
+    width: 60%;
+}
+.dr-toc {
+    margin: 0;
+    padding: 0 16px;
+    background: #ddd;
+    list-style: none;
+    font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
+    overflow: auto;
+    border-right: solid #ddd 3px;
+    height: 100%;
+    float: right;
+    width: 25%;
+}
+#dr {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+}
+::-moz-selection {
+    background: #c00;
+    color: #fff;
+}
+::selection {
+    background: #c00;
+    color: #fff;
+}
+.dr-doc code
+{
+	background: #FFF;
+	border-radius: 5px;
+	padding: 0 6px;
+	border: 1px solid #CCC;
+}
+.dr-doc pre code
+{
+	background: none;
+	padding: 0;
+	border: none;
+}
+.dr-doc code,
+.dr-type em,
+.dr-returns em,
+.dr-property em {
+    font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
+}
+.extra {
+    display: none;
+}
+pre.code code {
+    color: #fff;
+}
+pre.code {
+    background: #333;
+    color: #fff;
+    overflow-x: auto;
+    padding: 16px 30px;
+    margin: 0 -30px;
+}
+code b {
+    color: #e9df8f;
+    font-weight: normal;
+}
+code i,
+code i *,
+code i .d {
+    color: #8b9967;
+    font-style: normal;
+}
+code .s {
+    color: #e7be61;
+}
+code .d {
+    color: #cf6a4c;
+}
+code .c,
+code .c * {
+    color: #999;
+    font-style: italic;
+}
+em.amp {
+    font-family: Baskerville, "Goudy Old Style", Palatino, "Book Antiqua", serif;
+    font-style: italic;
+}
+dl.dr-parameters {
+    margin: 8px 0;
+}
+dt.dr-param {
+    color: #666;
+    font-weight: 400;
+    float: left;
+    margin-right: 16px;
+    min-width: 160px;
+}
+dd.dr-type {
+    margin: 0;
+}
+dd.dr-description {
+    display: table;
+    min-height: 24px;
+    border: solid 1px #eee;
+}
+.dr-type {
+    float: left;
+}
+.dr-type em,
+.dr-returns em,
+.dr-property em {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: #ccc;
+    border-radius: 5px;
+    float: left;
+    font-size: .75em;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0 8px 0 0;
+    min-width: 80px;
+    padding: 2px 5px;
+    text-align: center;
+}
+.dr-type em.amp,
+.dr-returns em.amp,
+.dr-property em.amp {
+    float: none;
+    background: none;
+    font-size: 1em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+.dr-property em.dr-type {
+    margin: 4px 16px 0 0;
+}
+em.dr-type-string {
+    background: #e1edb1;
+    color: #3d4c00;
+}
+em.dr-type-object {
+    background: #edb1b1;
+    color: #4c0000;
+}
+em.dr-type-function {
+    background: #cfb1ed;
+    color: #26004c;
+}
+em.dr-type-number {
+    background: #b1c9ed;
+    color: #001e4c;
+}
+em.dr-type-boolean {
+    background: #b1edc9;
+    color: #004c1e;
+}
+em.dr-type-array {
+    background: #edd5b1;
+    color: #4c2d00;
+}
+dd.dr-optional {
+    display: none;
+}
+ol.dr-json {
+    background: #ddd;
+    list-style: none;
+    margin: 0 -30px;
+    padding: 16px 30px;
+}
+ol.dr-json .dr-json-key {
+    float: left;
+    min-width: 50px;
+    margin-right: 16px;
+}
+ol.dr-json .dr-json-description {
+    display: table;
+}
+ol.dr-json ol.dr-json  {
+    margin: 0;
+    padding: 0 0 0 50px;
+}
+h1 {
+    font-weight: 400;
+    font-size: 2.6em;
+    margin: 0;
+}
+h2, h3, h4, h5 {
+    margin: 1em 0 .5em 0;
+    padding: 6px 0 0;
+    font-weight: 600;
+    position: relative;
+}
+h5 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 20px;
+}
+h3 {
+    font-size: 28px;
+}
+h2 {
+    font-size: 38px;
+}
+h2.dr-class,
+h3.dr-class,
+h4.dr-class,
+h5.dr-class {
+    color: #009;
+}
+h2.dr-method,
+h3.dr-method,
+h4.dr-method,
+h5.dr-method {
+    color: #900;
+}
+h2.dr-property,
+h3.dr-property,
+h4.dr-property,
+h5.dr-property {
+    color: #090;
+}
+i.dr-trixie {
+    border: solid 10px #eee;
+    border-left-color: #999;
+    height: 0;
+    margin-left: -30px;
+    margin-top: -10px;
+    overflow: hidden;
+    position: absolute;
+    top: 50%;
+    width: 0;
+}
+p.header {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 1em 0 .3em;
+}
+.dr-returns {
+    margin-top: 16px;
+}
+.dr-returns .dr-title {
+    float: left;
+    margin-right: 16px;
+    width: 160px;
+}
+.dr-toc a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding-top: 8px;
+    position: relative;
+    z-index: 1000;
+}
+.dr-toc li.dr-lvl1 a {
+    padding-left: 1em;
+}
+.dr-toc li.dr-lvl2 a {
+    padding-left: 2em;
+}
+.dr-toc li.dr-lvl3 a {
+    padding-left: 3em;
+}
+.dr-toc li.dr-lvl4 a {
+    padding-left: 4em;
+}
+.dr-toc li.dr-lvl5 a {
+    padding-left: 5em;
+}
+.dr-toc li.dr-lvl6 a {
+    padding-left: 6em;
+}
+.dr-toc a.dr-class {
+    color: #339;
+}
+.dr-toc a.dr-property {
+    color: #393;
+}
+.dr-toc a.dr-method {
+    color: #933;
+}
+.dr-toc a:hover {
+    text-shadow: 0 0 2px #333;
+}
+.dr-toc a.dr-class:hover {
+    text-shadow: 0 0 2px #66c;
+}
+.dr-toc a.dr-property:hover {
+    text-shadow: 0 0 2px #6c6;
+}
+.dr-toc a.dr-method:hover {
+    text-shadow: 0 0 2px #c66;
+}
+a.dr-hash,
+a.dr-sourceline {
+    -webkit-transition: opacity 0.2s linear;
+    color: #333;
+    font-family: Menlo, "Arial Unicode MS", sans-serif;
+    margin: 0 0 0 .3em;
+    opacity: 0;
+    text-decoration: none;
+}
+a.dr-link {
+    position: relative;
+    color: #3875c0;
+}
+a.dr-link:hover {
+    text-shadow: 0 1px 2px #999;
+    bottom: 1px;
+    padding-bottom: 1px;
+}
+a.dr-link:visited {
+    color: #7051bc;
+}
+h2:hover a.dr-hash,
+h3:hover a.dr-hash,
+h4:hover a.dr-hash,
+h5:hover a.dr-hash,
+h2:hover a.dr-sourceline,
+h3:hover a.dr-sourceline,
+h4:hover a.dr-sourceline,
+h5:hover a.dr-sourceline {
+    opacity: 1;
+}
+p {
+    margin: 0 0 .5em;
+}
+
+.dr-source-line {
+    margin: 0;
+}
+.dr-source-line a {
+    -webkit-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-radius: 5px;
+    color: #000;
+    background: #999;
+    font-weight: 400;
+    font-size: .75em;
+    text-decoration: none;
+    padding: 5px;
+}
+#src-dr-js code {
+    background: #000;
+    display: block;
+    color: #fff;
+    font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
+    white-space: pre;
+    padding-left: 100px;
+    position: relative;
+    line-height: 1.2;
+}
+#src-dr-js code:hover {
+    background: #333;
+}
+#src-dr-js code:hover .ln {
+    color: #fff;
+}
+#src-dr-js code .ln {
+    position: absolute;
+    left: 0;
+    color: #333;
+    width: 70px;
+    text-align: right;
+}
+
+/*Scrollbar*/
+.dr-doc::-webkit-scrollbar,
+.dr-toc::-webkit-scrollbar {
+    width: 7px;
+    height: 9px;
+}
+.dr-doc::-webkit-scrollbar-button:start:decrement, 
+.dr-doc::-webkit-scrollbar-button:end:increment,
+.dr-toc::-webkit-scrollbar-button:start:decrement, 
+.dr-toc::-webkit-scrollbar-button:end:increment {
+    display: block;
+    height: 0;
+    background-color: transparent;
+}
+.dr-doc::-webkit-scrollbar-track-piece,
+.dr-toc::-webkit-scrollbar-track-piece {
+    -webkit-border-radius: 0;
+    -webkit-border-bottom-right-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+}
+.dr-doc::-webkit-scrollbar-thumb:vertical,
+.dr-toc::-webkit-scrollbar-thumb:vertical {
+    height: 50px;
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 4px;
+}
+.dr-doc::-webkit-scrollbar-thumb:horizontal,
+.dr-toc::-webkit-scrollbar-thumb:horizontal {
+    width: 50px;
+    background-color: rgba(0, 0, 0, 0.2);
+    -webkit-border-radius: 4px;
+}
+
+</style>
+<style type="text/css" media="print">
+html, body {
+    margin: 0;
+    padding: 0;
+}
+#dr-js {
+    margin: 0;
+    padding: 0;
+}
+#src-dr-js {
+    margin: 1em;
+    padding: 0;
+}
+.dr-doc {
+    font: 300 16px/1.4 "Myriad Pro", "Helvetica Neue", Helvetica, "Arial Unicode MS", Arial, sans-serif;
+    margin: 0;
+    padding: 0 30px 10px;
+}
+.dr-toc {
+    font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
+    list-style: none;
+    margin: 0;
+    padding: 0 16px;
+	float: right;
+}
+.dr-toc input {
+	display: none;
+}
+#dr {
+    margin: 0 auto;
+}
+.dr-doc code
+{
+	background: #FFF;
+	border-radius: 5px;
+	padding: 0 6px;
+	border: 1px solid #CCC;
+}
+.dr-doc pre code
+{
+	background: none;
+	padding: 0;
+	border: none;
+}
+.dr-doc code,
+.dr-type em,
+.dr-returns em,
+.dr-property em {
+    font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
+}
+.extra {
+    display: none;
+}
+pre.code code {
+    color: #000;
+}
+pre.code {
+    background: #eee;
+	border: solid 1px #ccc;
+    color: #000;
+    overflow-x: auto;
+    padding: 16px 30px;
+    margin: 0 -30px;
+}
+code b {
+    color: #e98553;
+    font-weight: normal;
+}
+code i,
+code i *,
+code i .d {
+    color: #5c993f;
+    font-style: normal;
+}
+code .s {
+    color: #e7be61;
+}
+code .d {
+    color: #cf6a4c;
+}
+code .c,
+code .c * {
+    color: #999;
+    font-style: italic;
+}
+em.amp {
+    font-family: Baskerville, "Goudy Old Style", Palatino, "Book Antiqua", serif;
+    font-style: italic;
+}
+dl.dr-parameters {
+    margin: 8px 0;
+}
+dt.dr-param {
+    color: #666;
+    font-weight: 400;
+    float: left;
+    margin-right: 16px;
+    min-width: 160px;
+}
+dd.dr-type {
+    margin: 0;
+}
+dd.dr-description {
+    display: table;
+    min-height: 24px;
+    border: solid 1px #fff;
+}
+.dr-type {
+    float: left;
+}
+.dr-type em,
+.dr-returns em,
+.dr-property em {
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    background: #ccc;
+    border-radius: 5px;
+    float: left;
+    font-size: .75em;
+    font-style: normal;
+    font-weight: 700;
+    margin: 0 8px 0 0;
+    min-width: 80px;
+    padding: 2px 5px;
+    text-align: center;
+}
+.dr-type em.amp,
+.dr-returns em.amp,
+.dr-property em.amp {
+    float: none;
+    background: none;
+    font-size: 1em;
+    font-weight: 400;
+    font-style: italic;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+}
+.dr-property em.dr-type {
+    margin: 4px 16px 0 0;
+}
+em.dr-type-string {
+    background: #e1edb1;
+    color: #3d4c00;
+}
+em.dr-type-object {
+    background: #edb1b1;
+    color: #4c0000;
+}
+em.dr-type-function {
+    background: #cfb1ed;
+    color: #26004c;
+}
+em.dr-type-number {
+    background: #b1c9ed;
+    color: #001e4c;
+}
+em.dr-type-boolean {
+    background: #b1edc9;
+    color: #004c1e;
+}
+em.dr-type-array {
+    background: #edd5b1;
+    color: #4c2d00;
+}
+dd.dr-optional {
+    display: none;
+}
+ol.dr-json {
+    background: #ddd;
+    list-style: none;
+    margin: 0 -30px;
+    padding: 16px 30px;
+}
+ol.dr-json .dr-json-key {
+    float: left;
+    min-width: 50px;
+    margin-right: 16px;
+}
+ol.dr-json .dr-json-description {
+    display: table;
+}
+ol.dr-json ol.dr-json  {
+    margin: 0;
+    padding: 0 0 0 50px;
+}
+h1 {
+    font-weight: 400;
+    font-size: 2.6em;
+    margin: 0;
+}
+h2, h3, h4, h5 {
+    margin: 1em 0 .5em 0;
+    padding: 6px 0 0;
+    font-weight: 600;
+    position: relative;
+}
+h5 {
+    font-size: 18px;
+}
+h4 {
+    font-size: 20px;
+}
+h3 {
+    font-size: 28px;
+}
+h2 {
+    font-size: 38px;
+}
+h2.dr-class,
+h3.dr-class,
+h4.dr-class,
+h5.dr-class {
+    color: #009;
+}
+h2.dr-method,
+h3.dr-method,
+h4.dr-method,
+h5.dr-method {
+    color: #900;
+}
+h2.dr-property,
+h3.dr-property,
+h4.dr-property,
+h5.dr-property {
+    color: #090;
+}
+i.dr-trixie {
+	display: none;
+}
+p.header {
+    font-size: 19px;
+    font-weight: 600;
+    margin: 1em 0 .3em;
+}
+.dr-returns {
+    margin-top: 16px;
+}
+.dr-returns .dr-title {
+    float: left;
+    margin-right: 16px;
+    width: 160px;
+}
+.dr-toc a {
+    display: block;
+    text-decoration: none;
+    color: #333;
+    padding-top: 8px;
+    position: relative;
+    z-index: 1000;
+}
+.dr-toc li.dr-lvl1 a {
+    padding-left: 1em;
+}
+.dr-toc li.dr-lvl2 a {
+    padding-left: 2em;
+}
+.dr-toc li.dr-lvl3 a {
+    padding-left: 3em;
+}
+.dr-toc li.dr-lvl4 a {
+    padding-left: 4em;
+}
+.dr-toc li.dr-lvl5 a {
+    padding-left: 5em;
+}
+.dr-toc li.dr-lvl6 a {
+    padding-left: 6em;
+}
+.dr-toc a.dr-class {
+    color: #339;
+}
+.dr-toc a.dr-property {
+    color: #393;
+}
+.dr-toc a.dr-method {
+    color: #933;
+}
+.dr-toc a:hover {
+    text-shadow: 0 0 2px #333;
+}
+.dr-toc a.dr-class:hover {
+    text-shadow: 0 0 2px #66c;
+}
+.dr-toc a.dr-property:hover {
+    text-shadow: 0 0 2px #6c6;
+}
+.dr-toc a.dr-method:hover {
+    text-shadow: 0 0 2px #c66;
+}
+a.dr-hash,
+a.dr-sourceline {
+    -webkit-transition: opacity 0.2s linear;
+    color: #333;
+    font-family: Menlo, "Arial Unicode MS", sans-serif;
+    margin: 0 0 0 .3em;
+    opacity: 0;
+    text-decoration: none;
+}
+a.dr-link {
+    position: relative;
+    color: #3875c0;
+}
+a.dr-link:hover {
+    text-shadow: 0 1px 2px #999;
+    bottom: 1px;
+    padding-bottom: 1px;
+}
+a.dr-link:visited {
+    color: #7051bc;
+}
+h2:hover a.dr-hash,
+h3:hover a.dr-hash,
+h4:hover a.dr-hash,
+h5:hover a.dr-hash,
+h2:hover a.dr-sourceline,
+h3:hover a.dr-sourceline,
+h4:hover a.dr-sourceline,
+h5:hover a.dr-sourceline {
+    opacity: 1;
+}
+p {
+    margin: 0 0 .5em;
+}
+
+.dr-source-line {
+    margin: 0;
+}
+.dr-source-line a {
+    -webkit-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    border-radius: 5px;
+    color: #000;
+    background: #999;
+    font-weight: 400;
+    font-size: .75em;
+    text-decoration: none;
+    padding: 5px;
+}
+#src-dr-js code {
+    background: #000;
+    display: block;
+    color: #fff;
+    font-family: Menlo, Consolas, Monaco, "Lucida Console", monospace;
+    white-space: pre;
+    padding-left: 100px;
+    position: relative;
+    line-height: 1.2;
+}
+#src-dr-js code:hover {
+    background: #333;
+}
+#src-dr-js code:hover .ln {
+    color: #fff;
+}
+#src-dr-js code .ln {
+    position: absolute;
+    left: 0;
+    color: #333;
+    width: 70px;
+    text-align: right;
+}
+
+</style>
+</head>
+<body id="dr-js"><div id="dr"><ol class="dr-toc" id="dr-toc"><li class="dr-lvl0"><a href="#Stimuli" class="{clas}"><span>Stimuli</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Bird" class="dr-class"><span>Stimuli.Bird</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bird.bodyStretch" class="dr-property"><span>Stimuli.Bird.bodyStretch</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bird.color" class="dr-property"><span>Stimuli.Bird.color</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bird.crestColor" class="dr-property"><span>Stimuli.Bird.crestColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bird.draw" class="dr-method"><span>Stimuli.Bird.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bird.headStretch" class="dr-property"><span>Stimuli.Bird.headStretch</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bird.tailColor" class="dr-property"><span>Stimuli.Bird.tailColor</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Bug" class="dr-class"><span>Stimuli.Bug</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bug.antennaeColor" class="dr-property"><span>Stimuli.Bug.antennaeColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bug.bodyColor" class="dr-property"><span>Stimuli.Bug.bodyColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bug.bodyFatness" class="dr-property"><span>Stimuli.Bug.bodyFatness</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bug.draw" class="dr-method"><span>Stimuli.Bug.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bug.headFatness" class="dr-property"><span>Stimuli.Bug.headFatness</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Bug.wingsColor" class="dr-property"><span>Stimuli.Bug.wingsColor</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Crystal" class="dr-class"><span>Stimuli.Crystal</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Crystal.bubblesColor" class="dr-property"><span>Stimuli.Crystal.bubblesColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Crystal.centerSize" class="dr-property"><span>Stimuli.Crystal.centerSize</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Crystal.color" class="dr-property"><span>Stimuli.Crystal.color</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Crystal.draw" class="dr-method"><span>Stimuli.Crystal.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Crystal.outsideSize" class="dr-property"><span>Stimuli.Crystal.outsideSize</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Crystal.streaksColor" class="dr-property"><span>Stimuli.Crystal.streaksColor</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Fish" class="dr-class"><span>Stimuli.Fish</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Fish.color" class="dr-property"><span>Stimuli.Fish.color</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Fish.draw" class="dr-method"><span>Stimuli.Fish.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Fish.finColor" class="dr-property"><span>Stimuli.Fish.finColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Fish.tailSize" class="dr-property"><span>Stimuli.Fish.tailSize</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Fish.tallness" class="dr-property"><span>Stimuli.Fish.tallness</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Flower" class="dr-class"><span>Stimuli.Flower</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Flower.centerColor" class="dr-property"><span>Stimuli.Flower.centerColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Flower.centerSize" class="dr-property"><span>Stimuli.Flower.centerSize</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Flower.draw" class="dr-method"><span>Stimuli.Flower.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Flower.petalColor" class="dr-property"><span>Stimuli.Flower.petalColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Flower.petalLength" class="dr-property"><span>Stimuli.Flower.petalLength</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Flower.spotsColor" class="dr-property"><span>Stimuli.Flower.spotsColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Flower.stemColor" class="dr-property"><span>Stimuli.Flower.stemColor</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Microbe" class="dr-class"><span>Stimuli.Microbe</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Microbe.bumpsColor" class="dr-property"><span>Stimuli.Microbe.bumpsColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Microbe.color" class="dr-property"><span>Stimuli.Microbe.color</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Microbe.draw" class="dr-method"><span>Stimuli.Microbe.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Microbe.spikesColor" class="dr-property"><span>Stimuli.Microbe.spikesColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Microbe.xRadius" class="dr-property"><span>Stimuli.Microbe.xRadius</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Microbe.yRadius" class="dr-property"><span>Stimuli.Microbe.yRadius</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Monster" class="dr-class"><span>Stimuli.Monster</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Monster.accentColor" class="dr-property"><span>Stimuli.Monster.accentColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Monster.color" class="dr-property"><span>Stimuli.Monster.color</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Monster.draw" class="dr-method"><span>Stimuli.Monster.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Monster.fatness" class="dr-property"><span>Stimuli.Monster.fatness</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Monster.tallness" class="dr-property"><span>Stimuli.Monster.tallness</span></a></li><li class="dr-lvl1"><a href="#Stimuli.Tree" class="dr-class"><span>Stimuli.Tree</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Tree.baseHeight" class="dr-property"><span>Stimuli.Tree.baseHeight</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Tree.baseWidth" class="dr-property"><span>Stimuli.Tree.baseWidth</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Tree.berryColor" class="dr-property"><span>Stimuli.Tree.berryColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Tree.draw" class="dr-method"><span>Stimuli.Tree.draw()</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Tree.leafColor" class="dr-property"><span>Stimuli.Tree.leafColor</span></a></li><li class="dr-lvl2"><a href="#Stimuli.Tree.trunkColor" class="dr-property"><span>Stimuli.Tree.trunkColor</span></a></li><li class="dr-lvl1"><a href="#Stimuli.colorSceme" class="dr-property"><span>Stimuli.colorSceme</span></a></li><li class="dr-lvl0"><a href="#StimuliTools" class="{clas}"><span>StimuliTools</span></a></li><li class="dr-lvl1"><a href="#StimuliTools.ColorRandomizer" class="dr-class"><span>StimuliTools.ColorRandomizer</span></a></li><li class="dr-lvl2"><a href="#StimuliTools.ColorRandomizer.get" class="dr-method"><span>StimuliTools.ColorRandomizer.get()</span></a></li></ol><div class="dr-doc"><h1>Dynamic Categories Stimuli Reference</h1><div class="Stimuli-section"><h2 id="Stimuli" class="undefined"><i class="dr-trixie">&#160;</i>Stimuli<a href="#Stimuli" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 108 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L108">&#x27ad;</a></h2>
+<div class="extra" id="Stimuli-extra"></div></div><p>Contains methods for creating experimental stimuli. These stimuli are 
+dynamic svg images of 8 different domains: trees, birds, bugs, flowers,
+fish, microbes, monsters, and crystals. These domains are
+meant to be naturally occuring kinds of things that might be seen on an alien
+planet. For each domain, the user can create arbitrarily many
+categories. Within each category, three continuous properties (e.g.
+size, shape, and color) vary around the category mean. The user can either set
+this category mean by passing into the constructor an object specifying the value
+of that property, or let the script randomly assgin the category mean. The
+variance for each continuous property can also be specified in this way. The user
+can then draw arbitrarily many token elements from that category, specifying
+whether they have or do not have each of two binary target properties.
+</p>
+<div class="Stimuli-Bird-section"><h3 id="Stimuli.Bird" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Bird(propertyMeans)<a href="#Stimuli.Bird" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 914 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L914">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Bird-extra"></div></div><div class="dr-class"><p>Represents a bird category.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the bug in format:</dd>
+</dl>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of the bird,</span>
+<li><span class="dr-json-key">crestColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of bird&#39;s crest,</span>
+<li><span class="dr-json-key">tailColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of bird&#39;s tail,</span>
+<li><span class="dr-json-key">headStretch</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is fattest head and 0 is thinnest,</span>
+<li><span class="dr-json-key">bodyStretch</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is tallest body and 0 is shortest,</span>
+<li><span class="dr-json-key">colorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">crestColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for crestColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">tailColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for tailColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">headStretchVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for headStretch (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">bodyStretchVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for bodyStretch (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+<p class="header">Here&#39;s how to draw some birds:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepBird1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepBird2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepBird3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugBird1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><b>var</b> fepBird<span class="s"> = </span><b>new</b> Stimuli.Bird(); <span class="c">//create a kind of bird called <i>"feps"</i></span>
+<b>var</b> wugBird<span class="s"> = </span><b>new</b> Stimuli.Bird(); <span class="c">//create a kind of bird called <i>"wugs"</i></span>
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepBird1<span class="s"> = </span>fepBird.draw(<i>"fepBird1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//crest</span>
+<b>var</b> fepBird2<span class="s"> = </span>fepBird.draw(<i>"fepBird2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//crest<span class="s"> &amp; </span>tail</span>
+<b>var</b> fepBird3<span class="s"> = </span>fepBird.draw(<i>"fepBird3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no crest or tail</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugBird1<span class="s"> = </span>wugBird.draw(<i>"wugBird1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//tail</span>
+
+<span class="c">//slightly different colors because they're the colors <b>for</b> two</span>
+<span class="c">//different birds from the same category</span>
+console.log(fepBird1.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepBird2.color);
+
+<span class="c">//very different colors because they're the latent mean colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepBird.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugBird.color);
+</code></pre>
+</div><div class="Stimuli-Bird-bodyStretch-section"><h4 id="Stimuli.Bird.bodyStretch" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bird.bodyStretch<a href="#Stimuli.Bird.bodyStretch" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 961 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L961">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bird.bodyStretch-extra"></div></div><div class="dr-property"><p>A number sampled from uniform which represents the latent mean value of
+how tall the bird&#39;s body is. 1 represents the tallest body and 0
+represents the shortest.
+E.g. 0.13984732927294.
+</p>
+</div><div class="Stimuli-Bird-color-section"><h4 id="Stimuli.Bird.color" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bird.color<a href="#Stimuli.Bird.color" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 923 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L923">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bird.color-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of most of the bird,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Bird-crestColor-section"><h4 id="Stimuli.Bird.crestColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bird.crestColor<a href="#Stimuli.Bird.crestColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 932 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L932">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bird.crestColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the crest,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Bird-draw-section"><h4 id="Stimuli.Bird.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Bird.draw(label, crest, tail, scaleFactor)<a href="#Stimuli.Bird.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 984 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L984">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bird.draw-extra"></div></div><div class="dr-method"><p>Draws a bird token from a bird category and returns an object with
+information about the bird that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">crest</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this bird token has a crest</dd>
+<dt class="dr-param">tail</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this bird token has a tail</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the bird in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of most of the bird -- the body and head are actually colored with a radial gradient from lighter to darker whose middle value is this color and the wings with a linear gradient of the same kind,</span>
+<li><span class="dr-json-key">crestColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of bird&#39;s crest,</span>
+<li><span class="dr-json-key">tailColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of bird&#39;s tail,</span>
+<li><span class="dr-json-key">headStretch</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is fattest head and 0 is thinnest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">bodyStretch</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is tallest body and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">crest</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">tail</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Bird-headStretch-section"><h4 id="Stimuli.Bird.headStretch" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bird.headStretch<a href="#Stimuli.Bird.headStretch" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 951 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L951">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bird.headStretch-extra"></div></div><div class="dr-property"><p>A number sampled from uniform which represents the latent mean value of
+how fat the bird&#39;s head is. 1 represents the fattest head and 0
+represents the thinnest.
+E.g. 0.13984732927294.
+</p>
+</div><div class="Stimuli-Bird-tailColor-section"><h4 id="Stimuli.Bird.tailColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bird.tailColor<a href="#Stimuli.Bird.tailColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 941 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L941">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bird.tailColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the tail,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Bug-section"><h3 id="Stimuli.Bug" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Bug(propertyMeans)<a href="#Stimuli.Bug" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 656 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L656">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Bug-extra"></div></div><div class="dr-class"><p>Represents a bug category.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the bug in format:</dd>
+</dl>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">bodyColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of body,</span>
+<li><span class="dr-json-key">wingsColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of wings,</span>
+<li><span class="dr-json-key">antennaeColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of antennae,</span>
+<li><span class="dr-json-key">bodyFatness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max fatness of body and 0 is min,</span>
+<li><span class="dr-json-key">headFatness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max fatness of head and 0 is min,</span>
+<li><span class="dr-json-key">bodyColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for bodyColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">wingsColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for wingsColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">antennaeColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for antennaeColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">bodyFatnessVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for bodyFatness (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">headFatnessVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for headFatness (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+<p class="header">Here&#39;s how to draw some bugs:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepBug1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepBug2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepBug3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugBug1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><b>var</b> fepBug<span class="s"> = </span><b>new</b> Stimuli.Bug(); <span class="c">//create a kind of bug called <i>"feps"</i></span>
+<b>var</b> wugBug<span class="s"> = </span><b>new</b> Stimuli.Bug(); <span class="c">//create a kind of bug called <i>"wugs"</i></span>
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepBug1<span class="s"> = </span>fepBug.draw(<i>"fepBug1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//wings</span>
+<b>var</b> fepBug2<span class="s"> = </span>fepBug.draw(<i>"fepBug2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//wings<span class="s"> &amp; </span>antennae</span>
+<b>var</b> fepBug3<span class="s"> = </span>fepBug.draw(<i>"fepBug3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no wings or antennae</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugBug1<span class="s"> = </span>wugBug.draw(<i>"wugBug1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//antennae</span>
+
+<span class="c">//slightly different colors because they're the trunk colors <b>for</b> two</span>
+<span class="c">//different trees from the same category</span>
+console.log(fepBug1.bodyColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepBug2.bodyColor);
+
+<span class="c">//very different colors because they're the latent mean trunk colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepBug.bodyColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugBug.bodyColor);
+</code></pre>
+</div><div class="Stimuli-Bug-antennaeColor-section"><h4 id="Stimuli.Bug.antennaeColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bug.antennaeColor<a href="#Stimuli.Bug.antennaeColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 683 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L683">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bug.antennaeColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the antennae,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Bug-bodyColor-section"><h4 id="Stimuli.Bug.bodyColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bug.bodyColor<a href="#Stimuli.Bug.bodyColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 665 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L665">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bug.bodyColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the body,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Bug-bodyFatness-section"><h4 id="Stimuli.Bug.bodyFatness" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bug.bodyFatness<a href="#Stimuli.Bug.bodyFatness" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 693 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L693">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bug.bodyFatness-extra"></div></div><div class="dr-property"><p>A number. Latent mean body fatness - a number between 0 and 1 where 0
+represents the thinnest bug and 1 represents the fattest. Sampled from
+uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Bug-draw-section"><h4 id="Stimuli.Bug.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Bug.draw(label, wings, antennae, scaleFactor)<a href="#Stimuli.Bug.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 727 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L727">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bug.draw-extra"></div></div><div class="dr-method"><p>Draws a bug token from a bug category and returns an object with
+information about the bug that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">wings</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this bug token has wings</dd>
+<dt class="dr-param">antennae</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this bug token has antennae</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the bug in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">bodyColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of body -- the body is actually colored with a radial gradient from lighter to darker whose middle value is this color,</span>
+<li><span class="dr-json-key">wingsColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of wings -- the wings are actually colored with linear gradients from lighter to darker whose middle value is this color,</span>
+<li><span class="dr-json-key">antennaeColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of antennae,</span>
+<li><span class="dr-json-key">bodyFatness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max body fatness and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">headFatness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max head fatness and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">wings</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">antennae</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Bug-headFatness-section"><h4 id="Stimuli.Bug.headFatness" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bug.headFatness<a href="#Stimuli.Bug.headFatness" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 703 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L703">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bug.headFatness-extra"></div></div><div class="dr-property"><p>A number. Latent mean head fatness - a number between 0 and 1 where 1
+represents the bug with the fattest head and 0 represents the thinnest.
+Sampled from uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Bug-wingsColor-section"><h4 id="Stimuli.Bug.wingsColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Bug.wingsColor<a href="#Stimuli.Bug.wingsColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 674 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L674">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Bug.wingsColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the wings,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Crystal-section"><h3 id="Stimuli.Crystal" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Crystal(propertyMeans)<a href="#Stimuli.Crystal" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1911 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1911">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Crystal-extra"></div></div><div class="dr-class"><p>Represents a crystal category.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the bug in format:</dd>
+</dl>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of crystal -- this has a gradient from this color to white and back to this color to show reflections</span>
+<li><span class="dr-json-key">bubblesColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of bubbles in the crystal,</span>
+<li><span class="dr-json-key">streaksColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of streaks in the crystal,</span>
+<li><span class="dr-json-key">centerSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest the center side of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">outsideSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest the outer sides of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">bubbles</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">streaks</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of crystal,</span>
+<li><span class="dr-json-key">bubblesColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of bubbles in the crystal,</span>
+<li><span class="dr-json-key">streaksColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of streaks in the crystal,</span>
+<li><span class="dr-json-key">centerSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest the center side of the crytal could be and 0 is min,</span>
+<li><span class="dr-json-key">outsideSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest the outer sides of the crytal could be and 0 is min,</span>
+<li><span class="dr-json-key">colorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">bubblesColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for bubblesColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">streaksColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for streaksColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">centerSizeVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for centerSize (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">outsideSizeVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for outsideSize (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+<p class="header">Here&#39;s how to draw some crystals:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepCrystal1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepCrystal2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepCrystal3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugCrystal1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><b>var</b> fepCrystal<span class="s"> = </span><b>new</b> Stimuli.Crystal(); <span class="c">//create a kind of crystal called <i>"feps"</i></span>
+<b>var</b> wugCrystal<span class="s"> = </span><b>new</b> Stimuli.Crystal(); <span class="c">//create a kind of crystal called <i>"wugs"</i></span>
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepCrystal1<span class="s"> = </span>fepCrystal.draw(<i>"fepCrystal1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//spots</span>
+<b>var</b> fepCrystal2<span class="s"> = </span>fepCrystal.draw(<i>"fepCrystal2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//spots<span class="s"> &amp; </span>thorns</span>
+<b>var</b> fepCrystal3<span class="s"> = </span>fepCrystal.draw(<i>"fepCrystal3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no spots or thorns</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugCrystal1<span class="s"> = </span>wugCrystal.draw(<i>"wugCrystal1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//thorns</span>
+
+<span class="c">//slightly different colors because they're the colors <b>for</b> two</span>
+<span class="c">//different crystals from the same category</span>
+console.log(fepCrystal1.petalColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepCrystal2.petalColor);
+
+<span class="c">//very different colors because they're the latent mean colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepCrystal.petalColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugCrystal.petalColor);
+</code></pre>
+</div><div class="Stimuli-Crystal-bubblesColor-section"><h4 id="Stimuli.Crystal.bubblesColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Crystal.bubblesColor<a href="#Stimuli.Crystal.bubblesColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1929 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1929">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Crystal.bubblesColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the bubbles, sampled
+from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Crystal-centerSize-section"><h4 id="Stimuli.Crystal.centerSize" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Crystal.centerSize<a href="#Stimuli.Crystal.centerSize" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1956 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1956">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Crystal.centerSize-extra"></div></div><div class="dr-property"><p>A number. Latent mean center size - a number between 0 and 1 where 1
+is largest the center side of the crytal could be and 0 is min,
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Crystal-color-section"><h4 id="Stimuli.Crystal.color" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Crystal.color<a href="#Stimuli.Crystal.color" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1920 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1920">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Crystal.color-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the crystal, sampled
+from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Crystal-draw-section"><h4 id="Stimuli.Crystal.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Crystal.draw(label, bubbles, streaks, scaleFactor)<a href="#Stimuli.Crystal.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1995 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1995">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Crystal.draw-extra"></div></div><div class="dr-method"><p>Draws a crystal token from a crystal category and returns an object with
+information about the crystal that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">bubbles</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this flower token has bubbles</dd>
+<dt class="dr-param">streaks</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this flower token has streaks</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the crystal in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of crystal -- this has a gradient from this color to white and back to this color to show reflections</span>
+<li><span class="dr-json-key">bubblesColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of bubbles in the crystal,</span>
+<li><span class="dr-json-key">streaksColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of streaks in the crystal,</span>
+<li><span class="dr-json-key">centerSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest the center side of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">outsideSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest the outer sides of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">bubbles</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">streaks</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Crystal-outsideSize-section"><h4 id="Stimuli.Crystal.outsideSize" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Crystal.outsideSize<a href="#Stimuli.Crystal.outsideSize" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1947 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1947">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Crystal.outsideSize-extra"></div></div><div class="dr-property"><p>A number. Latent mean petal length - a number between 0 and 1 where 1
+is largest the outer sides of the crytal could be and 0 is min,
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Crystal-streaksColor-section"><h4 id="Stimuli.Crystal.streaksColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Crystal.streaksColor<a href="#Stimuli.Crystal.streaksColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1938 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1938">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Crystal.streaksColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the streaks, sampled
+from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Fish-section"><h3 id="Stimuli.Fish" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Fish(propertyMeans)<a href="#Stimuli.Fish" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1516 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1516">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Fish-extra"></div></div><div class="dr-class"><p>Represents a fish category.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the bug in format:</dd>
+</dl>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of fish,</span>
+<li><span class="dr-json-key">finColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of fins of fish,</span>
+<li><span class="dr-json-key">tailSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is longest tails and 0 is shortest,</span>
+<li><span class="dr-json-key">tallness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest tallest fish and 0 is shortest,</span>
+<li><span class="dr-json-key">colorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">finColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for finColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">tailSizeVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for tailSize (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">tallnessVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for tallness (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+<p class="header">Here&#39;s how to draw some fish:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepFish1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepFish2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepFish3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugFish1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><b>var</b> fepFish<span class="s"> = </span><b>new</b> Stimuli.Fish(); <span class="c">//create a kind of fish called <i>"feps"</i></span>
+<b>var</b> wugFish<span class="s"> = </span><b>new</b> Stimuli.Fish(); <span class="c">//create a kind of fish called <i>"wugs"</i></span>
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepFish1<span class="s"> = </span>fepFish.draw(<i>"fepFish1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//fangs</span>
+<b>var</b> fepFish2<span class="s"> = </span>fepFish.draw(<i>"fepFish2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//fangs<span class="s"> &amp; </span>whiskers</span>
+<b>var</b> fepFish3<span class="s"> = </span>fepFish.draw(<i>"fepFish3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no fangs or whiskers</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugFish1<span class="s"> = </span>wugFish.draw(<i>"wugFish1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//whiskers</span>
+
+<span class="c">//slightly different colors because they're the colors <b>for</b> two</span>
+<span class="c">//different fish from the same category</span>
+console.log(fepFish1.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepFish2.color);
+
+<span class="c">//very different colors because they're the latent mean colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepFish.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugFish.color);
+</code></pre>
+</div><div class="Stimuli-Fish-color-section"><h4 id="Stimuli.Fish.color" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Fish.color<a href="#Stimuli.Fish.color" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1546 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1546">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Fish.color-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the fish body,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Fish-draw-section"><h4 id="Stimuli.Fish.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Fish.draw(label, fangs, whiskers, scaleFactor)<a href="#Stimuli.Fish.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1589 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1589">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Fish.draw-extra"></div></div><div class="dr-method"><p>Draws a fish token from a fish category and returns an object with
+information about the fish that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">fangs</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this fish token has fangs</dd>
+<dt class="dr-param">whiskers</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this fish token has whiskers</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the fish in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of fish -- actually a radial gradient from a lighter version of this color to a darker version,</span>
+<li><span class="dr-json-key">finColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of fins of fish,</span>
+<li><span class="dr-json-key">tailSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is longest tails and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">tallness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest tallest fish and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">fangs</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">whiskers</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Fish-finColor-section"><h4 id="Stimuli.Fish.finColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Fish.finColor<a href="#Stimuli.Fish.finColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1555 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1555">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Fish.finColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the fins,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Fish-tailSize-section"><h4 id="Stimuli.Fish.tailSize" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Fish.tailSize<a href="#Stimuli.Fish.tailSize" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1525 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1525">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Fish.tailSize-extra"></div></div><div class="dr-property"><p>A number. Latent mean body tail size - a number between 0 and 1 where 0
+represents the smallest tails and 1 represents the biggest. Sampled
+from uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Fish-tallness-section"><h4 id="Stimuli.Fish.tallness" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Fish.tallness<a href="#Stimuli.Fish.tallness" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1537 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1537">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Fish.tallness-extra"></div></div><div class="dr-property"><p>A number. Latent mean body tallness - a number between 0 and 1 where 0
+represents the tallest fish and 1 represents the shortest (maybe the 
+&quot;tall&quot; fish is actually fat... anyway, the bigger body is the 1 and
+the thinner body is the 0). Sampled
+from uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Flower-section"><h3 id="Stimuli.Flower" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Flower(propertyMeans)<a href="#Stimuli.Flower" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1689 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1689">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Flower-extra"></div></div><div class="dr-class"><p>Represents a flower category.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the bug in format:</dd>
+</dl>
+<ol class="dr-json"><li><span class="dr-json-key">petalColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of petals -- the closer set of petals is actually a radial gradient based on a lighter version of this color and the further away petals are a radial gradient based on a darker version of this color,</span>
+<li><span class="dr-json-key">centerColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of center of flower -- this is actually a radial gradient from a lighter version of the color to a darker version of the color,</span>
+<li><span class="dr-json-key">spotsColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of spots on petals,</span>
+<li><span class="dr-json-key">stemColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of stem (and consequently thorns, if there are thorns),</span>
+<li><span class="dr-json-key">petalLength</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is longest petals and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">centerSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest center and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">spots</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">thorns</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li>{<ol class="dr-json"><li><span class="dr-json-key">petalColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of petals,</span>
+<li><span class="dr-json-key">centerColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of center of flower,</span>
+<li><span class="dr-json-key">spotsColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of spots on petals,</span>
+<li><span class="dr-json-key">stemColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of stem (and consequently thorns, if there are thorns),</span>
+<li><span class="dr-json-key">petalLength</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is longest petals and 0 is min,</span>
+<li><span class="dr-json-key">centerSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest center and 0 is min,</span>
+<li><span class="dr-json-key">petalColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for petalColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">centerColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for centerColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">spotsColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for spotsColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">stemColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for stemColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">petalLengthVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for petalLength (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">centerSizeVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for centerSize (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+<p class="header">Here&#39;s how to draw some flowers:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepFlower1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepFlower2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepFlower3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugFlower1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><b>var</b> fepFlower<span class="s"> = </span><b>new</b> Stimuli.Flower(); <span class="c">//create a kind of flower called <i>"feps"</i></span>
+<b>var</b> wugFlower<span class="s"> = </span><b>new</b> Stimuli.Flower(); <span class="c">//create a kind of flower called <i>"wugs"</i></span>
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepFlower1<span class="s"> = </span>fepFlower.draw(<i>"fepFlower1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//spots</span>
+<b>var</b> fepFlower2<span class="s"> = </span>fepFlower.draw(<i>"fepFlower2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//spots<span class="s"> &amp; </span>thorns</span>
+<b>var</b> fepFlower3<span class="s"> = </span>fepFlower.draw(<i>"fepFlower3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no spots or thorns</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugFlower1<span class="s"> = </span>wugFlower.draw(<i>"wugFlower1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//thorns</span>
+
+<span class="c">//slightly different colors because they're the colors <b>for</b> two</span>
+<span class="c">//different flowers from the same category</span>
+console.log(fepFlower1.petalColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepFlower2.petalColor);
+
+<span class="c">//very different colors because they're the latent mean colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepFlower.petalColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugFlower.petalColor);
+</code></pre>
+</div><div class="Stimuli-Flower-centerColor-section"><h4 id="Stimuli.Flower.centerColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Flower.centerColor<a href="#Stimuli.Flower.centerColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1706 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1706">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Flower.centerColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the center,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Flower-centerSize-section"><h4 id="Stimuli.Flower.centerSize" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Flower.centerSize<a href="#Stimuli.Flower.centerSize" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1735 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1735">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Flower.centerSize-extra"></div></div><div class="dr-property"><p>A number. Latent mean size of the center of the flower - a number
+between 0 and 1 where 0 represents the smallest center and 1 represents
+the biggest. Sampled from uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Flower-draw-section"><h4 id="Stimuli.Flower.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Flower.draw(label, spots, thorns, scaleFactor)<a href="#Stimuli.Flower.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1777 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1777">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Flower.draw-extra"></div></div><div class="dr-method"><p>Draws a flower token from a flower category and returns an object with
+information about the flower that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">spots</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this flower token has spots</dd>
+<dt class="dr-param">thorns</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this flower token has thorns</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the flower in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">petalColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of petals -- the closer set of petals is actually a radial gradient based on a lighter version of this color and the further away petals are a radial gradient based on a darker version of this color,</span>
+<li><span class="dr-json-key">centerColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of center of flower -- this is actually a radial gradient from a lighter version of the color to a darker version of the color,</span>
+<li><span class="dr-json-key">spotsColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of spots on petals,</span>
+<li><span class="dr-json-key">stemColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of stem (and consequently thorns, if there are thorns),</span>
+<li><span class="dr-json-key">petalLength</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is longest petals and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">centerSize</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is largest center and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">spots</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">thorns</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Flower-petalColor-section"><h4 id="Stimuli.Flower.petalColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Flower.petalColor<a href="#Stimuli.Flower.petalColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1697 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1697">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Flower.petalColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the petals,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Flower-petalLength-section"><h4 id="Stimuli.Flower.petalLength" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Flower.petalLength<a href="#Stimuli.Flower.petalLength" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1745 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1745">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Flower.petalLength-extra"></div></div><div class="dr-property"><p>A number. Latent mean petal length - a number between 0 and 1 where 0
+represents the shortest petals and 1 represents the longest. Sampled
+from uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Flower-spotsColor-section"><h4 id="Stimuli.Flower.spotsColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Flower.spotsColor<a href="#Stimuli.Flower.spotsColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1715 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1715">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Flower.spotsColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the spots on the
+petals, sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Flower-stemColor-section"><h4 id="Stimuli.Flower.stemColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Flower.stemColor<a href="#Stimuli.Flower.stemColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1725 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1725">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Flower.stemColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the stem (and
+consequently thorns, if there are any), sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Microbe-section"><h3 id="Stimuli.Microbe" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Microbe(propertyMeans)<a href="#Stimuli.Microbe" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1108 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1108">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Microbe-extra"></div></div><div class="dr-class"><p>Represents a microbe category.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the bug in format:</dd>
+</dl>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of most of the microbe,</span>
+<li><span class="dr-json-key">bumpsColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of the bumps on the microbe,</span>
+<li><span class="dr-json-key">spikesColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of the spikes on the microbe,</span>
+<li><span class="dr-json-key">xRadius</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is fattest microbe and 0 is thinnest,</span>
+<li><span class="dr-json-key">yRadius</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is tallest microbe and 0 is shortest,</span>
+<li><span class="dr-json-key">colorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">bumpsColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for bumpsColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">spikesColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for spikesColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">xRadiusVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for xRadius (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">yRadiusVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for yRadius (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+<p class="header">Here&#39;s how to draw some microbes:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepMicrobe1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepMicrobe2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepMicrobe3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugMicrobe1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><b>var</b> fepMicrobe<span class="s"> = </span><b>new</b> Stimuli.Microbe(); <span class="c">//create a kind of microbe called <i>"feps"</i></span>
+<b>var</b> wugMicrobe<span class="s"> = </span><b>new</b> Stimuli.Microbe(); <span class="c">//create a kind of microbe called <i>"wugs"</i></span>
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepMicrobe1<span class="s"> = </span>fepMicrobe.draw(<i>"fepMicrobe1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//spikes</span>
+<b>var</b> fepMicrobe2<span class="s"> = </span>fepMicrobe.draw(<i>"fepMicrobe2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//spikes<span class="s"> &amp; </span>bumps</span>
+<b>var</b> fepMicrobe3<span class="s"> = </span>fepMicrobe.draw(<i>"fepMicrobe3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no spikes or bumps</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugMicrobe1<span class="s"> = </span>wugMicrobe.draw(<i>"wugMicrobe1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//bumps</span>
+
+<span class="c">//slightly different colors because they're the colors <b>for</b> two</span>
+<span class="c">//different microbes from the same category</span>
+console.log(fepMicrobe1.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepMicrobe2.color);
+
+<span class="c">//very different colors because they're the latent mean colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepMicrobe.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugMicrobe.color);
+</code></pre>
+</div><div class="Stimuli-Microbe-bumpsColor-section"><h4 id="Stimuli.Microbe.bumpsColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Microbe.bumpsColor<a href="#Stimuli.Microbe.bumpsColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1126 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1126">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Microbe.bumpsColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the bumps,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Microbe-color-section"><h4 id="Stimuli.Microbe.color" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Microbe.color<a href="#Stimuli.Microbe.color" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1117 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1117">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Microbe.color-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of most of the microbe,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Microbe-draw-section"><h4 id="Stimuli.Microbe.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Microbe.draw(label, spikes, bumps, scaleFactor)<a href="#Stimuli.Microbe.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1178 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1178">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Microbe.draw-extra"></div></div><div class="dr-method"><p>Draws a microbe token from a microbe category and returns an object with
+information about the microbe that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">spikes</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this microbe token has spikes</dd>
+<dt class="dr-param">bumps</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this microbe token has bumps</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the microbe in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of most of the microbe -- the flagella of this microbe are a darker version of this color, the cell wall a lighter version of this color, and the microbe itself is colored with a radial gradient from lighter to darker whose middle value is this color,</span>
+<li><span class="dr-json-key">bumpsColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of the bumps on the microbe,</span>
+<li><span class="dr-json-key">spikesColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of the spikes on the microbe,</span>
+<li><span class="dr-json-key">xRadius</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is fattest microbe and 0 is thinnest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">yRadius</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is tallest microbe and 0 is shortest -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">spikes</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">bumps</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Microbe-spikesColor-section"><h4 id="Stimuli.Microbe.spikesColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Microbe.spikesColor<a href="#Stimuli.Microbe.spikesColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1135 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1135">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Microbe.spikesColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the spikes,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Microbe-xRadius-section"><h4 id="Stimuli.Microbe.xRadius" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Microbe.xRadius<a href="#Stimuli.Microbe.xRadius" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1145 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1145">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Microbe.xRadius-extra"></div></div><div class="dr-property"><p>A number sampled from uniform which represents the latent mean value of
+how the &quot;xRadius&quot;. 0 represents the smallest horizontal radius and 1
+represents the largest.
+E.g. 0.13984732927294.
+</p>
+</div><div class="Stimuli-Microbe-yRadius-section"><h4 id="Stimuli.Microbe.yRadius" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Microbe.yRadius<a href="#Stimuli.Microbe.yRadius" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1155 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1155">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Microbe.yRadius-extra"></div></div><div class="dr-property"><p>A number sampled from uniform which represents the latent mean value of
+how the &quot;yRadius&quot;. 0 represents the smallest vertical radius and 1
+represents the largest.
+E.g. 0.13984732927294.
+</p>
+</div><div class="Stimuli-Monster-section"><h3 id="Stimuli.Monster" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Monster(propertyMeans)<a href="#Stimuli.Monster" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1319 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1319">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Monster-extra"></div></div><div class="dr-class"><p>Represents a monster category.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the bug in format:</dd>
+</dl>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of monster body,</span>
+<li><span class="dr-json-key">accentColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of horns and feet,</span>
+<li><span class="dr-json-key">tallness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max tallness of body and 0 is min,</span>
+<li><span class="dr-json-key">fatness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max fatness of body and 0 is min,</span>
+<li><span class="dr-json-key">colorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">accentColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for accentColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">tallnessVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for tallness (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">fatnessVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for fatness (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+<p class="header">Here&#39;s how to draw some monsters:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepMonster1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepMonster2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepMonster3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugMonster1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><b>var</b> fepMonster<span class="s"> = </span><b>new</b> Stimuli.Monster(); <span class="c">//create a kind of monster called <i>"feps"</i></span>
+<b>var</b> wugMonster<span class="s"> = </span><b>new</b> Stimuli.Monster(); <span class="c">//create a kind of monster called <i>"wugs"</i></span>
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepMonster1<span class="s"> = </span>fepMonster.draw(<i>"fepMonster1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//horns</span>
+<b>var</b> fepMonster2<span class="s"> = </span>fepMonster.draw(<i>"fepMonster2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//horns<span class="s"> &amp; </span>teeth</span>
+<b>var</b> fepMonster3<span class="s"> = </span>fepMonster.draw(<i>"fepMonster3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no horns or teeth</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugMonster1<span class="s"> = </span>wugMonster.draw(<i>"wugMonster1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//teeth</span>
+
+<span class="c">//slightly different colors because they're the colors <b>for</b> two</span>
+<span class="c">//different monsters from the same category</span>
+console.log(fepMonster1.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepMonster2.color);
+
+<span class="c">//very different colors because they're the latent mean colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepMonster.color<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugMonster.color);
+</code></pre>
+</div><div class="Stimuli-Monster-accentColor-section"><h4 id="Stimuli.Monster.accentColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Monster.accentColor<a href="#Stimuli.Monster.accentColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1356 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1356">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Monster.accentColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the feet and horns,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Monster-color-section"><h4 id="Stimuli.Monster.color" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Monster.color<a href="#Stimuli.Monster.color" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1347 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1347">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Monster.color-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the body of the
+monster, sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Monster-draw-section"><h4 id="Stimuli.Monster.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Monster.draw(label, horns, teeth, scaleFactor)<a href="#Stimuli.Monster.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1403 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1403">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Monster.draw-extra"></div></div><div class="dr-method"><p>Draws a monster token from a monster category and returns an object with
+information about the monster that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">horns</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this monster token has horns</dd>
+<dt class="dr-param">teeth</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this monster token has teeth</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the monster in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">color</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of monster body -- the body is actually a gradient version of this color,</span>
+<li><span class="dr-json-key">accentColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of horns and feet -- the feet are actually this color, but the pads of the feet and toes are a lighter less saturated version of this color,</span>
+<li><span class="dr-json-key">tallness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max tallness of body and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">fatness</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max fatness of body and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">horns</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">teeth</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Monster-fatness-section"><h4 id="Stimuli.Monster.fatness" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Monster.fatness<a href="#Stimuli.Monster.fatness" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1338 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1338">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Monster.fatness-extra"></div></div><div class="dr-property"><p>A number. Latent mean body fatness - a number between 0 and 1 where 0
+represents the thinnest monster and 1 represents the fattest. Sampled
+from uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Monster-tallness-section"><h4 id="Stimuli.Monster.tallness" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Monster.tallness<a href="#Stimuli.Monster.tallness" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 1328 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L1328">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Monster.tallness-extra"></div></div><div class="dr-property"><p>A number. Latent mean body tallness - a number between 0 and 1 where 0
+represents the shortest monster and 1 represents the tallest. Sampled
+from uniform.
+E.g. 0.13984732927294..
+</p>
+</div><div class="Stimuli-Tree-section"><h3 id="Stimuli.Tree" class="dr-class"><i class="dr-trixie">&#160;</i>Stimuli.Tree()<a href="#Stimuli.Tree" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 251 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L251">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.Tree-extra"></div></div><div class="dr-class"><p>Represents a tree category.
+</p>
+<p class="header">Here&#39;s how to draw some trees:
+<p>In the html:
+</p>
+<pre class="javascript code"><code>&lt;svg id=<i>"fepTree1"</i>>&lt;/svg>
+&lt;svg id=<i>"fepTree2"</i>>&lt;/svg>
+&lt;svg id=<i>"fepTree3"</i>>&lt;/svg>
+&lt;svg id=<i>"wugTree1"</i>>&lt;/svg>
+</code></pre>
+<p>In the javascript:
+</p>
+<pre class="javascript code"><code><span class="c">//create a kind of tree called <i>"feps"</i> <b>with</b> specified values <b>for</b> some</span>
+  continuous properties
+<b>var</b> fepTree<span class="s"> = </span><b>new</b> Stimuli.Tree({leafColor:<i>"#00FF00"</i>,
+                                width:<span class="d">0.5</span>,
+                                height:<span class="d">1</span>,
+                                widthVar:<span class="d">2</span>});
+<span class="c">//create a kind of tree called <i>"wugs"</i></span>
+<b>var</b> wugTree<span class="s"> = </span><b>new</b> Stimuli.Tree();
+
+<span class="c">//draw some feps</span>
+<b>var</b> fepTree1<span class="s"> = </span>fepTree.draw(<i>"fepTree1"</i>, <b>true</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//berries</span>
+<b>var</b> fepTree2<span class="s"> = </span>fepTree.draw(<i>"fepTree2"</i>, <b>true</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//berries<span class="s"> &amp; </span>leaves</span>
+<b>var</b> fepTree3<span class="s"> = </span>fepTree.draw(<i>"fepTree3"</i>, <b>false</b>, <b>false</b>, <span class="d">0.7</span>); <span class="c">//no berries or leaves</span>
+
+<span class="c">//draw a wug</span>
+<b>var</b> wugTree1<span class="s"> = </span>wugTree.draw(<i>"wugTree1"</i>, <b>false</b>, <b>true</b>, <span class="d">0.7</span>); <span class="c">//leaves</span>
+
+<span class="c">//slightly different colors because they're the trunk colors <b>for</b> two</span>
+<span class="c">//different trees from the same category</span>
+console.log(fepTree1.trunkColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>fepTree2.trunkColor);
+
+<span class="c">//very different colors because they're the latent mean trunk colors <b>for</b></span>
+<span class="c">//the two different categories</span>
+console.log(fepTree.trunkColor<span class="s"> + </span><i>" "</i><span class="s"> + </span>wugTree.trunkColor);
+</code></pre>
+</div><div class="Stimuli-Tree-baseHeight-section"><h4 id="Stimuli.Tree.baseHeight" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Tree.baseHeight<a href="#Stimuli.Tree.baseHeight" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 310 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L310">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Tree.baseHeight-extra"></div></div><div class="dr-property"><p>A number sampled from uniform. The latent mean &quot;height&quot; of trunk - 
+actually a number between 0 and 1 where 0 represents the minimum height
+and 1 represents the maximum height, sampled from uniform.
+E.g. 0.13984732927294.&quot;.
+</p>
+</div><div class="Stimuli-Tree-baseWidth-section"><h4 id="Stimuli.Tree.baseWidth" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Tree.baseWidth<a href="#Stimuli.Tree.baseWidth" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 300 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L300">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Tree.baseWidth-extra"></div></div><div class="dr-property"><p>A number sampled from uniform. The latent mean &quot;width&quot; of trunk - 
+actually a number between 0 and 1 where 0 represents the minimum width
+and 1 represents the maximum width, sampled from uniform.
+E.g. 0.13984732927294.&quot;.
+</p>
+</div><div class="Stimuli-Tree-berryColor-section"><h4 id="Stimuli.Tree.berryColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Tree.berryColor<a href="#Stimuli.Tree.berryColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 272 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L272">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Tree.berryColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the berries,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">propertyMeans</dt>
+<dd class="dr-type"><em class="dr-type-object">object</em></dd>
+<dd class="dr-description">an optional parameter containing category means and/or variances for properties of the tree in format:</dd>
+</dl>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">berryColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of berries,</span>
+<li><span class="dr-json-key">leafColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of leaves,</span>
+<li><span class="dr-json-key">trunkColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of trunk -- the trunk is actually colored with a linear gradient from lighter to darker whose middle value is this color,</span>
+<li><span class="dr-json-key">width</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max width of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">height</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max height of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">berryColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for berryColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">leafColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for leafColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">trunkColorVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for turnkColor (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">widthVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for widthVar (higher numbers mean higher variances, and the default value for this is 1)</span>
+<li><span class="dr-json-key">heightVar</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">a non-negative number which is a the multiple of the default variance for heightVar (higher numbers mean higher variances, and the default value for this is 1)</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Tree-draw-section"><h4 id="Stimuli.Tree.draw" class="dr-method"><i class="dr-trixie">&#160;</i>Stimuli.Tree.draw(label, berries, leaves, scaleFactor)<a href="#Stimuli.Tree.draw" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 353 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L353">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Tree.draw-extra"></div></div><div class="dr-method"><p>Draws a tree token from a tree category and returns an object with
+information about the tree that was drawn.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">label</dt>
+<dd class="dr-type"><em class="dr-type-string">string</em></dd>
+<dd class="dr-description">matches the id for an svg tag in the html</dd>
+<dt class="dr-param">berries</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this tree token has berries</dd>
+<dt class="dr-param">leaves</dt>
+<dd class="dr-type"><em class="dr-type-boolean">boolean</em></dd>
+<dd class="dr-description">whether this tree token has leaves</dd>
+<dt class="dr-param">scaleFactor</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">scales the whole image</dd>
+</dl>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-object">object</em> <span class="dr-description">properties of the tree in format:</span></p>
+<ol class="dr-json"><li>{<ol class="dr-json"><li><span class="dr-json-key">berryColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of berries,</span>
+<li><span class="dr-json-key">leafColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of leaves,</span>
+<li><span class="dr-json-key">trunkColor</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">hex color of trunk -- the trunk is actually colored with a linear gradient from lighter to darker whose middle value is this color,</span>
+<li><span class="dr-json-key">width</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max width of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">height</span><span class="dr-type"><em class="dr-type-number">number</em></span><span class="dr-json-description">1 is max height of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],</span>
+<li><span class="dr-json-key">label</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">berries</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+<li><span class="dr-json-key">leaves</span><span class="dr-type"><em class="dr-type-string">string</em></span><span class="dr-json-description">same as input parameter,</span>
+</ol></li><li>}</li></ol>
+</div><div class="Stimuli-Tree-leafColor-section"><h4 id="Stimuli.Tree.leafColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Tree.leafColor<a href="#Stimuli.Tree.leafColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 281 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L281">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Tree.leafColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the leaves,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-Tree-trunkColor-section"><h4 id="Stimuli.Tree.trunkColor" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.Tree.trunkColor<a href="#Stimuli.Tree.trunkColor" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 290 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L290">&#x27ad;</a></h4>
+<div class="extra" id="Stimuli.Tree.trunkColor-extra"></div></div><div class="dr-property"><p>A string. The hex code for the latent mean color of the trunk,
+sampled from Stimuli.colorScheme.
+E.g. &quot;#FF0000&quot;.
+</p>
+</div><div class="Stimuli-colorSceme-section"><h3 id="Stimuli.colorSceme" class="dr-property"><i class="dr-trixie">&#160;</i>Stimuli.colorSceme<a href="#Stimuli.colorSceme" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 121 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L121">&#x27ad;</a></h3>
+<div class="extra" id="Stimuli.colorSceme-extra"></div></div><div class="dr-property"><p>an instance of StimuliTools.ColorRandomizer() so that all colors in the stimuli
+are different from each other and the set of colors is
+different each time the file stimuli.js is run.
+</p>
+</div><div class="StimuliTools-section"><h2 id="StimuliTools" class="undefined"><i class="dr-trixie">&#160;</i>StimuliTools<a href="#StimuliTools" title="Link to this section" class="dr-hash">&#x2693;</a></h2>
+<div class="extra" id="StimuliTools-extra"></div></div><div class="StimuliTools-ColorRandomizer-section"><h3 id="StimuliTools.ColorRandomizer" class="dr-class"><i class="dr-trixie">&#160;</i>StimuliTools.ColorRandomizer(nSteps)<a href="#StimuliTools.ColorRandomizer" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 14 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L14">&#x27ad;</a></h3>
+<div class="extra" id="StimuliTools.ColorRandomizer-extra"></div></div><div class="dr-class"><p>Produces a randomly ordered bank of hues each of which is seperated from the
+other by 1/nSteps (nSteps is by default 10) and offset from 0 by a random number
+between 0 and 1/nSteps.
+</p>
+<dl class="dr-parameters"><dt class="dr-param">nSteps</dt>
+<dd class="dr-type"><em class="dr-type-number">number</em></dd>
+<dd class="dr-description">by default 10, maximum number of hues to hold in the hue bank at a time</dd>
+</dl>
+</div><div class="StimuliTools-ColorRandomizer-get-section"><h4 id="StimuliTools.ColorRandomizer.get" class="dr-method"><i class="dr-trixie">&#160;</i>StimuliTools.ColorRandomizer.get()<a href="#StimuliTools.ColorRandomizer.get" title="Link to this section" class="dr-hash">&#x2693;</a><a class="dr-sourceline" title="Go to line 32 in the source" href="https://github.com/feste/stimuli/blob/master/stimuli_files/stimuli.js#L32">&#x27ad;</a></h4>
+<div class="extra" id="StimuliTools.ColorRandomizer.get-extra"></div></div><div class="dr-method"><p>Gets the next random color. When the hue bank becomes empty, this method
+updates the hue bank with the same nSteps but a new offset.
+</p>
+<p class="dr-returns"><strong class="dr-title">Returns:</strong> <em class="dr-type-string">string</em> <span class="dr-description">rgb hex color using the next value in the hue bank, full saturation, and close to full brightness.</span></p>
+</div></div></div>
+<script>(function (ol) {
+    if (!ol) {
+        return;
+    }
+    var li = document.createElement("li"),
+        isABBR = function (str, abbr) {
+            var letters = abbr.toUpperCase().split(""),
+                first = letters.shift(),
+                rg = new RegExp("^[" + first.toLowerCase() + first + "][a-z]*" + letters.join("[a-z]*") + "[a-z]*$");
+            return !!String(str).match(rg);
+        },
+        score = function (me, search) {
+            me = String(me);
+            search = String(search);
+            var score = 0,
+                chunk;
+            if (me == search) {
+                return 1;
+            }
+            if (!me || !search) {
+                return 0;
+            }
+            if (isABBR(me, search)) {
+                return .9;
+            }
+            score = 0;
+            chunk = me.toLowerCase();
+            for (var j, i = 0, ii = search.length; i < ii; i++) {
+                j = chunk.indexOf(search.charAt(i));
+                if (~j) {
+                    chunk = chunk.substring(j + 1);
+                    score += 1 / (j + 1);
+                }
+            }
+            score = Math.max(score / ii - Math.abs(me.length - ii) / me.length / 2, 0);
+            return score;
+        };
+    li.innerHTML = '<input type="search" id="dr-filter" results="0">';
+    var lis = ol.getElementsByTagName("span"),
+        names = [],
+        rgName = /[^\.\(]*(?=(\(\))?$)/;
+    for (var i = 0, ii = lis.length; i < ii; i++) {
+        names[i] = {
+            li: lis[i].parentNode.parentNode,
+            text: lis[i].innerHTML.match(rgName)[0]
+        };
+    }
+    ol.insertBefore(li, ol.firstChild);
+    var input = document.getElementById("dr-filter"),
+		sorter = function (a, b) {
+            return b.weight - a.weight;
+        };
+    input.style.width = "100%";
+    input.style.marginTop = "10px";
+    input.onclick = input.onchange = input.onkeydown = input.onkeyup = function () {
+        var v = input.value,
+            res = [];
+        if (v.length > 1) {
+            for (var i = 0, ii = names.length; i < ii; i++) {
+                res[i] = {
+                    li: names[i].li,
+                    weight: score(names[i].text, v)
+                };
+            }
+            res.sort(sorter);
+            for (i = 0, ii = res.length; i < ii; i++) {
+                ol.appendChild(res[i].li);
+            }
+        } else {
+            for (i = 0, ii = names.length; i < ii; i++) {
+                ol.appendChild(names[i].li);
+            }
+        }
+    };
+})(document.getElementById("dr-toc"));
+
+</script>
+</body></html>

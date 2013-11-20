@@ -1,8 +1,5 @@
 //documentation with Dr.js -- https://github.com/dciccale/dr.js 
 
-
-//TODO: add a variable for *variance* for each property in each category
-
 var StimuliTools = {
   shuffle: function(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;}, // non-destructive.
 
@@ -100,10 +97,13 @@ var StimuliTools = {
  * fish, microbes, monsters, and crystals. These domains are
  * meant to be naturally occuring kinds of things that might be seen on an alien
  * planet. For each domain, the user can create arbitrarily many
- * categories. Within each category, three non-target continuous properties (e.g.
- * size, shape, and color) vary around the category mean. The user can then draw
- * arbitrarily many token elements from that category, specifying whether they have
- * or do not have each of two binary target properties.
+ * categories. Within each category, three continuous properties (e.g.
+ * size, shape, and color) vary around the category mean. The user can either set
+ * this category mean by passing into the constructor an object specifying the value
+ * of that property, or let the script randomly assgin the category mean. The
+ * variance for each continuous property can also be specified in this way. The user
+ * can then draw arbitrarily many token elements from that category, specifying
+ * whether they have or do not have each of two binary target properties.
 \*/
 var Stimuli = {
 
@@ -223,8 +223,14 @@ var Stimuli = {
    | <svg id="fepTree3"></svg>
    | <svg id="wugTree1"></svg>
    * In the javascript:
-   | var fepTree = new Stimuli.Tree(); //create a kind of tree called "feps"
-   | var wugTree = new Stimuli.Tree(); //create a kind of tree called "wugs"
+   | //create a kind of tree called "feps" with specified values for some
+   |   continuous properties
+   | var fepTree = new Stimuli.Tree({leafColor:"#00FF00",
+   |                                 width:0.5,
+   |                                 height:1,
+   |                                 widthVar:2});
+   | //create a kind of tree called "wugs"
+   | var wugTree = new Stimuli.Tree();
    |
    | //draw some feps
    | var fepTree1 = fepTree.draw("fepTree1", true, false, 0.7); //berries
@@ -249,6 +255,19 @@ var Stimuli = {
      * A string. The hex code for the latent mean color of the berries,
      * sampled from Stimuli.colorScheme.
      * E.g. "#FF0000".
+     - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the tree in format:
+     o {
+     o     berryColor (string) hex color of berries,
+     o     leafColor (string) hex color of leaves,
+     o     trunkColor (string) hex color of trunk -- the trunk is actually colored with a linear gradient from lighter to darker whose middle value is this color,
+     o     width (number) 1 is max width of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     height (number) 1 is max height of trunk and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     berryColorVar (number) a non-negative number which is a the multiple of the default variance for berryColor (higher numbers mean higher variances, and the default value for this is 1)
+     o     leafColorVar (number) a non-negative number which is a the multiple of the default variance for leafColor (higher numbers mean higher variances, and the default value for this is 1)
+     o     trunkColorVar (number) a non-negative number which is a the multiple of the default variance for turnkColor (higher numbers mean higher variances, and the default value for this is 1)
+     o     widthVar (number) a non-negative number which is a the multiple of the default variance for widthVar (higher numbers mean higher variances, and the default value for this is 1)
+     o     heightVar (number) a non-negative number which is a the multiple of the default variance for heightVar (higher numbers mean higher variances, and the default value for this is 1)
+     o }
     \*/
     this.berryColor = Stimuli.keepIfThere(meanProperties, "berryColor", "color");
     this.berryColorVar = Stimuli.keepIfThere(meanProperties, "berryColorVar", "1");
@@ -595,6 +614,19 @@ var Stimuli = {
    * Stimuli.Bug
    [ class ]
    * Represents a bug category.
+   - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the bug in format:
+   o {
+   o     bodyColor (string) hex color of body,
+   o     wingsColor (string) hex color of wings,
+   o     antennaeColor (string) hex color of antennae,
+   o     bodyFatness (number) 1 is max fatness of body and 0 is min,
+   o     headFatness (number) 1 is max fatness of head and 0 is min,
+   o     bodyColorVar (number) a non-negative number which is a the multiple of the default variance for bodyColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     wingsColorVar (number) a non-negative number which is a the multiple of the default variance for wingsColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     antennaeColorVar (number) a non-negative number which is a the multiple of the default variance for antennaeColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     bodyFatnessVar (number) a non-negative number which is a the multiple of the default variance for bodyFatness (higher numbers mean higher variances, and the default value for this is 1)
+   o     headFatnessVar (number) a non-negative number which is a the multiple of the default variance for headFatness (higher numbers mean higher variances, and the default value for this is 1)
+   o }
    > Here's how to draw some bugs:
    * In the html:
    | <svg id="fepBug1"></svg>
@@ -840,6 +872,19 @@ var Stimuli = {
    * Stimuli.Bird
    [ class ]
    * Represents a bird category.
+   - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the bug in format:
+   o {
+   o     color (string) hex color of the bird,
+   o     crestColor (string) hex color of bird's crest,
+   o     tailColor (string) hex color of bird's tail,
+   o     headStretch (number) 1 is fattest head and 0 is thinnest, 
+   o     bodyStretch (number) 1 is tallest body and 0 is shortest, 
+   o     colorVar (number) a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)
+   o     crestColorVar (number) a non-negative number which is a the multiple of the default variance for crestColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     tailColorVar (number) a non-negative number which is a the multiple of the default variance for tailColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     headStretchVar (number) a non-negative number which is a the multiple of the default variance for headStretch (higher numbers mean higher variances, and the default value for this is 1)
+   o     bodyStretchVar (number) a non-negative number which is a the multiple of the default variance for bodyStretch (higher numbers mean higher variances, and the default value for this is 1)
+   o }
    > Here's how to draw some birds:
    * In the html:
    | <svg id="fepBird1"></svg>
@@ -1021,6 +1066,19 @@ var Stimuli = {
    * Stimuli.Microbe
    [ class ]
    * Represents a microbe category.
+   - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the bug in format:
+   o {
+   o     color (string) hex color of most of the microbe,
+   o     bumpsColor (string) hex color of the bumps on the microbe,
+   o     spikesColor (string) hex color of the spikes on the microbe,
+   o     xRadius (number) 1 is fattest microbe and 0 is thinnest,
+   o     yRadius (number) 1 is tallest microbe and 0 is shortest,
+   o     colorVar (number) a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)
+   o     bumpsColorVar (number) a non-negative number which is a the multiple of the default variance for bumpsColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     spikesColorVar (number) a non-negative number which is a the multiple of the default variance for spikesColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     xRadiusVar (number) a non-negative number which is a the multiple of the default variance for xRadius (higher numbers mean higher variances, and the default value for this is 1)
+   o     yRadiusVar (number) a non-negative number which is a the multiple of the default variance for yRadius (higher numbers mean higher variances, and the default value for this is 1)
+   o }
    > Here's how to draw some microbes:
    * In the html:
    | <svg id="fepMicrobe1"></svg>
@@ -1221,6 +1279,17 @@ var Stimuli = {
    * Stimuli.Monster
    [ class ]
    * Represents a monster category.
+   - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the bug in format:
+   o {
+   o     color (string) hex color of monster body,
+   o     accentColor (string) hex color of horns and feet,
+   o     tallness (number) 1 is max tallness of body and 0 is min,
+   o     fatness (number) 1 is max fatness of body and 0 is min,
+   o     colorVar (number) a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)
+   o     accentColorVar (number) a non-negative number which is a the multiple of the default variance for accentColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     tallnessVar (number) a non-negative number which is a the multiple of the default variance for tallness (higher numbers mean higher variances, and the default value for this is 1)
+   o     fatnessVar (number) a non-negative number which is a the multiple of the default variance for fatness (higher numbers mean higher variances, and the default value for this is 1)
+   o }
    > Here's how to draw some monsters:
    * In the html:
    | <svg id="fepMonster1"></svg>
@@ -1407,6 +1476,17 @@ var Stimuli = {
    * Stimuli.Fish
    [ class ]
    * Represents a fish category.
+   - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the bug in format:
+   o {
+   o     color (string) hex color of fish,
+   o     finColor (string) hex color of fins of fish,
+   o     tailSize (number) 1 is longest tails and 0 is shortest,
+   o     tallness (number) 1 is largest tallest fish and 0 is shortest,
+   o     colorVar (number) a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)
+   o     finColorVar (number) a non-negative number which is a the multiple of the default variance for finColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     tailSizeVar (number) a non-negative number which is a the multiple of the default variance for tailSize (higher numbers mean higher variances, and the default value for this is 1)
+   o     tallnessVar (number) a non-negative number which is a the multiple of the default variance for tallness (higher numbers mean higher variances, and the default value for this is 1)
+   o }
    > Here's how to draw some fish:
    * In the html:
    | <svg id="fepFish1"></svg>
@@ -1556,6 +1636,30 @@ var Stimuli = {
    * Stimuli.Flower
    [ class ]
    * Represents a flower category.
+   - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the bug in format:
+     o     petalColor (string) hex color of petals -- the closer set of petals is actually a radial gradient based on a lighter version of this color and the further away petals are a radial gradient based on a darker version of this color,
+     o     centerColor (string) hex color of center of flower -- this is actually a radial gradient from a lighter version of the color to a darker version of the color,
+     o     spotsColor (string) hex color of spots on petals,
+     o     stemColor (string) hex color of stem (and consequently thorns, if there are thorns),
+     o     petalLength (number) 1 is longest petals and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     centerSize (number) 1 is largest center and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+     o     label (string) same as input parameter,
+     o     spots (string) same as input parameter,
+     o     thorns (string) same as input parameter,
+   o {
+   o     petalColor (string) hex color of petals,
+   o     centerColor (string) hex color of center of flower,
+   o     spotsColor (string) hex color of spots on petals,
+   o     stemColor (string) hex color of stem (and consequently thorns, if there are thorns),
+   o     petalLength (number) 1 is longest petals and 0 is min,
+   o     centerSize (number) 1 is largest center and 0 is min,
+   o     petalColorVar (number) a non-negative number which is a the multiple of the default variance for petalColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     centerColorVar (number) a non-negative number which is a the multiple of the default variance for centerColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     spotsColorVar (number) a non-negative number which is a the multiple of the default variance for spotsColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     stemColorVar (number) a non-negative number which is a the multiple of the default variance for stemColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     petalLengthVar (number) a non-negative number which is a the multiple of the default variance for petalLength (higher numbers mean higher variances, and the default value for this is 1)
+   o     centerSizeVar (number) a non-negative number which is a the multiple of the default variance for centerSize (higher numbers mean higher variances, and the default value for this is 1)
+   o }
    > Here's how to draw some flowers:
    * In the html:
    | <svg id="fepFlower1"></svg>
@@ -1755,6 +1859,29 @@ var Stimuli = {
    * Stimuli.Crystal
    [ class ]
    * Represents a crystal category.
+   - propertyMeans (object) an optional parameter containing category means and/or variances for properties of the bug in format:
+   o {
+   o     color (string) hex color of crystal -- this has a gradient from this color to white and back to this color to show reflections
+   o     bubblesColor (string) hex color of bubbles in the crystal,
+   o     streaksColor (string) hex color of streaks in the crystal,
+   o     centerSize (number) 1 is largest the center side of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+   o     outsideSize (number) 1 is largest the outer sides of the crytal could be and 0 is min -- uniformly sampled from the interval [max(latent mean value - 0.2, 0), min(latent mean value + 0.2, 1)],
+   o     label (string) same as input parameter,
+   o     bubbles (string) same as input parameter,
+   o     streaks (string) same as input parameter,
+   o }
+   o {
+   o     color (string) hex color of crystal,
+   o     bubblesColor (string) hex color of bubbles in the crystal,
+   o     streaksColor (string) hex color of streaks in the crystal,
+   o     centerSize (number) 1 is largest the center side of the crytal could be and 0 is min,
+   o     outsideSize (number) 1 is largest the outer sides of the crytal could be and 0 is min,
+   o     colorVar (number) a non-negative number which is a the multiple of the default variance for color (higher numbers mean higher variances, and the default value for this is 1)
+   o     bubblesColorVar (number) a non-negative number which is a the multiple of the default variance for bubblesColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     streaksColorVar (number) a non-negative number which is a the multiple of the default variance for streaksColor (higher numbers mean higher variances, and the default value for this is 1)
+   o     centerSizeVar (number) a non-negative number which is a the multiple of the default variance for centerSize (higher numbers mean higher variances, and the default value for this is 1)
+   o     outsideSizeVar (number) a non-negative number which is a the multiple of the default variance for outsideSize (higher numbers mean higher variances, and the default value for this is 1)
+   o }
    > Here's how to draw some crystals:
    * In the html:
    | <svg id="fepCrystal1"></svg>
