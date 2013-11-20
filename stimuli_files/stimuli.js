@@ -677,8 +677,8 @@ var Stimuli = {
      * Draws a bug token from a bug category and returns an object with
      * information about the bug that was drawn.
      - label (string) matches the id for an svg tag in the html
-     - berries (boolean) whether this bug token has wings
-     - leaves (boolean) whether this bug token has antennae
+     - wings (boolean) whether this bug token has wings
+     - antennae (boolean) whether this bug token has antennae
      - scaleFactor (number) scales the whole image
      = (object) properties of the bug in format:
      o {
@@ -1257,7 +1257,7 @@ var Stimuli = {
      * E.g. 0.13984732927294..
     \*/
     this.tallness = Stimuli.keepIfThere(meanProperties, "tallness", "[0,1]");
-    this.tallnessVariance = Stimuli.keepIfThere(meanProperties, "tallnessVar", "1");
+    this.tallnessVar = Stimuli.keepIfThere(meanProperties, "tallnessVar", "1");
     /*\
      * Stimuli.Monster.fatness
      [ property ]
@@ -1267,7 +1267,7 @@ var Stimuli = {
      * E.g. 0.13984732927294..
     \*/
     this.fatness = Stimuli.keepIfThere(meanProperties, "fatness", "[0,1]");
-    this.fatnessVariance = Stimuli.keepIfThere(meanProperties, "fatnessVar", "1");
+    this.fatnessVar = Stimuli.keepIfThere(meanProperties, "fatnessVar", "1");
     /*\
      * Stimuli.Monster.color
      [ property ]
@@ -1276,7 +1276,7 @@ var Stimuli = {
      * E.g. "#FF0000".
     \*/
     this.color = Stimuli.keepIfThere(meanProperties, "color", "color");
-    this.colorVariance = Stimuli.keepIfThere(meanProperties, "colorVar", "1");
+    this.colorVar = Stimuli.keepIfThere(meanProperties, "colorVar", "1");
     /*\
      * Stimuli.Monster.accentColor
      [ property ]
@@ -1285,7 +1285,7 @@ var Stimuli = {
      * E.g. "#FF0000".
     \*/
     this.accentColor = Stimuli.keepIfThere(meanProperties, "accentColor", "color");
-    this.accentColorVariance = Stimuli.keepIfThere(meanProperties, "accentColorVar", "1");
+    this.accentColorVar = Stimuli.keepIfThere(meanProperties, "accentColorVar", "1");
     
     var data = $.csv.toObjects(Stimuli.images.monster);
 
@@ -1317,8 +1317,8 @@ var Stimuli = {
      * Draws a monster token from a monster category and returns an object with
      * information about the monster that was drawn.
      - label (string) matches the id for an svg tag in the html
-     - berries (boolean) whether this monster token has horns
-     - leaves (boolean) whether this monster token has teeth
+     - horns (boolean) whether this monster token has horns
+     - teeth (boolean) whether this monster token has teeth
      - scaleFactor (number) scales the whole image
      = (object) properties of the monster in format:
      o {
