@@ -6,37 +6,20 @@
 
 <body>
 
-Feps
-<br/>
-<svg id="fep0"></svg>
-<svg id="fep1"></svg>
-<svg id="fep2"></svg>
-<br/>
-<br/>
-Wugs
-<br/>
-<svg id="wug0"></svg>
-<svg id="wug1"></svg>
-<svg id="wug2"></svg>
+<svg id="space"></svg>
 
-<!-- Scripts -->
-<script src="./stimuli_files/jquery-2.0.3.min.js" type="text/javascript"></script>
-<script src="./stimuli_files/jquery.csv-0.71.min.js" type="text/javascript"></script>
-<script src="./stimuli_files/raphael.js" type="text/javascript"></script>
-<script src="./stimuli_files/stimuli.js" type="text/javascript"></script>
+<!-- Erin's stimuli scripts -->
+<script src="http://code.jquery.com/jquery-1.11.0.min.js" type="text/javascript"></script>
+<script src="stimuli_files/jquery.csv-0.71.min.js" type="text/javascript"></script>
+<script src="stimuli_files/raphael.js" type="text/javascript"></script>
+<script src="stimuli_files/stimuli.js" type="text/javascript"></script>
 
 <script>
-var scale = 0.5;
-var fep = new Stimuli.Monster({color:"#00FF00", colorVar:0, accentColor:"#B1FB17", tallness:0.8, fatness:0.5, tallnessVar:3, fatnessVar:3});
-fep.draw("fep0", true, false, scale);
-fep.draw("fep1", true, false, scale);
-fep.draw("fep2", true, false, scale);
-//
-var wug = new Stimuli.Monster({color:"#A52A2A", colorVar:3, accentColor:'#E8A317', tallnes:0.5, fatness:0.9, fatnessVar:0.5, tallnessVar:0.5});
-wug.draw("wug0", true, true, scale);
-wug.draw("wug1", true, true, scale);
-wug.draw("wug2", true, true, scale);
+monster = new Stimuli.Monster({tallness: 1, fatness: .5, color: "#c92ae8", accentColor: "#f9a50e", colorVar: 0, accentColorVar: 0, tallnessVar:0, fatnessVar:0});
+
+stim = monster.draw("space", true, false, 1);
 </script>
+
 
 
 </body></html>

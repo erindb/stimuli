@@ -12,7 +12,7 @@ var StimuliTools = {
  - nSteps (number) by default 10, maximum number of hues to hold in the hue bank at a time
 \*/
   ColorRandomizer: function(nStep) {
-    var nSteps = nSteps || 10;
+    var nSteps = nSteps==null ? 10 : nSteps;
     function hues(n) {
       var h = [];
       var offset = Math.random() * .99 / n;
@@ -45,7 +45,7 @@ var StimuliTools = {
     if (varianceScale == 0) {
       return mean;
     } else {
-      var radius = radius || 0.2;
+      var radius = radius==null ? 0.2 : radius;
       radius = radius * varianceScale;
       if (mean + radius < 1) {
         var upper = mean + radius;
@@ -134,7 +134,7 @@ var Stimuli = {
   },
   
   lighten: function(origColor, saturation) {
-    var saturation = saturation || false;
+    var saturation = saturation ? false : saturation;
     var eps = 0.3;
     var c = Raphael.color(origColor);
     if (c.v + eps < 1) {
@@ -180,10 +180,10 @@ var Stimuli = {
   },
 
   myColor: function(meanColor, varianceScale, hVar, sVar, vVar) {
-    var varianceScale = varianceScale || 1;
-    var hVar = hVar || 0.01;
-    var sVar = sVar || 0.1;
-    var vVar = vVar || 0.1;
+    var varianceScale = varianceScale==null ? 1 : varianceScale;
+    var hVar = hVar==null ? 0.01 : hVar;
+    var sVar = sVar==null ? 0.1 : sVar;
+    var vVar = vVar==null ? 0.1 : vVar;
     var c = Raphael.color(meanColor);
     var hue = StimuliTools.uniformAroundMean(c.h, varianceScale, hVar);
     var saturation = StimuliTools.uniformAroundMean(c.s, varianceScale, sVar);
@@ -1405,6 +1405,7 @@ var Stimuli = {
       var tallness = StimuliTools.uniformAroundMean(this.tallness, this.tallnessVar);
       var fatness = StimuliTools.uniformAroundMean(this.fatness, this.fatnessVar);
       var color = Stimuli.myColor(this.color, this.colorVar);
+      console.log(color);
       var accentColor = Stimuli.myColor(this.accentColor, this.accentColorVar);
       var lightAccent = Stimuli.lighten(accentColor, true);
       var colors = {"left eye": "#ffffff",
@@ -2096,7 +2097,7 @@ var Stimuli = {
   */
   
   drawPaths: function(paper, pieces, colors, interpolationFunction, opacity) {
-    var opacity = opacity || null;
+    var opacity = opacity==null ? null : opacity;
     for (var i = 0; i < pieces.length; i++) {
       var piece = pieces[i];
       var pathString = interpolationFunction(piece);
