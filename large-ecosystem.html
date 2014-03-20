@@ -7,17 +7,9 @@
 <body>
 
 <table>
-<tbody>
-<tr>
-	<td><div id="bug"></div></td>
-	<td><div id="bird"></div></td>
-</tr>
-<tr>
-	<td><div id="fish"></div></td>
-	<td><div id="flower"></svg></td>
-	<td></td>
-</tr>
+<tbody id="critters">
 </tbody>
+</table>
 
 
 <!-- Erin's stimuli scripts -->
@@ -27,48 +19,28 @@
 <script src="ecosystem.js" type="text/javascript"></script>
 
 <script>
+function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
+function sample(v) {return(shuffle(v)[0]);}
+
 var nrow = 3;
-var ncol = 4;
+var ncol = 6;
 var critters = ["bug", "bird", "fish", "flower"];
-for (var c=0; c<critters.length; c++) {
-	var critter = critters[c];
 
-	var tablestring = '<table><tbody>';
-	for (var i=0; i<nrow; i++) {
-		tablestring += '<tr>';
-		for (var j=0; j<ncol; j++) {
-			tablestring += '<td><svg id="' + critter + '-' + i + '-' + j +
-			               '" width="250px" height="250px"></svg></td>'
-		}
-		tablestring += '</tr>';
+var tablestring = "";
+for (var i=0; i<nrow; i++) {
+	tablestring += '<tr>';
+	for (var j=0; j<ncol; j++) {
+		tablestring += '<td><svg id="' + i + '-' + j +
+		               '" width="250px" height="250px"></svg></td>'
 	}
-	tablestring += '</tbody></table>';
+	tablestring += '</tr>';
+}
 
-	$("#"+critter).html(tablestring);
-	var props = [
-		{
-			"var":0.2, tar1:1, tar2:0,
-			col1:{"mean":"#ff0000"},
-			col2:{"mean":"#00ff00"},
-			col3:{"mean":"#0000ff"},
-			col4:{"mean":"#ffff00"},
-			col5:{"mean":"#00ffff"},
-		},
-		{tar1:0, tar2:1,
-			col1:{"mean":"#ff0000"},
-			col2:{"mean":"#00ff00"},
-			col3:{"mean":"#0000ff"},
-			col4:{"mean":"#ffff00"},
-			col5:{"mean":"#00ffff"},
-		},
-		{"var":0.6, tar1:0, tar2:0}
-	];
-	for (var i=0; i<nrow; i++) {
-		for (var j=0; j<ncol; j++) {
-			var p = props[i] ? props[i] : {};
-			var genus = new Ecosystem.Genus(critter, p);
-			genus.draw(critter + '-' + i + '-' + j, {}, 0.5);
-		}
+$("#critters").html(tablestring);
+for (var i=0; i<nrow; i++) {
+	for (var j=0; j<ncol; j++) {
+		var critter = sample(critters);
+		Ecosystem.draw(critter, {}, i.toString() + '-' + j.toString(), 0.8);
 	}
 }
 </script>
