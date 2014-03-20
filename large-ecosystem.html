@@ -39,7 +39,7 @@ for (var i=0; i<nrow; i++) {
 $("#critters").html(tablestring);
 for (var i=0; i<nrow; i++) {
 	for (var j=0; j<ncol; j++) {
-		var critter = sample(critters);
+		var critter = critters[(i*ncol + j) % 4];
 		Ecosystem.draw(critter, {}, i.toString() + '-' + j.toString(), 0.8);
 	}
 }
