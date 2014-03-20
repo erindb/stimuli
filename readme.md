@@ -17,7 +17,7 @@ For drawing dynamic stimuli of various species. You can draw a picture directly,
 
 ## example code:
 
-This is the code used in `ecosystem-demo.html`.
+This is the code used in `ecosystem-demo.html` which can be viewed [here](www.stanford.edu/~erindb/stimuli/ecosystem-demo.html).
 
 ### html:
 
