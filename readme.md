@@ -42,7 +42,7 @@ This is the code used in `ecosystem-demo.html`.
 
 This will draw a bug at half the default size (250px x 250px) with a red crest, green body, blue wing, no tail, with a short and skinny body and fat head.
 
-You can specify all of these properties, or only some of them. You can even pass in an empty dictionary `{}`. If want *all* of the properties to be randomly sampled, you can use this JavaScript code instead:
+You can specify all of these properties, or only some of them. You can even pass in an empty object `{}` if want *all* of the properties to be randomly sampled:
 
 	var scale = 0.5;
 	Ecosystem.draw("bird", {}, "svgID", scale)
