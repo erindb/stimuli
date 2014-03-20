@@ -83,7 +83,7 @@ But when I want to specify a category mean for col1:
 
 	genus = new Ecosystem("bird", {"col1":{"mean":"#ff0000"}})
 
-For category colors (`col1`, `col2`, `col3`, `col4`, `col5`) and proportions (`prop1`,`prop2`), you can specify just a `mean`, just a `var`, or both. For category target properties (`tar1`, `tar2`), you specify a number between 0 and 1 which gives the probability within that category of having that feature.
+For category colors (`col1`, `col2`, `col3`, `col4`, `col5`) and proportions (`prop1`,`prop2`), you can specify just a `mean`, just a `var`, or both. For category target properties (`tar1`, `tar2`), you specify a number between 0 and 1 which gives the probability within that category of having that feature. You can also specify one additional value in the *means-and-vars* object: `var`. `var` is a default variance, which will be overwritten if you explicitly specify a variance (like `col1:{var:0.1}`). Whenever there's a variance for a category and no mean, this program will randomly sample a category mean. Whenever there's a mean and no variance, I've chosen a default variance (which I think is pretty small).
 
 * flower
 	* col1=stem
