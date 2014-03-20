@@ -1,0 +1,56 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Ecosystem Demo</title>
+<meta name="viewport" content="initial-scale=1.0">
+</head> 
+
+<script src="jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="raphael.js" type="text/javascript"></script>
+<script src="ecosystem.js" type="text/javascript"></script>
+
+<svg id="svg0"></svg>
+<svg id="svg1"></svg>
+
+<svg id="svg2"></svg>
+<svg id="svg3"></svg>
+<svg id="svg4"></svg>
+<svg id="svg5"></svg>
+
+<script>
+	var scale = 0.5;
+
+	//all properties specified:
+	Ecosystem.draw(
+		"bird", {"col1":"#ff0000",
+				 "col2":"#00ff00",
+				 "col3":"#0000ff",
+				 "tar1":false,
+				 "tar2":true,
+				 "prop1":0,
+				 "prop2":0},
+		"svg0", scale)
+
+	//all properties sampled completely randomly:
+	//(refresh page to see different samples)
+	Ecosystem.draw("bird", {}, "svg1", scale)
+
+	//properties sampled around specified mean:
+	var genus = new Ecosystem.Genus("bird", {
+		"col1":{"mean":"#ff0000"},
+		"col2":{"mean":"#00ff00"},
+		"col3":{"mean":"#0000ff"},
+		"tar1":0.1, //almost never has a tail
+		"tar2":0.9, //almost always has a crest
+		"prop1":{"mean":0, "var":0.05}, //low height variance
+		"prop1":{"mean":0, "var":0.5}, //high fatness variance
+		"var":0.3 //overall variance (overwritten by any specified variances)
+	})
+	genus.draw("svg2", {}, scale);
+	genus.draw("svg3", {}, scale);
+	genus.draw("svg4", {}, scale);
+
+	//you can specify properties for items drawn from categories, too:
+	genus.draw("svg5", {"tar1":true, "tar2":true}, scale);
+</script>
+
+</html>
