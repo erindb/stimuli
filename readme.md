@@ -1,6 +1,6 @@
 # ecosystem.js
 
-For drawing dynamic stimuli of various species. You can draw a picture directly, or make a category to draw instances of later. Any properties unspecified will be randomly sampled.
+For drawing dynamic stimuli of various species. You can draw a picture directly, or make a category to draw instances of later. Any properties unspecified will be randomly sampled. [Here's an example of the pretty pictures this script can draw](http://www.stanford.edu/~erindb/stimuli/large-ecosystem.html).
 
 ## categories:
 
