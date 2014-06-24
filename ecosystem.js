@@ -117,17 +117,6 @@ var Ecosystem = {
 
     draw: function(category, properties, paperlabel, scaleFactor, x, y) {
 
-        //for rescaling
-        var svgWidth = $("#" + paperlabel).width();
-        var defaultWidth = 250;
-
-        var paper;
-        if (x==null && y==null) {
-            paper = Raphael(paperlabel, 250, 250); //FOR RESCALING NEED TO CHANGE THIS
-        } else {
-            paper = paperlabel;
-        }
-
         if (category == null) {console.log("error 8: you need to give a category for 'draw' function");}
         //colors ()
         var col1 = properties["col1"]==null ? Ecosystem.randCol() : properties["col1"];
@@ -144,26 +133,53 @@ var Ecosystem = {
         var tar1 = properties["tar1"]==null ? Ecosystem.randBoul() : properties["tar1"];
         var tar2 = properties["tar2"]==null ? Ecosystem.randBoul() : properties["tar2"];
 
-        var ends = Ecosystem.endpoints(category, col1, col2, col3, col4, col5); //not all categories use all colors
+        if (paperlabel != null) {
 
-        var pathlabels = Object.keys(ends["00"]);
+            //for rescaling
+            var svgWidth = $("#" + paperlabel).width();
+            var defaultWidth = 250;
 
-        for (var i=0; i<pathlabels.length; i++) {
-            var pathlabel = pathlabels[i];
-            if ( (pathlabel != "target1" && pathlabel != "target2") ||
-                    (pathlabel == "target1" && tar1) ||
-                    (pathlabel == "target2" && tar2)) {
-                var pathstring = Ecosystem.intermediate2d(ends, pathlabel, prop1, prop2);
-                var path = paper.path(pathstring);
-                Ecosystem.stroke(path, ends["colors"][pathlabel]);
+            var paper;
+            if (x==null && y==null) {
+                paper = Raphael(paperlabel, 250, 250); //FOR RESCALING NEED TO CHANGE THIS
+            } else {
+                paper = paperlabel;
             }
+
+            var ends = Ecosystem.endpoints(category, col1, col2, col3, col4, col5); //not all categories use all colors
+
+            var pathlabels = Object.keys(ends["00"]);
+
+            for (var i=0; i<pathlabels.length; i++) {
+                var pathlabel = pathlabels[i];
+                if ( (pathlabel != "target1" && pathlabel != "target2") ||
+                        (pathlabel == "target1" && tar1) ||
+                        (pathlabel == "target2" && tar2)) {
+                    var pathstring = Ecosystem.intermediate2d(ends, pathlabel, prop1, prop2);
+                    var path = paper.path(pathstring);
+                    Ecosystem.stroke(path, ends["colors"][pathlabel]);
+                }
+            }
+
+            var svgContainer = document.getElementById(paperlabel);
+            var scaleFactor = (scaleFactor == null) ? 1 : scaleFactor;
+            svgContainer.setAttribute("width", (scaleFactor*250).toString() + "px");
+            svgContainer.setAttribute("height", (scaleFactor*250).toString() + "px");
+            svgContainer.setAttribute("viewBox", "0 0 250 250");
         }
 
-        var svgContainer = document.getElementById(paperlabel);
-        var scaleFactor = (scaleFactor == null) ? 1 : scaleFactor;
-        svgContainer.setAttribute("width", (scaleFactor*250).toString() + "px");
-        svgContainer.setAttribute("height", (scaleFactor*250).toString() + "px");
-        svgContainer.setAttribute("viewBox", "0 0 250 250");
+        return {
+            "category": category,
+            "col1": col1,
+            "col2": col2,
+            "col3": col3,
+            "col4": col4,
+            "col5": col5,
+            "prop1": prop1,
+            "prop2": prop2,
+            "tar1": tar1,
+            "tar2": tar2
+        };
     },
 
     endpoints: function(category, col1, col2, col3, col4, col5) {
@@ -379,7 +395,7 @@ var Ecosystem = {
 	            }
 	        }
             //pass along all user-specified
-            Ecosystem.draw(this.category, tokenProperties, paperlabel, scaleFactor);
+            return Ecosystem.draw(this.category, tokenProperties, paperlabel, scaleFactor);
         }
 
         this.oldDraw = function(paperlabel, tar1, tar2, scaleFactor) {
