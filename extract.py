@@ -5,11 +5,11 @@ doc = minidom.parse(sys.argv[1])
 layers = [layer for layer in doc.getElementsByTagName('g')]
 for layer in layers:
     layer_id = layer.getAttribute('inkscape:label')
-    print layer_id + ": {"
+    print "\"" + layer_id + "\": {\"",
     for path in layer.getElementsByTagName('path'):
         piece = path.getAttribute('id').split("-")[0]
         pathstring = path.getAttribute('d')
-        print piece + ":" + '"' + pathstring + '",'
+        print "\"" + piece + "\":" + '"' + pathstring + '",',
     print "},"
 doc.unlink()
 
