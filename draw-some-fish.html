@@ -1,0 +1,149 @@
+<html>
+<body>
+
+<h3>Fish</h3>
+
+<div id='fish_drawing'></div>
+
+<div id="controls">
+	<div id="color-selectors">
+		<div class="control-label">col1:</div> <div id="colorSelector1" class="colorSelector"><div style="background-color: #0000ff"></div></div>
+		<br/>
+		<div class="control-label">col2:</div> <div id="colorSelector2" class="colorSelector"><div style="background-color: #0000ff"></div></div>
+		<br/>
+		<div class="control-label">col3:</div> <div id="colorSelector3" class="colorSelector"><div style="background-color: #0000ff"></div></div>
+	</div>
+	<div class="control-label">body:</div> <div class='slider' id='prop1'></div>
+	<br/>
+	<div class="control-label">tail:</div> <div class='slider' id='prop2'></div>
+</div>
+
+<!-- check for binary, color picker for colors -->
+
+<link href="jquery-ui.css" rel="stylesheet" type="text/css"/>
+<link rel="stylesheet" href="colorpicker.css" type="text/css" />
+<link rel="stylesheet" media="screen" type="text/css" href="layout.css" />
+<style>
+	.ui-slider-range {
+		background: transparent;
+	}
+	.slider {
+		width: 400px;
+		margin: 10px;
+	}
+</style>
+
+<script type='text/javascript' src='jquery-2.0.3.min.js'></script>
+<script type='text/javascript' src='jquery-ui.js'></script>
+<script type="text/javascript" src="colorpicker.js"></script>
+<script type="text/javascript" src="eye.js"></script>
+<script type="text/javascript" src="colorpicker.js"></script>
+<script type='text/javascript' src='raphael.js'></script>
+<script type='text/javascript' src='ecosystem.js'></script>
+<script type="text/javascript" src="eye.js"></script>
+<script type="text/javascript" src="utils.js"></script>
+<script type="text/javascript" src="layout.js?ver=1.0.2"></script>
+<script>
+
+var col1 = "#ffffff"
+var col2 = "#ffffff"
+var col3 = "#ffffff"
+
+$('#colorSelector1').ColorPicker({
+	color: col1,
+	onShow: function (colpkr) {
+		$(colpkr).fadeIn(500);
+		return false;
+	},
+	onHide: function (colpkr) {
+		$(colpkr).fadeOut(500);
+		return false;
+	},
+	onChange: function (hsb, hex, rgb) {
+		col1 = '#' + hex;
+		$('#colorSelector1 div').css('backgroundColor', '#' + hex);
+		update_fish();
+	}
+});
+$('#colorSelector2').ColorPicker({
+	color: col2,
+	onShow: function (colpkr) {
+		$(colpkr).fadeIn(500);
+		return false;
+	},
+	onHide: function (colpkr) {
+		$(colpkr).fadeOut(500);
+		return false;
+	},
+	onChange: function (hsb, hex, rgb) {
+		col2 = '#' + hex;
+		$('#colorSelector2 div').css('backgroundColor', '#' + hex);
+		update_fish();
+	}
+});
+$('#colorSelector3').ColorPicker({
+	color: col3,
+	onShow: function (colpkr) {
+		$(colpkr).fadeIn(500);
+		return false;
+	},
+	onHide: function (colpkr) {
+		$(colpkr).fadeOut(500);
+		return false;
+	},
+	onChange: function (hsb, hex, rgb) {
+		col3 = '#' + hex;
+		$('#colorSelector3 div').css('backgroundColor', '#' + hex);
+		update_fish();
+	}
+});
+$('#colorSelector1 div').css({'backgroundColor':col1});
+$('#colorSelector2 div').css({'backgroundColor':col2});
+$('#colorSelector3 div').css({'backgroundColor':col3});
+
+function make_slider(label, response_callback) {
+	$(label).empty();
+	$(label).slider({
+		range : 'min',
+		min : 0,
+		max : 1,
+		step: 0.01,
+		value : 0.5,
+		slide : response_callback,
+					change : response_callback
+	});
+	$(label + ' .ui-slider-handle').hide();
+			$(label).mousedown(function(){
+		$(label + ' .ui-slider-handle').show();
+			$(label).css({'background':'#99D6EB'});
+			$(label + ' .ui-slider-handle').css({
+				'background':'#667D94',
+				'border-color': '#001F29'
+			});
+			});
+			$(label).css({'background':'#eee'});
+}
+
+var fish = new Ecosystem.Genus('fish', {var:0, col1:col1, col2:col2, col3:col3});
+
+function update_fish() {
+	$('#fish_drawing').empty();
+	fish.draw('fish_drawing', {prop1: prop1, prop2: prop2, tar1:0, tar2:0, tar3:1, col1:col1, col2:col2, col3:col3}, 0.5);
+}
+
+update_fish();
+
+var prop1 = 0.5;
+var prop2 = 0.5;
+
+var f1 = function(event, ui) {prop1 = ui.value; update_fish();}
+$('#prop1').slider({range: 'min', min: 0, max: 1, step: 0.01, value: 0.5, slide: f1, change: f1});
+var f2 = function(event, ui) {prop2 = ui.value; update_fish();}
+$('#prop2').slider({range: 'min', min: 0, max: 1, step: 0.01, value: 0.5, slide: f2, change: f2});
+
+/*make_slider('#prop1', )
+make_slider('#prop2', function(event, ui) {prop2 = ui.value; update_fish();})*/
+
+</script>
+</body>
+</html>
