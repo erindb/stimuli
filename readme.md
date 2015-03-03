@@ -100,7 +100,7 @@ For category colors (`col1`, `col2`, `col3`, `col4`, `col5`) and proportions (`p
 	* prop1=bodysize(short->tall)
 	* prop2=tailsize
 	* tar1=fangs
-	* tar2=fins
+	* tar2=whiskers
 * bug
 	* col1=legs
 	* col2=head
