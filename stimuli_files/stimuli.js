@@ -350,9 +350,9 @@ var Stimuli = {
      o     leaves (string) same as input parameter,
      o }
     \*/
-    this.draw = function(label, berries, leaves, scaleFactor) {
-      var w = StimuliTools.uniformAroundMean(this.width, this.widthVar);
-      var h = StimuliTools.uniformAroundMean(this.height, this.heightVar);
+    this.draw = function(label, berries, leaves, scaleFactor, w, h) {
+      // var w = StimuliTools.uniformAroundMean(this.width, this.widthVar);
+      // var h = StimuliTools.uniformAroundMean(this.height, this.heightVar);
       var trunkColor = Stimuli.myColor(this.trunkColor, this.trunkColorVar);
       var leafColor = Stimuli.myColor(this.leafColor, this.leafColorVar);
       var berryColor = Stimuli.myColor(this.berryColor, this.berryColorVar);

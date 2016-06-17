@@ -1,0 +1,81 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Stimuli Demo</title>
+<meta name="viewport" content="initial-scale=1.0">
+</head> 
+
+<body>
+<table border="1">
+  <tr>
+    <td>
+      trees<br/>
+      <svg id="fepTree1"></svg>
+      <svg id="fepTree2"></svg>
+      <svg id="fepTree3"></svg>
+      <svg id="wugTree1"></svg>
+    </td>
+  </tr>
+</table>
+
+<!-- Scripts -->
+<script src="./stimuli_files/jquery-2.0.3.min.js" type="text/javascript"></script>
+<script src="./stimuli_files/jquery.csv-0.71.min.js" type="text/javascript"></script>
+<script src="./stimuli_files/raphael.js" type="text/javascript"></script>
+<script src="./stimuli_files/stimuli.js" type="text/javascript"></script>
+
+<a id="downloadTree11" download="tree11.svg">Download tree11</a>
+<a id="downloadTree10" download="tree10.svg">Download tree10</a>
+<a id="downloadTree01" download="tree01.svg">Download tree01</a>
+<a id="downloadTree00" download="tree00.svg">Download tree00</a>
+
+<script>
+var scale = 0.55;
+
+//**************DRAW SOME TREES*******************
+var fepTree = new Stimuli.Tree(); //create a kind of tree called "feps"
+var wugTree = new Stimuli.Tree(); //create a kind of tree called "wugs"
+
+//draw some feps
+var fepTree1 = fepTree.draw("fepTree1", true, true, scale, 1, 1); //berries
+var fepTree2 = fepTree.draw("fepTree2", true, true, scale, 1, 0); //berries & leaves
+var fepTree3 = fepTree.draw("fepTree3", true, true, scale, 0, 1); //no berries or leaves
+
+//draw a wug
+var wugTree1 = wugTree.draw("wugTree1", true, true, scale, 0, 0); //leaves
+
+//slightly different colors because they're the trunk colors for two
+//different trees from the same category
+console.log(fepTree1.trunkColor + " " + fepTree2.trunkColor);
+
+//very different colors because they're the latent mean trunk colors for
+//the two different categories
+console.log(fepTree.trunkColor + " " + wugTree.trunkColor);
+
+function download(imgid, linkid) {
+  var svg = document.getElementById(imgid);
+  //get svg source.
+  var serializer = new XMLSerializer();
+  var source = serializer.serializeToString(svg);
+  //add name spaces.
+  if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+      source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
+  }
+  if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+      source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
+  }
+  //add xml declaration
+  source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+  //convert svg source to URI data scheme.
+  var url = "data:image/svg+xml;charset=utf-8,"+encodeURIComponent(source);
+  //set url value to a element's href attribute.
+  document.getElementById(linkid).href = url;
+}
+download("fepTree1", "downloadTree11")
+download("fepTree2", "downloadTree10")
+download("fepTree3", "downloadTree01")
+download("wugTree1", "downloadTree00")
+
+</script>
+
+
+</body></html>
