@@ -9,7 +9,7 @@ for layer in layers:
     for path in layer.getElementsByTagName('path'):
         piece = path.getAttribute('id').split("-")[0]
         pathstring = path.getAttribute('d')
-        print "\"" + piece + "\":" + '"' + pathstring + '",',
+        print "\"" + piece + "\":" + '"' + pathstring + '", \n',
     print "},"
 doc.unlink()
 
