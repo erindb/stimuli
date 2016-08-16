@@ -1,5 +1,0 @@
-#!/bin/bash
-
-cat ecoA.jsPart > ecosystem.js
-python extract.py treetest.svg >> ecosystem.js
-cat ecoB.jsPart >> ecosystem.js
