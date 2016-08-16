@@ -22,9 +22,9 @@
 function shuffle(v) { newarray = v.slice(0);for(var j, x, i = newarray.length; i; j = parseInt(Math.random() * i), x = newarray[--i], newarray[i] = newarray[j], newarray[j] = x);return newarray;} // non-destructive.
 function sample(v) {return(shuffle(v)[0]);}
 
-var nrow = 3;
+var nrow = 4;
 var ncol = 6;
-var critters = ["bug", "bird", "fish", "flower"];
+var critters = ["bug", "bird", "fish", "flower", "tree"];
 
 var tablestring = "";
 for (var i=0; i<nrow; i++) {
@@ -39,7 +39,7 @@ for (var i=0; i<nrow; i++) {
 $("#critters").html(tablestring);
 for (var i=0; i<nrow; i++) {
 	for (var j=0; j<ncol; j++) {
-		var critter = critters[(i*ncol + j) % 4];
+		var critter = critters[(i*ncol + j) % critters.length];
 		Ecosystem.draw(critter, {}, i.toString() + '-' + j.toString(), 0.8);
 	}
 }
