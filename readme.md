@@ -4,11 +4,15 @@ For drawing dynamic stimuli of various species. You can draw a picture directly,
 
 ## categories:
 
+* added summer 2016:
+	* tree
+--------
 * currently available:
 	* bird
 	* bug
 	* fish
 	* flower
+
 * to appear:
 	* tree
 	* monster
@@ -119,3 +123,7 @@ For category colors (`col1`, `col2`, `col3`, `col4`, `col5`) and proportions (`p
 	* prop2=fatness(fat head & skinny body -> small head & fat body)
 	* tar1=tail
 	* tar2=crest
+* tree
+	* tar1=fruits
+	* col1=trunk
+	* col3=berries
