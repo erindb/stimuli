@@ -126,3 +126,8 @@ For category colors (`col1`, `col2`, `col3`, `col4`, `col5`) and proportions (`p
 	* col1=berries
 	* col2=leaves
 	* col3=trunk
+
+## Additional files
+
+* Inside `concept-art` directory:
+	* `categories-fish.svg`: heirarchical categories of fish for Fred Callaway's experiments in 2015. Southern fish: nikfish and hapfish (thin bodies). Northern fish: delfish and wugfish (large bodies).
