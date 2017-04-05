@@ -163,11 +163,11 @@ var Ecosystem = {
                 }
             }
 
-            var svgContainer = document.getElementById(paperlabel);
+            var svg = document.getElementById(paperlabel).firstChild;
             var scaleFactor = (scaleFactor == null) ? 1 : scaleFactor;
-            svgContainer.setAttribute("width", (scaleFactor*250).toString() + "px");
-            svgContainer.setAttribute("height", (scaleFactor*250).toString() + "px");
-            svgContainer.setAttribute("viewBox", "0 0 250 250");
+            svg.setAttribute("width", (scaleFactor*250).toString() + "px");
+            svg.setAttribute("height", (scaleFactor*250).toString() + "px");
+            svg.setAttribute("viewBox", "0 0 250 250");  
         }
 
         return {
