@@ -1,3 +1,5 @@
+// variable ecosystem_data is defined in ecosystem_data.js
+
 function rm(v, item) {if (v.indexOf(item) > -1) { v.splice(v.indexOf(item), 1); }}
 
 Array.prototype.unique = function() {
@@ -144,7 +146,7 @@ var Ecosystem = {
             if (x==null && y==null) {
                 paper = Raphael(paperlabel, 250, 250); //FOR RESCALING NEED TO CHANGE THIS
             } else {
-                paper = paperlabel;
+                paper = Raphael(paperlabel, x, y);
             }
 
             var ends = Ecosystem.endpoints(category, col1, col2, col3, col4, col5); //not all categories use all colors
