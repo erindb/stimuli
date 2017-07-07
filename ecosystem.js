@@ -145,6 +145,10 @@ var Ecosystem = {
             var paper;
             if (x==null && y==null) {
                 paper = Raphael(paperlabel, 250, 250); //FOR RESCALING NEED TO CHANGE THIS
+            } else if (x==null) {
+                paper = Raphael(paperlabel, 250, y);
+            } else if (y==null) {
+                paper = Raphael(paperlabel, x, 250);
             } else {
                 paper = Raphael(paperlabel, x, y);
             }
